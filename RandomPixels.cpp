@@ -5,6 +5,8 @@
 #include "Painter.h"
 #include <thread>
 #include <random>
+#include <iostream>
+
 int main(){
     Painter p("Hello world",640,480);
     auto c = Painter::createColor(0,0,0);
@@ -15,11 +17,16 @@ int main(){
         std::uniform_int_distribution<int> dis_h(0,p.getHeight());
         std::uniform_int_distribution<int> dis_c(0,255);
         while(true) {
-            p.drawPixel(dis_w(e), dis_h(e), Painter::createColor(dis_c(e), dis_c(e), dis_c(e)));
+            using std::chrono_literals::operator""us;
+            //p.clear();
+
+            //p.drawLine(dis_w(e),dis_h(e),dis_w(e),dis_h(e));
+            std::this_thread::sleep_for(100us);
+            p.drawPixel(dis_w(e), dis_h(e), dis_c(e), dis_c(e), dis_c(e));
         }
     });
     t.detach();
-    p.run();
+    p.paint();
 
     return 0;
 }

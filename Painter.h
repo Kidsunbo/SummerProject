@@ -30,8 +30,12 @@ public:
 
 
     void drawPixel(int x,int y,Color c);
+    void drawPixel(int x,int y, int r = 0,int g=0,int b=0);
+    void drawLine(int x1, int y1, int x2, int y2, bool smooth = false);
 
-    void run();
+
+    void paint();
+    void clear(Color c = createColor(255,255,255));
 
     int getWidth();
     int getHeight();
