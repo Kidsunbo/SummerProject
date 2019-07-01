@@ -1,0 +1,16 @@
+//
+// Created by bxs863 on 01/07/2019.
+//
+
+#ifndef SUMMERPROJECT_PAINTEREXCEPTION_H
+#define SUMMERPROJECT_PAINTEREXCEPTION_H
+
+
+
+class PainterException {
+
+};
+
+
+
+#endif //SUMMERPROJECT_PAINTEREXCEPTION_H
