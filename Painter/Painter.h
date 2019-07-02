@@ -12,6 +12,9 @@
 // STL Header
 #include <vector>
 
+//Custom Header
+#include "UtilStruct.h"
+
 // Put all the code in namespace Kie
 namespace Kie {
 
@@ -20,36 +23,9 @@ namespace Kie {
  * APIs to draw pixels, and based on this function, some other APIs have been implemented.
  */
     class Painter {
-        friend struct Point;
-
-        /**
-         * This is the inner class Color which will store the color information for each pixel.
-         * This inner class is private which can only be created by function createColor
-         *
-         * @see Painter#createColor
-         */
-        struct Color {
-            int r = 255;
-            int g = 255;
-            int b = 255;
-        };
-
-        /**
-         * This is the enum for Shape, this class defines some basic shapes
-         */
-        enum class Shape{
-            Tri
-        };
 
     public:
-        /**
-         * This is the function for creating a color object.
-         * @param r The red value
-         * @param g The green value
-         * @param b The blue value
-         * @return The color object
-         */
-        static Color createColor(int r, int g, int b);
+        // Static method
 
 
     private:
@@ -79,16 +55,16 @@ namespace Kie {
 
         void drawPixel(int x, int y, int r = 0, int g = 0, int b = 0);
 
-        void drawLine(int x1, int y1, int x2, int y2,Color c = createColor(255,255,255));
+        void drawLine(int x1, int y1, int x2, int y2,Color c = Color::from(255, 255, 255));
 
-        void drawShape(Shape,std::vector<);
+        void drawShape(Shape s,const std::vector<Point>& vertex,bool fill=false);
         // End
 
 
         // Loop Functions
         void paint();
 
-        void clear(Color c = createColor(255, 255, 255));
+        void clear(Color c = Color::from(255, 255, 255));
         // End
 
 
@@ -97,6 +73,14 @@ namespace Kie {
 
         int getHeight();
         // End
+
+
+    private:
+        // Util function
+        void _drawRec(const std::vector<Point>& vertex,bool fill);
+        void _drawTri(const std::vector<Point>& vertex,bool fill);
+        void _drawCir(const std::vector<Point>& vertex,bool fill);
+
     };
 
 }

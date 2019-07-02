@@ -9,9 +9,6 @@
 
 using namespace Kie;
 
-Painter::Color Painter::createColor(int r, int g, int b) {
-    return Color{r,g,b};
-}
 
 Painter::Painter(const char* title,int width,int height){
     // Initialize GLFW
@@ -39,12 +36,12 @@ Painter::Painter(const char* title,int width,int height){
 
 }
 
-void Painter::drawPixel(int x, int y, Painter::Color c) {
+void Painter::drawPixel(int x, int y, Color c) {
     this->_buf[x][y] = c;
 }
 
 void Painter::drawPixel(int x, int y, int r, int g, int b) {
-    this->_buf[x][y] = createColor(r,g,b);
+    this->_buf[x][y] = Color::from(r, g, b);
 }
 
 void Painter::drawLine(int x1, int y1, int x2, int y2,Color c) {
@@ -78,7 +75,7 @@ Painter::~Painter() {
     glfwTerminate();
 }
 
-void Painter::clear(Painter::Color c) {
+void Painter::clear(Color c) {
     for(auto& row : _buf){
         for(auto& p : row){
             p=c;
@@ -99,6 +96,45 @@ int Painter::getHeight() {
     glfwGetWindowSize(window,&width,&height);
     return height;
 }
+
+void Painter::drawShape(Shape s, const std::vector<Point>& vertex, bool fill) {
+    switch (s){
+        case Shape::Triangle:
+            _drawTri(vertex,fill);
+            break;
+        case Shape::Rectangle:
+            _drawRec(vertex,fill);
+            break;
+        case Shape::Circle:
+            _drawCir(vertex,fill);
+            break;
+        case Shape::Cube:
+            throw NotImplementedException("Cube is not implemented");
+        default:
+            break;
+    }
+}
+
+void Painter::_drawRec(const std::vector<Point>& vertex, bool fill) {
+
+}
+
+void Painter::_drawTri(const std::vector<Point> &vertex, bool fill) {
+    if(!fill){
+        if(vertex.size()<3) return;
+        drawLine(vertex[0].x,vertex[0].y,vertex[1].x,vertex[1].y);
+        drawLine(vertex[1].x,vertex[1].y,vertex[2].x,vertex[2].y);
+        drawLine(vertex[2].x,vertex[2].y,vertex[0].x,vertex[0].y);
+    }
+}
+
+void Painter::_drawCir(const std::vector<Point> &vertex, bool fill) {
+
+}
+
+
+
+
 
 
 

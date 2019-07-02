@@ -10,7 +10,7 @@
 using namespace Kie;
 int main(){
     Painter p("Hello world",640,480);
-    auto c = Painter::createColor(0,0,0);
+    auto c = Color::from(0, 0, 0);
     p.drawPixel(100,100,c);
     std::thread t([&p](){
         std::random_device e;
