@@ -4,6 +4,8 @@
 
 #include "Painter.h"
 #include "PainterException.h"
+#include <cmath>
+
 
 using namespace Kie;
 
@@ -45,28 +47,13 @@ void Painter::drawPixel(int x, int y, int r, int g, int b) {
     this->_buf[x][y] = createColor(r,g,b);
 }
 
-void Painter::drawLine(int x1, int y1, int x2, int y2, bool smooth) {
-    if(!smooth){
-        if(x1==x2){
-            auto _min = y1>y2?y2:y1;
-            auto _max = y1>y2?y1:y2;
-            for(auto i=_min;i<=_max;i++){
-                drawPixel(x1,i);
-            }
+void Painter::drawLine(int x1, int y1, int x2, int y2,Color c) {
+        int count = (int) std::sqrt(std::pow(x2 - x1, 2) + std::pow(y2 - y1, 2));
+        float step1 = (float) (x2 - x1) / count;
+        float step2 = (float) (y2 - y1) / count;
+        for (int i = 0; i <= count; i++) {
+            drawPixel(x1 + i * step1, y1 + i * step2,c);
         }
-        else {
-            float step = (float) (y2 - y1) / (x2 - x1);
-            auto _min_x = x1>x2?x2:x1;
-            auto _max_x = x1>x2?x1:x2;
-            auto newY1 = _min_x==x1?y1:y2;
-            for(auto i = _min_x;i<=_max_x;i++){
-                int newY = newY1+step*(i-_min_x);
-                drawPixel(i,newY);
-            }
-        }
-    }
-
-    // Smooth version is to be continued.
 }
 
 void Painter::paint() {

@@ -12,7 +12,6 @@
 // STL Header
 #include <vector>
 
-
 // Put all the code in namespace Kie
 namespace Kie {
 
@@ -21,6 +20,8 @@ namespace Kie {
  * APIs to draw pixels, and based on this function, some other APIs have been implemented.
  */
     class Painter {
+        friend struct Point;
+
         /**
          * This is the inner class Color which will store the color information for each pixel.
          * This inner class is private which can only be created by function createColor
@@ -31,6 +32,13 @@ namespace Kie {
             int r = 255;
             int g = 255;
             int b = 255;
+        };
+
+        /**
+         * This is the enum for Shape, this class defines some basic shapes
+         */
+        enum class Shape{
+            Tri
         };
 
     public:
@@ -71,7 +79,9 @@ namespace Kie {
 
         void drawPixel(int x, int y, int r = 0, int g = 0, int b = 0);
 
-        void drawLine(int x1, int y1, int x2, int y2, bool smooth = false);
+        void drawLine(int x1, int y1, int x2, int y2,Color c = createColor(255,255,255));
+
+        void drawShape(Shape,std::vector<);
         // End
 
 
