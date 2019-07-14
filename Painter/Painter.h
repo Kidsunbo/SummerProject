@@ -57,7 +57,7 @@ namespace Kie {
 
         void drawLine(int x1, int y1, int x2, int y2,Color c = Color::from(255, 255, 255));
 
-        void drawShape(Shape s,const std::vector<Point>& vertex,bool fill=false);
+        void drawTriangle(const std::vector<Point>& vertex);
         // End
 
 
@@ -75,11 +75,6 @@ namespace Kie {
         // End
 
 
-    private:
-        // Util function
-        void _drawRec(const std::vector<Point>& vertex,bool fill);
-        void _drawTri(const std::vector<Point>& vertex,bool fill);
-        void _drawCir(const std::vector<Point>& vertex,bool fill);
 
     };
 

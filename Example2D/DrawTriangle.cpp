@@ -15,7 +15,7 @@ int main(){
             p.clear(Kie::Color::from(0,0,0));
             std::uniform_int_distribution<int> dis_w(0,p.getWidth());
             std::uniform_int_distribution<int> dis_h(0,p.getHeight());
-            p.drawShape(Kie::Shape::Triangle,{Kie::Point{dis_w(e),dis_h(e)},Kie::Point{dis_w(e),dis_h(e)},Kie::Point{dis_w(e),dis_h(e)}});
+            p.drawTriangle({Kie::Point{dis_w(e),dis_h(e)},Kie::Point{dis_w(e),dis_h(e)},Kie::Point{dis_w(e),dis_h(e)}});
             using std::chrono_literals::operator""s;
             std::this_thread::sleep_for(1s);
         }

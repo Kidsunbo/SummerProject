@@ -97,40 +97,15 @@ int Painter::getHeight() {
     return height;
 }
 
-void Painter::drawShape(Shape s, const std::vector<Point>& vertex, bool fill) {
-    switch (s){
-        case Shape::Triangle:
-            _drawTri(vertex,fill);
-            break;
-        case Shape::Rectangle:
-            _drawRec(vertex,fill);
-            break;
-        case Shape::Circle:
-            _drawCir(vertex,fill);
-            break;
-        case Shape::Cube:
-            throw NotImplementedException("Cube is not implemented");
-        default:
-            break;
-    }
+
+void Painter::drawTriangle(const std::vector<Point> &vertex) {
+    if(vertex.size()<3) return;
+    drawLine(vertex[0].x,vertex[0].y,vertex[1].x,vertex[1].y);
+    drawLine(vertex[1].x,vertex[1].y,vertex[2].x,vertex[2].y);
+    drawLine(vertex[2].x,vertex[2].y,vertex[0].x,vertex[0].y);
 }
 
-void Painter::_drawRec(const std::vector<Point>& vertex, bool fill) {
 
-}
-
-void Painter::_drawTri(const std::vector<Point> &vertex, bool fill) {
-    if(!fill){
-        if(vertex.size()<3) return;
-        drawLine(vertex[0].x,vertex[0].y,vertex[1].x,vertex[1].y);
-        drawLine(vertex[1].x,vertex[1].y,vertex[2].x,vertex[2].y);
-        drawLine(vertex[2].x,vertex[2].y,vertex[0].x,vertex[0].y);
-    }
-}
-
-void Painter::_drawCir(const std::vector<Point> &vertex, bool fill) {
-
-}
 
 
 

@@ -38,15 +38,7 @@ namespace Kie {
         int y;
         Color c = Color::from(0, 0, 0);
     };
-
-
-/**
- * This is the enum for Shape, this class defines some basic shapes
- */
-    enum class Shape {
-        Triangle, Circle, Rectangle, Cube
-    };
-
+    
 }
 
 #endif //TEST_UTILSTRUCT_H
