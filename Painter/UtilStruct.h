@@ -38,7 +38,11 @@ namespace Kie {
         int y;
         Color c = Color::from(0, 0, 0);
     };
-    
+
+
+    enum class LineAlgorithm{
+        Custom,DDA
+    };
 }
 
 #endif //TEST_UTILSTRUCT_H

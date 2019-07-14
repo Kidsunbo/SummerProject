@@ -44,13 +44,18 @@ void Painter::drawPixel(int x, int y, int r, int g, int b) {
     this->_buf[x][y] = Color::from(r, g, b);
 }
 
-void Painter::drawLine(int x1, int y1, int x2, int y2,Color c) {
+void Painter::drawLine(int x1, int y1, int x2, int y2,Color c,LineAlgorithm algorithm) {
+    if(algorithm==LineAlgorithm::Custom) {
         int count = (int) std::sqrt(std::pow(x2 - x1, 2) + std::pow(y2 - y1, 2));
         float step1 = (float) (x2 - x1) / count;
         float step2 = (float) (y2 - y1) / count;
         for (int i = 0; i <= count; i++) {
-            drawPixel(x1 + i * step1, y1 + i * step2,c);
+            drawPixel(x1 + i * step1, y1 + i * step2, c);
         }
+    }
+    else if(algorithm==LineAlgorithm::DDA){
+
+    }
 }
 
 void Painter::paint() {

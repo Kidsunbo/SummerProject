@@ -55,7 +55,7 @@ namespace Kie {
 
         void drawPixel(int x, int y, int r = 0, int g = 0, int b = 0);
 
-        void drawLine(int x1, int y1, int x2, int y2,Color c = Color::from(255, 255, 255));
+        void drawLine(int x1, int y1, int x2, int y2,Color c = Color::from(255, 255, 255),LineAlgorithm algorithm = LineAlgorithm::Custom);
 
         void drawTriangle(const std::vector<Point>& vertex);
         // End
