@@ -6,6 +6,8 @@
 #include "PainterException.h"
 #include <cmath>
 
+#include <iostream>
+
 
 using namespace Kie;
 
@@ -15,13 +17,16 @@ Painter::Painter(const char* title,int width,int height){
     if(!glfwInit()) throw GLFWLoginException("GLFW init failed");
     // Set window hint
     const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,1);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,1);
     glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
+#endif
 
     // Create window and load GL
     window = glfwCreateWindow(width,height,title,nullptr,nullptr);
-
+    if(window==nullptr) throw GLFWLoginException("GLFW window create failed");
     // Create the buffer, the initial value will be the decided by the declaration of the Color class
     for(auto i = 0;i<=mode->width;i++){
         _buf.emplace_back(std::vector<Color>(mode->height+1));
@@ -33,15 +38,15 @@ Painter::Painter(const char* title,int width,int height){
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow* window, int width, int height){
         glViewport(0, 0, width, height);
     });
-
 }
 
 void Painter::drawPixel(int x, int y, Color c) {
-    this->_buf[x][y] = c;
+    if(x<_buf.size() && x>=0 && y<_buf[x].size() && y>=0)
+        this->_buf[x][y] = c;
 }
 
 void Painter::drawPixel(int x, int y, int r, int g, int b) {
-    this->_buf[x][y] = Color::from(r, g, b);
+    drawPixel(x,y,Color::from(r, g, b));
 }
 
 void Painter::drawLine(int x1, int y1, int x2, int y2,Color c,LineAlgorithm algorithm) {
@@ -50,7 +55,9 @@ void Painter::drawLine(int x1, int y1, int x2, int y2,Color c,LineAlgorithm algo
         float step1 = (float) (x2 - x1) / count;
         float step2 = (float) (y2 - y1) / count;
         for (int i = 0; i <= count; i++) {
-            drawPixel(x1 + i * step1, y1 + i * step2, c);
+            int x_Pos = x1 + static_cast<int>(i * step1);
+            int y_Pos = y1 + static_cast<int>(i * step2);
+            drawPixel(x_Pos,y_Pos,c);
         }
     }
     else if(algorithm==LineAlgorithm::DDA){
@@ -74,6 +81,9 @@ void Painter::paint() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+    glfwDestroyWindow(window);
+    closed = true;
+    glfwTerminate();
 }
 
 Painter::~Painter() {
@@ -103,11 +113,59 @@ int Painter::getHeight() {
 }
 
 
-void Painter::drawTriangle(const std::vector<Point> &vertex) {
+void Painter::drawTriangle(const std::vector<Point> &vertex,Color c) {
     if(vertex.size()<3) return;
-    drawLine(vertex[0].x,vertex[0].y,vertex[1].x,vertex[1].y);
-    drawLine(vertex[1].x,vertex[1].y,vertex[2].x,vertex[2].y);
-    drawLine(vertex[2].x,vertex[2].y,vertex[0].x,vertex[0].y);
+    drawLine(vertex[0].x,vertex[0].y,vertex[1].x,vertex[1].y,c);
+    drawLine(vertex[1].x,vertex[1].y,vertex[2].x,vertex[2].y,c);
+    drawLine(vertex[2].x,vertex[2].y,vertex[0].x,vertex[0].y,c);
+}
+
+void Painter::setPenWidth(int width) {
+    this->_width=width;
+}
+
+int Painter::getPenWidth() {
+    return _width;
+}
+
+void Painter::drawCircle(int x, int y, int r,Color c) {
+    // Apply Bresenham circle drawing method
+    int d = static_cast<int>(1.25-r);
+    drawPixel(x,y+r,c); // Top
+    drawPixel(x+r,y,c); // Right
+    drawPixel(x,y-r,c); // Bottom
+    drawPixel(x-r,y,c); // Left
+    for(int x_Pos = 0,y_Pos = r;x_Pos<=y_Pos;){
+        if(d<=0) {
+            d = d + 2 * x_Pos + 3;
+            ++x_Pos;
+            drawPixel(x_Pos+x,y_Pos+y,c);
+            drawPixel(y_Pos+x,x_Pos+y,c);
+            drawPixel(-x_Pos+x,y_Pos+y,c);
+            drawPixel(-y_Pos+x,x_Pos+y,c);
+            drawPixel(x_Pos+x,-y_Pos+y,c);
+            drawPixel(y_Pos+x,-x_Pos+y,c);
+            drawPixel(-x_Pos+x,-y_Pos+y,c);
+            drawPixel(-y_Pos+x,-x_Pos+y,c);
+        }
+        else{
+            d=d+2*(x_Pos-y_Pos)+5;
+            ++x_Pos;
+            --y_Pos;
+            drawPixel(x_Pos+x,y_Pos+y,c);
+            drawPixel(y_Pos+x,x_Pos+y,c);
+            drawPixel(-x_Pos+x,y_Pos+y,c);
+            drawPixel(-y_Pos+x,x_Pos+y,c);
+            drawPixel(x_Pos+x,-y_Pos+y,c);
+            drawPixel(y_Pos+x,-x_Pos+y,c);
+            drawPixel(-x_Pos+x,-y_Pos+y,c);
+            drawPixel(-y_Pos+x,-x_Pos+y,c);
+        }
+    }
+}
+
+bool Painter::isClosed() {
+    return closed;
 }
 
 

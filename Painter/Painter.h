@@ -32,6 +32,8 @@ namespace Kie {
         GLFWwindow *window;  // The pointer of the main window
         std::vector<std::vector<Color>> _buf; // This is the most important thing in this class, which stores all the
         // information of each pixel. All the operation operates on it.
+        int _width = 1; // The width of the pen, default to 1
+        bool closed = false;
     public:
 
         // Constructor
@@ -53,11 +55,13 @@ namespace Kie {
         // Draw APIs
         void drawPixel(int x, int y, Color c);
 
-        void drawPixel(int x, int y, int r = 0, int g = 0, int b = 0);
+        void drawPixel(int x, int y, int r = 255, int g = 255, int b = 255);
 
         void drawLine(int x1, int y1, int x2, int y2,Color c = Color::from(255, 255, 255),LineAlgorithm algorithm = LineAlgorithm::Custom);
 
-        void drawTriangle(const std::vector<Point>& vertex);
+        void drawTriangle(const std::vector<Point>& vertex,Color c=Color::from(255,255,255));
+
+        void drawCircle(int x,int y,int r,Color c= Color::from(255,255,255));
         // End
 
 
@@ -74,6 +78,13 @@ namespace Kie {
         int getHeight();
         // End
 
+
+        // State API
+        void setPenWidth(int width);
+
+        int getPenWidth();
+
+        bool isClosed();
 
 
     };

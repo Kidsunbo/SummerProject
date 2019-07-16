@@ -16,7 +16,7 @@ int main(){
         std::random_device e;
 
         std::uniform_int_distribution<int> dis_c(0,255);
-        while(true) {
+        while(!p.isClosed()) {
             std::uniform_int_distribution<int> dis_w(0,p.getWidth());
             std::uniform_int_distribution<int> dis_h(0,p.getHeight());
             p.drawPixel(dis_w(e), dis_h(e), dis_c(e), dis_c(e), dis_c(e));
