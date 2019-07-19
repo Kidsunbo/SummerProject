@@ -62,6 +62,8 @@ namespace Kie {
         void drawTriangle(const std::vector<Point>& vertex,Color c=Color::from(255,255,255));
 
         void drawCircle(int x,int y,int r,Color c= Color::from(255,255,255));
+
+        void drawEllipse(int x, int y,int a,int b, Color c = Color::from(255,255,255));
         // End
 
 

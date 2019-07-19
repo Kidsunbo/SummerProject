@@ -168,6 +168,57 @@ bool Painter::isClosed() {
     return closed;
 }
 
+void Painter::drawEllipse(int x, int y, int a, int b, Color c) {
+    // Apply Bresenham oval drawing method
+    float d1 = b*b+a*a*(-b+0.25);
+    bool d2NoValue = true;
+    float d2 =0;
+
+    drawPixel(x,y+b,c); // Top
+    drawPixel(x,y-b,c); // Bottom
+    for(int x_Pos = 0,y_Pos=b;x_Pos<=a && y_Pos>0;){
+        if(2*a*a*(y_Pos-0.5)>2*b*b*(x_Pos+1)){
+            if(d1<=0){
+                d1 = d1+b*b*(2*x_Pos+3);
+                x_Pos++;
+            }
+            else{
+                d1=d1+b*b*(2*x_Pos+3)+a*a*(-2*y_Pos+2);
+                x_Pos++;
+                y_Pos--;
+            }
+            drawPixel(x+x_Pos,y+y_Pos,c);
+            drawPixel(x+x_Pos,y-y_Pos,c);
+            drawPixel(x-x_Pos,y+y_Pos,c);
+            drawPixel(x-x_Pos,y-y_Pos,c);
+        }
+        else{
+            if(d2NoValue){
+                d2 = b*b*(x_Pos+0.5)*(x_Pos+0.5)+a*a*(y_Pos-1)*(y_Pos-1)-a*a*b*b;
+                d2NoValue = false;
+            }
+            if(d2<=0){
+                d2 = b*b*(2*x_Pos+2)+a*a*(-2*y_Pos+3);
+                x_Pos++;
+                y_Pos--;
+            }
+            else{
+                d2 =d2+a*a*(-2*y_Pos+3);
+                y_Pos--;
+            }
+            drawPixel(x+x_Pos,y+y_Pos,c);
+            drawPixel(x+x_Pos,y-y_Pos,c);
+            drawPixel(x-x_Pos,y+y_Pos,c);
+            drawPixel(x-x_Pos,y-y_Pos,c);
+        }
+    }
+
+
+}
+
+
+
+
 
 
 

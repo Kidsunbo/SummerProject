@@ -10,6 +10,7 @@ add_executable(BlackWindow BlackWindow.cpp)
 add_executable(RandomTriangles RandomTriangles.cpp)
 add_executable(RandomCircle RandomCircle.cpp)
 add_executable(RandomShapes RandomShapes.cpp)
+add_executable(RandomEllipse RandomEllipse.cpp)
 
 
 # Dependency for RandomPixels
@@ -35,3 +36,7 @@ target_link_libraries(RandomCircle PRIVATE painter)
 # Dependency for RandomShapes
 target_include_directories(RandomShapes PRIVATE ../Painter)
 target_link_libraries(RandomShapes PRIVATE painter)
+
+# Dependency for RandomEllipse
+target_include_directories(RandomEllipse PRIVATE ../Painter)
+target_link_libraries(RandomEllipse PRIVATE painter)
