@@ -7,8 +7,8 @@
 #ifndef SUMMERPROJECT_TRIANGLE_H
 #define SUMMERPROJECT_TRIANGLE_H
 #include "Shape.h"
-#include "UtilStruct.h"
-#include "PainterException.h"
+#include "../UtilStruct.h"
+#include "../PainterException.h"
 #include "Line.h"
 
 namespace Kie {

@@ -15,7 +15,7 @@ namespace Kie {
         int y;
         Color c = Color::from(0, 0, 0);
 
-        Pixel(const int& x,const int& y, Color c):x(x),y(y),c(c){}
+        Pixel(int x,int y, Color c):x(x),y(y),c(c){}
 
         void draw(std::vector<std::vector<Color>>& buf) override {
             buf[x][y] = c;

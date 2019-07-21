@@ -7,8 +7,8 @@
 
 #include <cmath>
 #include "Shape.h"
-#include "UtilStruct.h"
-#include "PainterException.h"
+#include "../UtilStruct.h"
+#include "../PainterException.h"
 #include "Point.h"
 
 namespace Kie {
@@ -22,7 +22,6 @@ namespace Kie {
     public:
 
         Line(int x1, int y1, int x2 ,int y2, int width=1, Color c=Color::from(255,255,255)):x1(x1),x2(x2),y1(y1),y2(y2),width(width),c(c){}
-
         Line(const Line& l) noexcept{
             x1 = l.x1;
             y1 = l.y1;
