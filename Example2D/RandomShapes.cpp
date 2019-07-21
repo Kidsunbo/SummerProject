@@ -22,7 +22,7 @@ int main(){
             for(int i=0;i<temp;i++) {
                 p.drawCircle(dis_w(e), dis_h(e), dis_r(e), Kie::Color::from(dis_c(e), dis_c(e), dis_c(e)));
                 p.drawLine(dis_w(e),dis_h(e),dis_w(e),dis_h(e),Kie::Color::from(dis_c(e),dis_c(e),dis_c(e)));
-                p.drawTriangle({Kie::Point{dis_w(e),dis_h(e)},Kie::Point{dis_w(e),dis_h(e)},Kie::Point{dis_w(e),dis_h(e)}},Kie::Color::from(dis_c(e),dis_c(e),dis_c(e)));
+                p.drawTriangle({Kie::Pixel{dis_w(e),dis_h(e)},Kie::Pixel{dis_w(e),dis_h(e)},Kie::Pixel{dis_w(e),dis_h(e)}},Kie::Color::from(dis_c(e),dis_c(e),dis_c(e)));
             }
             using std::chrono_literals::operator""s;
             std::this_thread::sleep_for(1s);

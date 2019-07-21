@@ -14,6 +14,7 @@
 
 //Custom Header
 #include "UtilStruct.h"
+#include "Shape/Pixel.h"
 
 // Put all the code in namespace Kie
 namespace Kie {
@@ -59,7 +60,7 @@ namespace Kie {
 
         void drawLine(int x1, int y1, int x2, int y2,Color c = Color::from(255, 255, 255),LineAlgorithm algorithm = LineAlgorithm::Custom);
 
-        void drawTriangle(const std::vector<Point>& vertex,Color c=Color::from(255,255,255));
+        void drawTriangle(const std::vector<Pixel>& vertex,Color c=Color::from(255,255,255));
 
         void drawCircle(int x,int y,int r,Color c= Color::from(255,255,255));
 

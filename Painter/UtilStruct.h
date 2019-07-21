@@ -30,15 +30,6 @@ namespace Kie {
         }
     };
 
-/**
- * This is the class for vertex point of 2D and 3D objects.
- */
-    struct Point {
-        int x;
-        int y;
-        Color c = Color::from(0, 0, 0);
-    };
-
 
     enum class LineAlgorithm{
         Custom,DDA

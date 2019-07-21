@@ -61,7 +61,7 @@ void Painter::drawLine(int x1, int y1, int x2, int y2,Color c,LineAlgorithm algo
         }
     }
     else if(algorithm==LineAlgorithm::DDA){
-
+        throw NotImplementedException("Drawing line with DDA is not implemented");
     }
 }
 
@@ -113,7 +113,7 @@ int Painter::getHeight() {
 }
 
 
-void Painter::drawTriangle(const std::vector<Point> &vertex,Color c) {
+void Painter::drawTriangle(const std::vector<Pixel> &vertex,Color c) {
     if(vertex.size()<3) return;
     drawLine(vertex[0].x,vertex[0].y,vertex[1].x,vertex[1].y,c);
     drawLine(vertex[1].x,vertex[1].y,vertex[2].x,vertex[2].y,c);

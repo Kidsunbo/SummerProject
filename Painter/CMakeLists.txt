@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-set(GLAD ../glfw-3.3/deps/glad_gl.c)
+set(GLAD ../glfw-3.3/deps/glad_gl.c Shape/Line.h Shape/Shape.h Shape/Circle.h Shape/Pixel.h Shape/Triangle.h Shape/Point.h)
 
 aux_source_directory(. SOURCE_FILES)
 
