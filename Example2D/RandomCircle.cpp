@@ -5,6 +5,8 @@
 #include "Painter.h"
 #include <thread>
 #include <random>
+#include <iostream>
+
 int main(){
 
     Kie::Painter p("Random Lines",640,480);
@@ -14,7 +16,6 @@ int main(){
         std::uniform_int_distribution<int> dis_r(0,100);
         std::uniform_int_distribution<int> dis_c(0,255);
         while(!p.isClosed()) {
-
             p.clear(Kie::Color::from(dis_c(e),dis_c(e),dis_c(e)));
             std::uniform_int_distribution<int> dis_w(0,p.getWidth());
             std::uniform_int_distribution<int> dis_h(0,p.getHeight());

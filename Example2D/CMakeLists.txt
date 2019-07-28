@@ -13,6 +13,12 @@ add_executable(RandomShapes RandomShapes.cpp)
 add_executable(RandomEllipse RandomEllipse.cpp)
 
 
+add_executable(TestDrawCube TestDrawCube.cpp)
+target_include_directories(TestDrawCube PRIVATE ../Painter)
+target_link_libraries(TestDrawCube PRIVATE painter)
+
+
+
 # Dependency for RandomPixels
 target_include_directories(RandomPixels PRIVATE ../Painter)
 target_link_libraries(RandomPixels PRIVATE painter)

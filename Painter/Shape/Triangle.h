@@ -41,7 +41,6 @@ namespace Kie {
 
         std::shared_ptr<Shape> readFromFile(std::string filename) override {
             throw NotImplementedException("readFromFile is not implemented");
-            return std::make_shared<Triangle>();
         }
 
     };

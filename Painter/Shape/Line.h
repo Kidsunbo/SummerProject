@@ -46,6 +46,7 @@ namespace Kie {
             y2 = l.y2;
             width = l.width;
             c = l.c;
+            return *this;
         }
 
         void draw(std::vector<std::vector<Color>>& buf) override {
@@ -63,7 +64,6 @@ namespace Kie {
 
         std::shared_ptr<Shape> readFromFile(std::string filename) override {
             throw NotImplementedException("readFromFile is not implemented");
-            return std::make_shared<Pixel>();
         }
 
     };
