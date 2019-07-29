@@ -8,9 +8,13 @@
 #include "Triangle.h"
 
 namespace Kie {
-    struct Mesh {
-        std::vector<Triangle> tris = std::vector<Triangle>(2);
-    };
+//    struct Mesh {
+//        std::vector<Triangle> tris;
+//    };
+
+struct Mesh{
+    Triangle tris[2];
+};
 
 }
 

@@ -6,12 +6,30 @@
 #define TEST_PAINTER3D_H
 #include "Painter3DUtil.h"
 #include "Painter.h"
-#include "Projector.h"
+#include "ProjectionProcessor.h"
+#include "ScaleProcessor.h"
+#include "RotateProcessor.h"
 
 namespace Kie {
     class Painter3D {
+
+    private:
+        ScaleProcessor sp;
+        RotateProcessor rp;
         Painter painter;
-        Projector projector;
+        ProjectionProcessor pp;
+
+        unsigned short axis = 0;
+
+    public:
+        Painter &getPainter();
+
+        ProjectionProcessor &getPp();
+
+        ScaleProcessor &getSp();
+
+        RotateProcessor &getRp();
+
     public:
 
         Painter3D(const char *title, int width, int height);
@@ -24,7 +42,11 @@ namespace Kie {
         template<typename T>
         void draw(T &t) {
             if (!Painter3DUtil::HasMeshes<T>::value) return;
-            std::vector<Triangle> tris = projector.projection(t.meshes);
+
+            std::vector<Triangle> tris = Painter3DUtil::meshToTris(t.meshes);
+            rp.rotate(tris,axis); //Rotate the object
+            pp.projection(tris); // Projection the object
+            sp.scale(painter,tris); // rescale the object
             for(auto& tri : tris){
                 painter.drawLine(tri.vers[0].x,tri.vers[0].y,tri.vers[1].x,tri.vers[1].y);
                 painter.drawLine(tri.vers[1].x,tri.vers[1].y,tri.vers[2].x,tri.vers[2].y);
@@ -34,7 +56,13 @@ namespace Kie {
 
         void paint();
 
+        void setRotateSpeed(float speed);
+        void setRotateAxis(unsigned short axis);
+        void setDistance(float distance);
+
+
         void clear(Color c = Color::from(255, 255, 255));
+
     };
 
 }

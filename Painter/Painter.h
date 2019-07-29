@@ -45,6 +45,8 @@ namespace Kie {
          * @param height
          */
         Painter(const char *title, int width, int height);
+        Painter(Painter& painter) = delete;
+        Painter(Painter&& painter) = delete;
 
         // End
 

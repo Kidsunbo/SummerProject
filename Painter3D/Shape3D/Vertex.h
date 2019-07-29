@@ -7,9 +7,9 @@
 
 namespace Kie {
     struct Vertex {
-        int x = 0;
-        int y = 0;
-        int z = 0;
+        float x = 0;
+        float y = 0;
+        float z = 0;
     };
 }
 
