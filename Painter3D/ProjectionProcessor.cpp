@@ -6,14 +6,16 @@
 
 
 Kie::ProjectionProcessor::ProjectionProcessor(Kie::Painter &painter, float Near, float Far, float Fov): Near(Near), Far(Far), Fov(Fov){
-    AR = static_cast<float>(painter.getHeight())/ static_cast<float>(painter.getWidth());
-    FR = 1.0f / std::tan(Fov * 0.5f / 180.0f * 3.1415926f);
-    matProj[0][0] = AR*FR;
-    matProj[1][1]=FR;
-    matProj[2][2]=Far/(Far-Near);
-    matProj[3][2]=(-Far*Near)/(Far-Near);
-    matProj[2][3]=1.0f;
-    distance = Near;
+    if(Near!=Far) {
+        AR = static_cast<float>(painter.getHeight()) / static_cast<float>(painter.getWidth());
+        FR = 1.0f / std::tan(Fov * 0.5f / 180.0f * 3.1415926f);
+        matProj[0][0] = AR * FR;
+        matProj[1][1] = FR;
+        matProj[2][2] = Far / (Far - Near);
+        matProj[3][2] = (-Far * Near) / (Far - Near);
+        matProj[2][3] = 1.0f;
+        distance = Near;
+    }
 }
 
 void Kie::ProjectionProcessor::projection(std::vector<Triangle> &tris) {

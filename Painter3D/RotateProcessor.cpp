@@ -6,24 +6,34 @@
 #include <cmath>
 
 void Kie::RotateProcessor::rotate(std::vector<Triangle> &tris, unsigned short axis) {
-    rtime+=speed;
-    if((axis&0b001)!=0){
-        updateAngleX(rtime);
-        for(auto& tri:tris)
-            for(auto& ver : tri.vers)
+    if(axis!=0) {
+        rtime += speed;
+        if ((axis & 0b001) != 0) {
+            updateAngleX(rtime);
+            for (auto &tri:tris)
+                for (auto &ver : tri.vers)
+                    multiMat3X3(rotate_x, ver);
+        }
+        if ((axis & 0b010) != 0) {
+            updateAngleY(rtime);
+            for (auto &tri:tris)
+                for (auto &ver : tri.vers)
+                    multiMat3X3(rotate_y, ver);
+        }
+        if ((axis & 0b100) != 0) {
+            updateAngleZ(rtime);
+            for (auto &tri:tris)
+                for (auto &ver : tri.vers)
+                    multiMat3X3(rotate_z, ver);
+        }
+    }
+    else{
+        for (auto &tri:tris)
+            for (auto &ver : tri.vers) {
                 multiMat3X3(rotate_x, ver);
-    }
-    if((axis&0b010)!=0){
-        updateAngleY(rtime);
-        for(auto& tri:tris)
-            for(auto& ver : tri.vers)
                 multiMat3X3(rotate_y, ver);
-    }
-    if((axis&0b100)!=0){
-        updateAngleZ(rtime);
-        for(auto& tri:tris)
-            for(auto& ver : tri.vers)
                 multiMat3X3(rotate_z, ver);
+            }
     }
 }
 
@@ -43,17 +53,17 @@ void Kie::RotateProcessor::multiMat3X3(float (&m1)[3][3], Vertex& ver ) {
 }
 
 void Kie::RotateProcessor::updateAngleZ(float angle) {
-    rotate_x[0][0] = std::cos(angle/360.0f*3.1415926f);
-    rotate_x[0][1] = -std::sin(angle/360.0f*3.1415926f);
-    rotate_x[1][0] = std::sin(angle/360.0f*3.1415926f);
-    rotate_x[1][1] = std::cos(angle/360.0f*3.1415926f);
+    rotate_z[0][0] = std::cos(angle/360.0f*3.1415926f);
+    rotate_z[0][1] = -std::sin(angle/360.0f*3.1415926f);
+    rotate_z[1][0] = std::sin(angle/360.0f*3.1415926f);
+    rotate_z[1][1] = std::cos(angle/360.0f*3.1415926f);
 }
 
 void Kie::RotateProcessor::updateAngleY(float angle) {
-    rotate_x[0][0] = std::cos(angle/360.0f*3.1415926f);
-    rotate_x[0][2] = -std::sin(angle/360.0f*3.1415926f);
-    rotate_x[2][0] = std::sin(angle/360.0f*3.1415926f);
-    rotate_x[2][2] = std::cos(angle/360.0f*3.1415926f);
+    rotate_y[0][0] = std::cos(angle/360.0f*3.1415926f);
+    rotate_y[0][2] = -std::sin(angle/360.0f*3.1415926f);
+    rotate_y[2][0] = std::sin(angle/360.0f*3.1415926f);
+    rotate_y[2][2] = std::cos(angle/360.0f*3.1415926f);
 }
 
 void Kie::RotateProcessor::updateAngleX(float angle) {

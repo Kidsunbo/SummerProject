@@ -31,7 +31,7 @@ namespace Kie {
         Vertex multiplyMat(Vertex& mat);
 
     public:
-        explicit ProjectionProcessor(Painter& painter, float Near = 1.0f, float Far=1000.0f, float Fov=90.0f);
+        explicit ProjectionProcessor(Painter& painter, float Near = 10.0f, float Far=100.0f, float Fov=90.0f);
 
         void updateMatProj(Painter& painter,float Near,float Far,float Fov);
 

@@ -43,10 +43,12 @@ int main(){
     };
     painter3D.setRotateSpeed(10);
     painter3D.setDistance(3);
-    painter3D.setRotateAxis(Painter3DUtil::x|Painter3DUtil::z);
+    //painter3D.getRp().updateAngleY(-60);
+    //painter3D.getRp().updateAngleX(30);
+    painter3D.setRotateAxis(Painter3DUtil::y|Painter3DUtil::z);
     std::thread t([&]() {
         while (!painter3D.getPainter().isClosed()) {
-            std::this_thread::sleep_for(20ms);
+            std::this_thread::sleep_for(50ms);
             painter3D.clear(Color::from(0, 0, 0));
             painter3D.draw(cube);
         }
