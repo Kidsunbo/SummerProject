@@ -5,8 +5,7 @@
 #include "Painter.h"
 #include "PainterException.h"
 #include <cmath>
-
-#include <iostream>
+#include <algorithm>
 
 
 using namespace Kie;
@@ -215,6 +214,69 @@ void Painter::drawEllipse(int x, int y, int a, int b, Color c) {
 
 
 }
+
+void Painter::fillTriangle(std::vector<Pixel> &vertex, Color c) {
+    std::sort(vertex.begin(),vertex.end(),[](Pixel& a,Pixel& b){return a.y<b.y;});
+    if(vertex[1].y==vertex[2].y) fillBottomTriangle(vertex[0],vertex[1],vertex[2],c);
+    else if(vertex[0].y==vertex[1].y) fillTopTriangle(vertex[0],vertex[1],vertex[2],c);
+    else{
+        int newX = static_cast<int>(static_cast<float>(vertex[0].x)
+                                    +(static_cast<float>(vertex[1].y-vertex[0].y)/ static_cast<float>(vertex[2].y-vertex[0].y))*
+                                     static_cast<float>(vertex[2].x-vertex[0].x));
+        Pixel p3 = Pixel(newX,vertex[1].y,c);
+        fillBottomTriangle(vertex[0],vertex[1],p3,c);
+        fillTopTriangle(vertex[1],p3,vertex[2],c);
+    }
+
+}
+
+void Painter::fillTopTriangle(const Pixel &p1, const Pixel &p2, const Pixel &p3,Color c) {
+    float step1 = float(p3.x - p1.x) / float(p3.y - p1.y);
+    float step2 = float(p3.x - p2.x) / float(p3.y - p2.y);
+
+    float start = static_cast<float>(p3.x);
+    float end = static_cast<float>(p3.x);
+
+    for (int y = p3.y; y > p2.y; y--)
+    {
+        drawLine(static_cast<int>(start),y, static_cast<int>(end),y,c);
+        start -= step1;
+        end -= step2;
+    }
+}
+
+void Painter::fillBottomTriangle(const Pixel &p1, const Pixel &p2, const Pixel &p3,Color c) {
+    float step1 = float(p2.x - p1.x) / float(p2.y - p1.y);
+    float step2 = float(p3.x - p1.x) / float(p3.y - p1.y);
+
+    float start = static_cast<float>(p1.x);
+    float end = static_cast<float>(p1.x);
+
+    for (int y = p1.y; y <= p2.y; y++)
+    {
+        drawLine(static_cast<int>(start),y,static_cast<int>(end),y,c);
+        start += step1;
+        end += step2;
+    }
+}
+
+void Painter::drawTriangle(float x1, float y1, float x2, float y2, float x3, float y3, Color c) {
+    drawLine(static_cast<int>(x1), static_cast<int>(y1),static_cast<int>(x2),static_cast<int>(y2),c);
+    drawLine(static_cast<int>(x2),static_cast<int>(y2),static_cast<int>(x3),static_cast<int>(y3),c);
+    drawLine(static_cast<int>(x3),static_cast<int>(y3),static_cast<int>(x1),static_cast<int>(y1),c);
+}
+
+void Painter::fillTriangle(float x1, float y1, float x2, float y2, float x3, float y3, Color c) {
+    std::vector<Pixel> vec;
+    vec.emplace_back(x1,y1,c);
+    vec.emplace_back(x2,y2,c);
+    vec.emplace_back(x3,y3,c);
+    fillTriangle(vec,c);
+}
+
+
+
+
 
 
 

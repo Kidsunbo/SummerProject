@@ -5,7 +5,7 @@ if(NOT TARGET painter)
 endif()
 
 aux_source_directory(. SOURCE)
-add_library(painter3d ${SOURCE})
+add_library(painter3d ${SOURCE} Normal.cpp Normal.h Camera.cpp Camera.h Light.cpp Light.h)
 
 target_include_directories(painter3d PUBLIC ../Painter)
 target_link_libraries(painter3d PUBLIC painter)

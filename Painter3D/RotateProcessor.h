@@ -29,7 +29,7 @@ namespace Kie {
         float rotate_y[3][3] = {{1,0,0},{0,1,0},{0,0,1}};
         float rotate_z[3][3] = {{1,0,0},{0,1,0},{0,0,1}};
 
-        static void multiMat3X3(float(&m1)[3][3], Vertex& ver);
+        static void multiMat3X3(float(&m1)[3][3], Vec3D& ver);
     public:
 
         explicit RotateProcessor(float speed);

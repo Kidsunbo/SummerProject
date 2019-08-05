@@ -11,6 +11,8 @@ add_executable(RandomTriangles RandomTriangles.cpp)
 add_executable(RandomCircle RandomCircle.cpp)
 add_executable(RandomShapes RandomShapes.cpp)
 add_executable(RandomEllipse RandomEllipse.cpp)
+add_executable(DrawFilledTriangle DrawFilledTriangle.cpp)
+
 
 
 
@@ -41,3 +43,7 @@ target_link_libraries(RandomShapes PRIVATE painter)
 # Dependency for RandomEllipse
 target_include_directories(RandomEllipse PRIVATE ../Painter)
 target_link_libraries(RandomEllipse PRIVATE painter)
+
+# Dependency for DrawFilledTriangle
+target_include_directories(DrawFilledTriangle PRIVATE ../Painter)
+target_link_libraries(DrawFilledTriangle PRIVATE painter)

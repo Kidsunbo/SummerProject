@@ -28,15 +28,14 @@ namespace Kie {
 
     private:
 
-        Vertex multiplyMat(Vertex& mat);
+        Vec3D multiplyMat(Vec3D& mat);
 
     public:
-        explicit ProjectionProcessor(Painter& painter, float Near = 10.0f, float Far=100.0f, float Fov=90.0f);
+        explicit ProjectionProcessor(Painter& painter, float Near = 0.01f, float Far=100.0f, float Fov=90.0f);
 
         void updateMatProj(Painter& painter,float Near,float Far,float Fov);
 
         void projection(std::vector<Triangle>& meshes);
-
 
     };
 

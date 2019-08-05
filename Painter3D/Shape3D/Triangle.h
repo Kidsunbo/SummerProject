@@ -6,11 +6,11 @@
 #define SUMMERPROJECT_TRIANGLE_H
 
 
-#include "Vertex.h"
+#include "Vec3D.h"
 
 namespace Kie {
     struct Triangle {
-        Vertex vers[3];
+        Vec3D vers[3];
     };
 }
 

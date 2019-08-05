@@ -64,9 +64,15 @@ namespace Kie {
 
         void drawTriangle(const std::vector<Pixel>& vertex,Color c=Color::from(255,255,255));
 
+        void drawTriangle(float x1, float y1, float x2, float y2, float x3, float y3,Color c=Color::from(255,255,255));
+
         void drawCircle(int x,int y,int r,Color c= Color::from(255,255,255));
 
         void drawEllipse(int x, int y,int a,int b, Color c = Color::from(255,255,255));
+
+        void fillTriangle(std::vector<Pixel>& vertex,Color c = Color::from(255,255,255));
+
+        void fillTriangle(float x1, float y1, float x2, float y2, float x3, float y3, Color c = Color::from(255,255,255));
         // End
 
 
@@ -90,6 +96,11 @@ namespace Kie {
         int getPenWidth();
 
         bool isClosed();
+
+    private:
+        void fillTopTriangle(const Pixel &p1, const Pixel &p2, const Pixel &p3,Color c);
+
+        void fillBottomTriangle(const Pixel &p1, const Pixel &p2, const Pixel &p3,Color c);
 
 
     };

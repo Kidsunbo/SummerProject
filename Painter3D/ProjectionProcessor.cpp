@@ -27,8 +27,8 @@ void Kie::ProjectionProcessor::projection(std::vector<Triangle> &tris) {
     }
 }
 
-Kie::Vertex Kie::ProjectionProcessor::multiplyMat(Kie::Vertex &mat) {
-    Vertex r;
+Kie::Vec3D Kie::ProjectionProcessor::multiplyMat(Kie::Vec3D &mat) {
+    Vec3D r;
     r.x = mat.x*matProj[0][0]+mat.y*matProj[1][0]+mat.z*matProj[2][0]+matProj[3][0];
     r.y = mat.x*matProj[0][1]+mat.y*matProj[1][1]+mat.z*matProj[2][1]+matProj[3][1];
     r.z = mat.x*matProj[0][2]+mat.y*matProj[1][2]+mat.z*matProj[2][2]+matProj[3][2];

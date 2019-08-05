@@ -42,7 +42,7 @@ Kie::RotateProcessor::RotateProcessor(float speed):speed(speed) {
 }
 
 
-void Kie::RotateProcessor::multiMat3X3(float (&m1)[3][3], Vertex& ver ) {
+void Kie::RotateProcessor::multiMat3X3(float (&m1)[3][3], Vec3D& ver ) {
 
     float x = m1[0][0]*ver.x+m1[0][1]*ver.y+m1[0][2]*ver.z;
     float y = m1[1][0]*ver.x+m1[1][1]*ver.y+m1[1][2]*ver.z;

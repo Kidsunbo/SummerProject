@@ -2,11 +2,11 @@
 // Created by bxs863 on 28/07/2019.
 //
 
-#ifndef SUMMERPROJECT_VERTEX_H
-#define SUMMERPROJECT_VERTEX_H
+#ifndef SUMMERPROJECT_VEC3D_H
+#define SUMMERPROJECT_VEC3D_H
 
 namespace Kie {
-    struct Vertex {
+    struct Vec3D {
         float x = 0;
         float y = 0;
         float z = 0;
@@ -14,4 +14,4 @@ namespace Kie {
 }
 
 
-#endif //SUMMERPROJECT_VERTEX_H
+#endif //SUMMERPROJECT_VEC3D_H

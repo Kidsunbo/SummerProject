@@ -9,6 +9,8 @@
 #include "ProjectionProcessor.h"
 #include "ScaleProcessor.h"
 #include "RotateProcessor.h"
+#include "Normal.h"
+#include "Camera.h"
 
 namespace Kie {
     class Painter3D {
@@ -18,6 +20,8 @@ namespace Kie {
         RotateProcessor rp;
         Painter painter;
         ProjectionProcessor pp;
+        Normal nm;
+        Camera camera;
 
         unsigned short axis = 0;
 
@@ -40,17 +44,22 @@ namespace Kie {
          * @param t The parameter
          */
         template<typename T>
-        void draw(T &t) {
+        void draw(T &t,Color c = Color::from(255,255,255),bool filled = false) {
             if (!Painter3DUtil::HasMeshes<T>::value) return;
 
             std::vector<Triangle> tris = Painter3DUtil::meshToTris(t.meshes);
             rp.rotate(tris,axis); //Rotate the object
             pp.projection(tris); // Projection the object
             sp.scale(painter,tris); // rescale the object
-            for(auto& tri : tris){
-                painter.drawLine(tri.vers[0].x,tri.vers[0].y,tri.vers[1].x,tri.vers[1].y);
-                painter.drawLine(tri.vers[1].x,tri.vers[1].y,tri.vers[2].x,tri.vers[2].y);
-                painter.drawLine(tri.vers[2].x,tri.vers[2].y,tri.vers[0].x,tri.vers[0].y);
+            for(auto& tri : tris) {
+                auto normal = nm.normal(tri);
+                if (normal.z<0) {
+//                    if(filled) painter.fillTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,c);
+//                    else painter.drawTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,c);
+                    painter.fillTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,c);
+                    painter.drawTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,Color::from(70,70,70));
+                    //painter.drawLine(200,200,200+normal.x*200,200+normal.y*200);
+                }
             }
         }
 
