@@ -34,9 +34,8 @@ namespace Kie {
 
         Light(float x, float y, float z, Color c = Color::from(255,255,255),float strength = 1.0f);
 
-        void illuminate(Color& c,Vec3D normal,Triangle& triangle);
+        Color illuminate(Color& c,Vec3D normal,Triangle& triangle);
 
-        void illuminate(Color color, std::vector<Triangle>& vector,Normal& nm);
     };
 }
 

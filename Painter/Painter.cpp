@@ -16,11 +16,11 @@ Painter::Painter(const char* title,int width,int height){
     if(!glfwInit()) throw GLFWLoginException("GLFW init failed");
     // Set window hint
     const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,1);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,1);
     glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 #ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
 #endif
 
     // Create window and load GL

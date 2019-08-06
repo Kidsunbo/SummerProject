@@ -8,7 +8,7 @@ Kie::Painter3D::Painter3D(const char *title, int width, int height):
 painter(Painter(title,width,height)),
 pp(ProjectionProcessor(painter)),
 rp(0),
-light(0,0,-1)
+light(0,0,-3,Color::from(255,255,255))
 {}
 
 void Kie::Painter3D::paint() {

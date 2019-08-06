@@ -16,7 +16,11 @@ Kie::Vec3D Kie::Normal::normal(Kie::Triangle &triangle) {
     lineB.z= triangle.vers[2].z-triangle.vers[0].z;
     Vec3D result = crossProduct(lineA,lineB);
     float l = std::sqrt(result.x*result.x+result.y*result.y+result.z*result.z);
-    result.x/=l;result.y/=l;result.z/=l;
+    if(l!=0) {
+        result.x /= l;
+        result.y /= l;
+        result.z /= l;
+    }
     return result;
 }
 

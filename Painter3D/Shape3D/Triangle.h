@@ -12,7 +12,6 @@
 namespace Kie {
     struct Triangle {
         Vec3D vers[3];
-        Color color = Color::from(255,255,255);
     };
 }
 

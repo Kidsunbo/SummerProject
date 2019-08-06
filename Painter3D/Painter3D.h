@@ -55,11 +55,12 @@ namespace Kie {
             rp.rotate(tris,axis); //Rotate the object
             pp.projection(tris); // Projection the object
             sp.scale(painter,tris); // rescale the object
-            light.illuminate(c,tris,nm);
+            //light.illuminate(c,tris,nm);
             for(auto& tri : tris) {
                 auto normal = nm.normal(tri);
                 if (normal.z<0) {
-                    painter.fillTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,tri.color);
+                    Color cc = light.illuminate(c,normal,tri);
+                    painter.fillTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,cc);
                 }
             }
         }

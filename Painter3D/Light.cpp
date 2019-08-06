@@ -13,20 +13,26 @@ Kie::Light::Light(float x, float y, float z, Kie::Color c, float strength) :x(x)
     color.z = static_cast<float>(c.b)/255.0f;
 }
 
-void Kie::Light::illuminate(Kie::Color &c,Vec3D normal,Triangle& triangle) {
+Kie::Color Kie::Light::illuminate(Kie::Color &col,Vec3D normal,Triangle& triangle) {
     //Ambient Lighting
     //Apply Strength
+    Color c;
     Vec3D ambient = {color.x*strength,color.y*strength,color.z*strength};
-    triangle.color.r = static_cast<int>(ambient.x* static_cast<float>(c.r));
-    triangle.color.g = static_cast<int>(ambient.y* static_cast<float>(c.g));
-    triangle.color.b = static_cast<int>(ambient.z* static_cast<float>(c.b));
 
-    //Apply Light Color
-//    c.r = static_cast<int>(static_cast<float>(c.r)*color.x);
-//    c.g = static_cast<int>(static_cast<float>(c.g)*color.y);
-//    c.b = static_cast<int>(static_cast<float>(c.b)*color.z);
+    //Diffuse
+    Vec3D v = {x-(triangle.vers[0].x+triangle.vers[1].x+triangle.vers[2].x)/3/640,
+               y-(triangle.vers[0].y+triangle.vers[1].y+triangle.vers[2].y)/3/480,
+               z-(triangle.vers[0].z+triangle.vers[1].z+triangle.vers[2].z)/3/10};
+    normalize(v);
+    float diff = dot(v,normal);
+    //diff*=100;
+    diff=std::max(diff,0.0f);
+    std::cout<<diff*color.x<<std::endl;
 
-
+    c.r=col.r*std::min(diff*color.x*ambient.x,1.0f);
+    c.g=col.g*std::min(diff*color.y*ambient.y,1.0f);
+    c.b=col.b*std::min(diff*color.z*ambient.z,1.0f);
+    return c;
 };
 
 void Kie::Light::normalize(Kie::Vec3D &vec) {
@@ -46,9 +52,6 @@ void Kie::Light::setStrength(float strength) {
     Light::strength = strength;
 }
 
-void Kie::Light::illuminate(Kie::Color color, std::vector<Triangle>& vector,Normal& nm) {
-    for(auto& tri:vector) illuminate(color,nm.normal(tri),tri);
-}
 
 
 
