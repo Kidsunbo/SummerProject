@@ -6,6 +6,7 @@
 #include "Shape3D/Cube.h"
 #include <thread>
 #include <chrono>
+#include <random>
 using std::chrono_literals::operator""ms;
 
 using namespace Kie;
@@ -43,11 +44,14 @@ int main(){
     };
     painter3D.setRotateSpeed(10);
     painter3D.setDistance(3);
-    //painter3D.getRp().updateAngleY(-60);
-    //painter3D.getRp().updateAngleX(30);
-    painter3D.setRotateAxis(Painter3DUtil::x|Painter3DUtil::y|Painter3DUtil::z);
+    std::random_device e;
+    std::uniform_real_distribution<float> dis(0.0f,1.0f);
+    painter3D.getRp().updateAngleY(-60);
+    painter3D.getRp().updateAngleX(30);
+    //painter3D.setRotateAxis(Painter3DUtil::x|Painter3DUtil::y|Painter3DUtil::z);
     std::thread t([&]() {
         while (!painter3D.getPainter().isClosed()) {
+            painter3D.getLight().setStrength(0.5);
             std::this_thread::sleep_for(50ms);
             painter3D.clear(Color::from(0, 0, 0));
             painter3D.draw(cube,Kie::Color::from(150,70,200));

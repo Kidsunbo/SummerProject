@@ -7,7 +7,8 @@
 Kie::Painter3D::Painter3D(const char *title, int width, int height):
 painter(Painter(title,width,height)),
 pp(ProjectionProcessor(painter)),
-rp(0)
+rp(0),
+light(0,0,-1)
 {}
 
 void Kie::Painter3D::paint() {
@@ -44,6 +45,10 @@ void Kie::Painter3D::setRotateAxis(unsigned short axis) {
 
 void Kie::Painter3D::setDistance(float distance) {
     pp.setDistance(distance);
+}
+
+Kie::Light &Kie::Painter3D::getLight() {
+    return light;
 }
 
 

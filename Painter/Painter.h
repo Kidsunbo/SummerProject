@@ -30,8 +30,10 @@ namespace Kie {
 
 
     private:
+        bool mainBuffer = true;
         GLFWwindow *window;  // The pointer of the main window
         std::vector<std::vector<Color>> _buf; // This is the most important thing in this class, which stores all the
+        std::vector<std::vector<Color>> _buf1;// This is the other buffer which is used to solve the slash.
         // information of each pixel. All the operation operates on it.
         int _width = 1; // The width of the pen, default to 1
         bool closed = false;

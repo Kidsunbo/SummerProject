@@ -14,8 +14,6 @@ add_executable(RandomEllipse RandomEllipse.cpp)
 add_executable(DrawFilledTriangle DrawFilledTriangle.cpp)
 
 
-
-
 # Dependency for RandomPixels
 target_include_directories(RandomPixels PRIVATE ../Painter)
 target_link_libraries(RandomPixels PRIVATE painter)

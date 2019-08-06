@@ -11,6 +11,7 @@
 #include "RotateProcessor.h"
 #include "Normal.h"
 #include "Camera.h"
+#include "Light.h"
 
 namespace Kie {
     class Painter3D {
@@ -22,6 +23,7 @@ namespace Kie {
         ProjectionProcessor pp;
         Normal nm;
         Camera camera;
+        Light light;
 
         unsigned short axis = 0;
 
@@ -33,6 +35,8 @@ namespace Kie {
         ScaleProcessor &getSp();
 
         RotateProcessor &getRp();
+
+        Light& getLight();
 
     public:
 
@@ -51,14 +55,11 @@ namespace Kie {
             rp.rotate(tris,axis); //Rotate the object
             pp.projection(tris); // Projection the object
             sp.scale(painter,tris); // rescale the object
+            light.illuminate(c,tris,nm);
             for(auto& tri : tris) {
                 auto normal = nm.normal(tri);
                 if (normal.z<0) {
-//                    if(filled) painter.fillTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,c);
-//                    else painter.drawTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,c);
-                    painter.fillTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,c);
-                    painter.drawTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,Color::from(70,70,70));
-                    //painter.drawLine(200,200,200+normal.x*200,200+normal.y*200);
+                    painter.fillTriangle(tri.vers[0].x, tri.vers[0].y,tri.vers[1].x, tri.vers[1].y, tri.vers[2].x, tri.vers[2].y,tri.color);
                 }
             }
         }

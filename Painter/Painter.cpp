@@ -29,6 +29,7 @@ Painter::Painter(const char* title,int width,int height){
     // Create the buffer, the initial value will be the decided by the declaration of the Color class
     for(auto i = 0;i<=mode->width;i++){
         _buf.emplace_back(std::vector<Color>(mode->height+1));
+        _buf1.emplace_back(std::vector<Color>(mode->height+1));
     }
 
     // Some setting
@@ -40,8 +41,8 @@ Painter::Painter(const char* title,int width,int height){
 }
 
 void Painter::drawPixel(int x, int y, Color c) {
-    if(x<_buf.size() && x>=0 && y<_buf[x].size() && y>=0)
-        this->_buf[x][y] = c;
+        if (x < _buf.size() && x >= 0 && y < _buf[x].size() && y >= 0)
+            this->_buf[x][y] = c;
 }
 
 void Painter::drawPixel(int x, int y, int r, int g, int b) {
@@ -71,9 +72,9 @@ void Painter::paint() {
         auto width = getWidth();
         auto height = getHeight();
         for(auto i=0;i<width+1;i++){
-            for(auto j = 0;j<height+1;j++){
-                glColor3ub(_buf[i][j].r,_buf[i][j].g,_buf[i][j].b);
-                glVertex2f((float)(i-width/2.0)/width*2.0,-(float)(j-height/2.0)/height*2.0);
+            for(auto j = 0;j<height+1;j++) {
+                glColor3ub(_buf[i][j].r, _buf[i][j].g, _buf[i][j].b);
+                glVertex2f((float) (i - width / 2.0) / width * 2.0, -(float) (j - height / 2.0) / height * 2.0);
             }
         }
         glEnd();
@@ -90,11 +91,11 @@ Painter::~Painter() {
 }
 
 void Painter::clear(Color c) {
-    for(auto& row : _buf){
-        for(auto& p : row){
-            p=c;
+        for (auto &row : _buf) {
+            for (auto &p : row) {
+                p = c;
+            }
         }
-    }
 }
 
 int Painter::getWidth() {
