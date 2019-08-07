@@ -4,12 +4,14 @@
 
 #include "Point.h"
 #include "Window/Window.h"
+#include "Math/Math.h"
+
 
 void Kie::Point::draw(Kie::Window &window) {
     auto width = window.getWidth();
     auto height = window.getHeight();
     if(normalized){
-        window.getBuffer().at(static_cast<int>(y*height/2.0f+height/2.0f)).at(static_cast<int>(x*width/2.0f+width/2.0f))=color;
+        window.getBuffer().at(static_cast<int>(Math::normalizeYtoRange2(y) * height / 2)).at(static_cast<int>(Math::normalizeXtoRange2(x) * width / 2))=color;
     }else{
         if(y<height && x<width)
             window.getBuffer().at(static_cast<int>(y)).at(static_cast<int>(x)) = color;

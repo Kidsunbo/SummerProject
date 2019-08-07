@@ -9,8 +9,8 @@ int main(){
 
     Kie::Window window(640,480,"Hello Dot");
 
-    Kie::Point point(10,20);
-    Kie::Point point1(0.1f,0.5f);
+    Kie::Point point(639,200);
+    Kie::Point point1(0.5f,0.5f,Kie::Color(100,200,240));
     while(!window.shouldClose()){
 
         glfwPollEvents();

@@ -56,9 +56,10 @@ void Kie::Window::_display(std::vector<std::vector<Color>> &_buf) {
     for(auto i=0;i<height+1;i++){
         for(auto j = 0;j<width+1;j++) {
             glColor3f(_buf[i][j].getR(), _buf[i][j].getG(), _buf[i][j].getB());
-            glVertex2f((float) (i - width / 2.0) / width * 2.0, -(float) (j - height / 2.0) / height * 2.0);
+            glVertex2f((float) (j - width / 2.0) / width * 2.0, -(float) (i - height / 2.0) / height * 2.0);
         }
     }
+
     glEnd();
 }
 
