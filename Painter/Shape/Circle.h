@@ -1,8 +1,0 @@
-//
-// Created by bxs863 on 21/07/2019.
-//
-
-#ifndef SUMMERPROJECT_CIRCLE_H
-#define SUMMERPROJECT_CIRCLE_H
-
-#endif //SUMMERPROJECT_CIRCLE_H
