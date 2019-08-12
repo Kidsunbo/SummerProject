@@ -13,8 +13,6 @@ namespace Kie::Math {
     float mapY(float &y);
 
 
-
-
     class Vec3D:public Impl::Vec<3>{
         Vec3D():Impl::Vec<3>(0.0f){}
     public:

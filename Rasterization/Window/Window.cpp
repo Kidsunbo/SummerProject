@@ -27,7 +27,7 @@ void Kie::Window::clear(Kie::Color c) {
     }
 }
 
-void Kie::Window::draw(Kie::Drawable &drawable) {
+void Kie::Window::draw(Kie::IDrawable &drawable) {
     drawable.draw(*this);
 }
 

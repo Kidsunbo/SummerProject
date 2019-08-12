@@ -15,7 +15,7 @@
 
 // Custom
 #include "Graphics/Color.h"
-#include "Graphics/Drawable.h"
+#include "Graphics/IDrawable.h"
 
 namespace Kie {
     class Window {
@@ -37,7 +37,7 @@ namespace Kie {
 
         void display();
 
-        void draw(Drawable& drawable);
+        void draw(IDrawable& drawable);
 
         int getWidth();
 

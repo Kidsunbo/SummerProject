@@ -2,15 +2,15 @@
 // Created by bxs863 on 07/08/2019.
 //
 
-#ifndef SUMMERPROJECT_DRAWABLE_H
-#define SUMMERPROJECT_DRAWABLE_H
+#ifndef SUMMERPROJECT_IDRAWABLE_H
+#define SUMMERPROJECT_IDRAWABLE_H
 
 
 namespace Kie {
 
     class Window;
 
-    class Drawable {
+    class IDrawable {
     public:
         virtual void draw(Window& window) = 0;
 
@@ -18,4 +18,4 @@ namespace Kie {
 }
 
 
-#endif //SUMMERPROJECT_DRAWABLE_H
+#endif //SUMMERPROJECT_IDRAWABLE_H

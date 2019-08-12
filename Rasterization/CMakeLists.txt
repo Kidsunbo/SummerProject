@@ -7,7 +7,7 @@ aux_source_directory(./Math Math)
 
 set(GLAD ../glfw-3.3/deps/glad_gl.c)
 
-set(SOURCE ${Graphics} ${Window} ${Exception} ${Math})
+set(SOURCE ${Graphics} ${Window} ${Exception} ${Math} Graphics/Line.cpp Graphics/Line.h)
 
 if(NOT TARGET glfw)
     add_subdirectory(../glfw-3.3 ../glfw-3.3)

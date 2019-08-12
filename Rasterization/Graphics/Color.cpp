@@ -6,6 +6,7 @@
 #include "Color.h"
 
 // STL
+#include <algorithm>
 #include <cmath>
 
 Kie::Color::Color(float r, float g, float b, bool normalized) {
