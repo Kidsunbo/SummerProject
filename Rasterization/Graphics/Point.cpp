@@ -11,7 +11,8 @@ void Kie::Point::draw(Kie::Window &window) {
     auto width = window.getWidth();
     auto height = window.getHeight();
     if(normalized){
-        window.getBuffer().at(static_cast<int>(Math::normalizeYtoRange2(y) * height / 2)).at(static_cast<int>(Math::normalizeXtoRange2(x) * width / 2))=color;
+        window.getBuffer().at(static_cast<int>(Math::mapY(y) * height / 2)).at(static_cast<int>(
+                                                                                                     Math::mapX(x) * width / 2))=color;
     }else{
         if(y<height && x<width)
             window.getBuffer().at(static_cast<int>(y)).at(static_cast<int>(x)) = color;
