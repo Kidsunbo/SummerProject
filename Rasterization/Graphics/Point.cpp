@@ -27,19 +27,12 @@ void Kie::Point::draw(Kie::Window &window) {
 
 Kie::Point::Point(float x, float y, Kie::Color c):color(c) {
     this->setPosition(x,y,0);
-    auto [x1,y1] = this->mapCoordsToPixel(640, 480);
-    if(x1!=y1) std::cout<<"hello"<<"  "<<x1<<"  "<<y1<<std::endl;
-
-
 }
 
 
 const Kie::Color &Kie::Point::getColor() {
     return color;
 }
-
-Kie::Point::Point(bool useInt,int x, int y, int width, int height, Kie::Color c):
-Point(static_cast<float>(x)*2.0f/static_cast<float>(width)-1,1- static_cast<float>(y)*2.0f/ static_cast<float>(height),c) {}
 
 void Kie::Point::setColor(Kie::Color c) {
     color = c;

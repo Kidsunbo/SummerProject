@@ -20,7 +20,6 @@ namespace Kie {
     public:
         ITransformable();
         virtual void setPosition(float x,float y,float z);
-        virtual void setPosition(bool useInt,int x,int y,int z,int width,int height);
         virtual void setOrigin(float x,float y,float z);
         virtual void setRotation(float degree);
         virtual void setScale(float ratio);

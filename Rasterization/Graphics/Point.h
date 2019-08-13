@@ -14,8 +14,6 @@ namespace Kie {
     class Point : public IDrawable, public ITransformable{
         Color color;
     public:
-        Point(bool useInt,int x ,int y,int width,int height,Color c = Color(255,255,255));
-
         Point(float x, float y, Color c = Color(255,255,255));
 
         void draw(Window &window) override;

@@ -18,8 +18,6 @@ namespace Kie {
 
         Line(Point p1,Point p2);
 
-        Line(bool useInt,int x1,int y1,int x2,int y2,int width,int height,Color c = Color(255,255,255));
-
         void draw(Window &window) override;
 
         void resetLineColor(Color c = Color(-1.0f,-1.0f,-1.0f,true));

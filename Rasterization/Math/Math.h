@@ -9,6 +9,8 @@
 
 namespace Kie::Math {
 
+    bool floatEqual(float f1,float f2);
+
     class Vec3D:public Impl::Vec<3>{
         Vec3D():Impl::Vec<3>(0.0f){}
     public:
@@ -21,15 +23,15 @@ namespace Kie::Math {
             return res;
         }
 
-        float getX(){
+        float getX() const{
             return arr[0];
         }
 
-        float getY(){
+        float getY() const{
             return arr[1];
         }
 
-        float getZ(){
+        float getZ() const{
             return arr[2];
         }
     };

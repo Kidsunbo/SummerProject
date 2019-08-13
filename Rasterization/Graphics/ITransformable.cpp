@@ -11,10 +11,6 @@ void Kie::ITransformable::setPosition(float x, float y, float z) {
     pos={x,y,z};
 }
 
-void Kie::ITransformable::setPosition(bool useInt, int x, int y, int z, int width, int height) {
-    pos={static_cast<float>(x)*2.0f/ static_cast<float>(width)-1,1- static_cast<float>(y)*2.0f/ static_cast<float>(height),0};
-}
-
 void Kie::ITransformable::setOrigin(float x, float y, float z) {
     origin={x,y,z};
 }

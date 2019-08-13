@@ -9,8 +9,8 @@
 
 int main(){
 
-    Kie::Window window(640,480,"Hello Dot");
-    Kie::Line line(true,10,10,200,200,window.getWidth(),window.getHeight());
+    Kie::Window window(640,480,"Hello Line");
+    Kie::Line line(-1,1,1,-1);
     Kie::Point p1(0.0f,0.0f,Kie::Color(0.0f,0.0f,0.0f));
     Kie::Point p2(0.5f,0.5f);
     Kie::Line line1(p1,p2);
