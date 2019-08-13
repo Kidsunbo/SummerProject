@@ -13,7 +13,6 @@
 namespace Kie {
     class Point : public IDrawable, public ITransformable{
         Color color;
-        Math::Vec3D pos;
     public:
         Point(bool useInt,int x ,int y,int width,int height,Color c = Color(255,255,255));
 
@@ -21,19 +20,9 @@ namespace Kie {
 
         void draw(Window &window) override;
 
-        void setPosition(float x, float y, float z=0.0f) override;
+        const Color &getColor();
 
-        void setPosition(bool useInt,int x, int y, int z,int width,int height) override;
-
-        Math::Vec3D getPosition() override;
-
-        void rotate(float degree) override;
-
-        const Color &getColor() const;
-
-        void move(float x, float y, float z=0.0f) override;
-
-
+        void setColor(Color c);
     };
 }
 

@@ -22,21 +22,10 @@ namespace Kie {
 
         void draw(Window &window) override;
 
-        void setPosition(float x, float y, float z) override;
-
-        void setPosition(bool useInt,int x, int y, int z, int width, int height) override;
-
-        Math::Vec3D getPosition() override;
-
-        void rotate(float degree) override;
-
-        void move(float x, float y, float z) override;
-
-        void resetLineColor(Color c = Color(-1,-1,-1,true));
+        void resetLineColor(Color c = Color(-1.0f,-1.0f,-1.0f,true));
 
     private:
         std::array<Point,2> vertex;
-        Math::Vec3D pos;
         Color lineColor;
     };
 }

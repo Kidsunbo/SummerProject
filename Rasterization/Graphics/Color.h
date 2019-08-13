@@ -9,6 +9,8 @@
 
 namespace Kie {
     class Color {
+
+        friend class InterpColor;
     private:
         float r;
         float g;
@@ -28,6 +30,22 @@ namespace Kie {
         Color operator +(Color& color);
 
         Color operator -(Color& color);
+    };
+
+    class InterpColor{
+        Color c;
+        float step_r;
+        float step_g;
+        float step_b;
+        int count;
+    public:
+        InterpColor(const Color& start,const Color& end,int count);
+
+        InterpColor& begin();
+        InterpColor& end();
+        bool operator !=(InterpColor& other);
+        Color operator*();
+        Color operator++();
     };
 }
 

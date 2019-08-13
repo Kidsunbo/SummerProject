@@ -38,6 +38,7 @@ namespace Kie {
         void display();
 
         void draw(IDrawable& drawable);
+        void draw(IDrawable&& drawable);
 
         int getWidth();
 

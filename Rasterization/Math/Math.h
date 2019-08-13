@@ -8,10 +8,6 @@
 #include "MathImpl.h"
 
 namespace Kie::Math {
-    float mapX(float &x);
-
-    float mapY(float &y);
-
 
     class Vec3D:public Impl::Vec<3>{
         Vec3D():Impl::Vec<3>(0.0f){}
@@ -41,9 +37,9 @@ namespace Kie::Math {
     using Vec2D = Impl::Vec<2>;
     using Vec4D = Impl::Vec<4>;
 
-
-
-
+    using Mat3D = Impl::Mat<3>;
+    using Mat4D = Impl::Mat<4>;
+    using Interp = Impl::Interpolation;
 }
 
 

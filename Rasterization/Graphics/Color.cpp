@@ -45,3 +45,31 @@ float Kie::Color::getB() const {
     return b;
 }
 
+Kie::InterpColor::InterpColor(const Kie::Color &start, const Kie::Color &end, int count):c(start),count(count) {
+    step_r = (end.getR()-start.getR())/ static_cast<float>(count);
+    step_g = (end.getG()-start.getG())/ static_cast<float>(count);
+    step_b = (end.getB()-start.getB())/ static_cast<float>(count);
+}
+
+Kie::InterpColor &Kie::InterpColor::begin() {
+    return *this;
+}
+
+Kie::InterpColor &Kie::InterpColor::end() {
+    return *this;
+}
+
+bool Kie::InterpColor::operator!=(Kie::InterpColor &other) {
+    return count!=0;
+}
+
+Kie::Color Kie::InterpColor::operator*() {
+    return c;
+}
+
+Kie::Color Kie::InterpColor::operator++() {
+    c.r += step_r;
+    c.g += step_g;
+    c.b += step_b;
+    return c;
+}

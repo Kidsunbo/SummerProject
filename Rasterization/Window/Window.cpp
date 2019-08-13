@@ -31,6 +31,10 @@ void Kie::Window::draw(Kie::IDrawable &drawable) {
     drawable.draw(*this);
 }
 
+void Kie::Window::draw(Kie::IDrawable &&drawable) {
+    drawable.draw(*this);
+}
+
 std::vector<std::vector<Kie::Color>> &Kie::Window::getBuffer() {
     if(buf1InBack) return _buf1;
     else return _buf2;
@@ -114,3 +118,5 @@ Kie::Window::~Window() {
 GLFWwindow *Kie::Window::getWindow() {
     return window;
 }
+
+

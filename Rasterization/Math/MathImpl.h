@@ -502,5 +502,37 @@ namespace Kie::Math::Impl {
 
     };
 
+    class Interpolation{
+        float _start=0.0f;
+        float _end = 0.0f;
+        float _step = 0.0f;
+    public:
+        Interpolation(float start,float end,int count):_start(start),_end(end){
+            _step = (end-start)/ static_cast<float>(count);
+        }
+
+        Interpolation& begin(){
+            return *this;
+        }
+
+        Interpolation& end(){
+            return *this;
+        }
+
+        float operator*(){
+            return _start;
+        }
+
+        bool operator!=(Interpolation& other){
+            return _start<_end;
+        }
+
+        float operator++(){
+            _start+=_step;
+            return _start;
+        }
+
+    };
+
 }
 #endif //SUMMERPROJECT_MATHIMPL_H
