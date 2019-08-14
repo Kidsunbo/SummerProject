@@ -33,6 +33,7 @@ void Kie::Triangle::_drawWithoutFill(Kie::Window &window) {
 
 void Kie::Triangle::_drawWithFill(Kie::Window &window) {
     std::sort(vertex.begin(),vertex.end(),[](Point& p1,Point& p2){return p1.getPosition().getY()>p2.getPosition().getY();});
+
     auto& pos1 = vertex[0].getPosition();
     auto& pos2 = vertex[1].getPosition();
     auto& pos3 = vertex[2].getPosition();
@@ -86,7 +87,7 @@ void Kie::Triangle::_fillTopTriangle(Kie::Window &window, Kie::Point &p1, Kie::P
         }
     }
     else{
-        for (float y = p1.getPosition().getY(); y <= end_y;) {
+        for (float y = p1.getPosition().getY(); y >= end_y;) {
             window.draw(Line(start,y,end,y,fillColor));
             start+=step1;
             end+=step2;

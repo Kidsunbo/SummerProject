@@ -30,7 +30,7 @@ void Kie::Line::draw(Kie::Window &window) {
         auto x2_temp = std::get<0>(res2);
         auto y2_temp = std::get<1>(res2);
 #endif
-    int step = std::max(std::abs(x2_temp-x1_temp),std::abs(y1_temp-y2_temp));
+    int step = std::max(std::abs(x2_temp-x1_temp),std::abs(y1_temp-y2_temp))*2;
     float x1=vertex[0].getPosition().getX();
     float x2 = vertex[1].getPosition().getX();
     float y1 = vertex[0].getPosition().getY();

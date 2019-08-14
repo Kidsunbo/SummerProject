@@ -12,6 +12,9 @@
 
 namespace Kie {
     class Triangle: public IDrawable, public ITransformable {
+        friend class Object;
+        friend class PipLine;
+
     public:
         Triangle(Point p1,Point p2,Point p3, bool fill=false, Color filledColor=Color(-1,-1,-1,true));
 

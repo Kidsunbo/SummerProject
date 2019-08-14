@@ -20,3 +20,7 @@ target_link_libraries(DrawALine PRIVATE raster)
 add_executable(DrawATriangle DrawATriangle.cpp)
 target_include_directories(DrawATriangle PRIVATE ../Rasterization)
 target_link_libraries(DrawATriangle PRIVATE raster)
+
+add_executable(DrawACube DrawACube.cpp)
+target_include_directories(DrawACube PRIVATE ../Rasterization)
+target_link_libraries(DrawACube PRIVATE raster)

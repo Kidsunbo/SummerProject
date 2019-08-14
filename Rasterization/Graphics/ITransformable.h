@@ -20,11 +20,13 @@ namespace Kie {
     public:
         ITransformable();
         virtual void setPosition(float x,float y,float z);
+        virtual void setPosition(Math::Vec3D pos);
         virtual void setOrigin(float x,float y,float z);
         virtual void setRotation(float degree);
         virtual void setScale(float ratio);
 
         virtual const Math::Vec3D& getPosition();
+        virtual const Math::Vec3D& getPosition() const;
         virtual const Math::Vec3D& getOrigin();
         virtual const float& getRotation();
         virtual const float& getScale();

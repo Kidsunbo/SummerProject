@@ -11,6 +11,11 @@ void Kie::ITransformable::setPosition(float x, float y, float z) {
     pos={x,y,z};
 }
 
+void Kie::ITransformable::setPosition(Math::Vec3D pos) {
+    this->pos = pos;
+}
+
+
 void Kie::ITransformable::setOrigin(float x, float y, float z) {
     origin={x,y,z};
 }
@@ -25,6 +30,9 @@ void Kie::ITransformable::setScale(float ratio) {
 }
 
 const Kie::Math::Vec3D& Kie::ITransformable::getPosition() {
+    return pos;
+}
+const Kie::Math::Vec3D& Kie::ITransformable::getPosition() const {
     return pos;
 }
 

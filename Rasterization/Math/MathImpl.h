@@ -145,7 +145,7 @@ namespace Kie::Math::Impl {
          * Negative the vector
          * @return
          */
-        Vec operator-() {
+        Vec operator-() const {
             Vec res;
             for (int i = 0; i < N; i++) {
                 res.arr[i] = -this->arr[i];
@@ -158,7 +158,7 @@ namespace Kie::Math::Impl {
          * @param vec
          * @return
          */
-        Vec operator+(const Vec &vec) {
+        Vec operator+(const Vec &vec) const {
             Vec res;
             for (int i = 0; i < N; i++) {
                 res.arr[i] = arr[i] + vec.arr[i];
@@ -171,7 +171,7 @@ namespace Kie::Math::Impl {
          * @param num
          * @return
          */
-        Vec operator+(float num) {
+        Vec operator+(float num) const {
             Vec res;
             for (int i = 0; i < N; i++) {
                 res.arr[i] = arr[i] + num;
@@ -208,7 +208,7 @@ namespace Kie::Math::Impl {
          * @param vec
          * @return
          */
-        Vec operator-(const Vec &vec) {
+        Vec operator-(const Vec &vec)const  {
             Vec res;
             for (int i = 0; i < N; i++) {
                 res.arr[i] = arr[i] - vec.arr[i];
@@ -233,7 +233,7 @@ namespace Kie::Math::Impl {
          * @param vec
          * @return
          */
-        Vec operator*(const Vec &vec) {
+        Vec operator*(const Vec &vec) const {
             Vec res;
             for (int i = 0; i < N; i++) {
                 res.arr[i] = arr[i] * vec.arr[i];
@@ -246,10 +246,18 @@ namespace Kie::Math::Impl {
          * @param num
          * @return
          */
-        Vec operator*(float num) {
+        Vec operator*(float num) const {
             Vec res;
             for (int i = 0; i < N; i++) {
                 res.arr[i] = arr[i] * num;
+            }
+            return res;
+        }
+
+        Vec operator/(float num) const {
+            Vec res;
+            for (int i = 0; i < N; i++) {
+                res.arr[i] = arr[i] / num;
             }
             return res;
         }
@@ -266,6 +274,7 @@ namespace Kie::Math::Impl {
             return *this;
         }
 
+
         /**
          * Same meaning with Mathematics meaning
          * @param num
@@ -274,6 +283,13 @@ namespace Kie::Math::Impl {
         Vec &operator*=(float num) {
             for (int i = 0; i < N; i++) {
                 arr[i] = arr[i] * num;
+            }
+            return *this;
+        }
+
+        Vec &operator/=(float num) {
+            for (int i = 0; i < N; i++) {
+                arr[i] = arr[i] / num;
             }
             return *this;
         }
@@ -490,6 +506,16 @@ namespace Kie::Math::Impl {
                 }
             }
             return res;
+        }
+
+        Mat& operator=(const Mat &other) {
+            this->mat = other.mat;
+            return *this;
+        }
+
+        Mat& operator=(Mat&& other) {
+            this->mat = other.mat;
+            return *this;
         }
 
         std::array<float,N>& operator[](int index){

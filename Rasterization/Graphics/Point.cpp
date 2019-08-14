@@ -38,3 +38,7 @@ void Kie::Point::setColor(Kie::Color c) {
     color = c;
 }
 
+Kie::Point::Point(float x, float y, float z, Kie::Color c):color(c) {
+    this->setPosition(x,y,z);
+}
+
