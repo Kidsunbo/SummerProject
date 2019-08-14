@@ -72,7 +72,9 @@ void Kie::Triangle::_fillTopTriangle(Kie::Window &window, Kie::Point &p1, Kie::P
     auto x2_temp = std::get<0>(res2);
     auto y2_temp = std::get<1>(res2);
 #endif
-    float y_step = (p2.getPosition().getY() - p1.getPosition().getY()) / static_cast<float>(y2_temp - y1_temp);
+    if(y1_temp==y2_temp)
+        return;
+    float y_step = (p2.getPosition().getY() - p1.getPosition().getY()) / static_cast<float>(y2_temp - y1_temp)/2;
     float end_y = p2.getPosition().getY();
     step1*=y_step;
     step2*=y_step;
@@ -116,7 +118,9 @@ void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1, Kie
         auto x2_temp = std::get<0>(res2);
         auto y2_temp = std::get<1>(res2);
 #endif
-    float y_step = (p1.getPosition().getY() - p3.getPosition().getY()) / static_cast<float>(y1_temp - y2_temp);
+    if(y1_temp==y2_temp)
+        return;
+    float y_step = (p1.getPosition().getY() - p3.getPosition().getY()) / static_cast<float>(y1_temp - y2_temp)/2;
     float end_y = p1.getPosition().getY();
     step1*=y_step;
     step2*=y_step;

@@ -58,6 +58,8 @@ namespace Kie {
         float getRotateY();
         float getRotateZ();
 
+        void setOrigin(float x, float y, float z) override;
+
     };
 
 }

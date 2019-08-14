@@ -44,6 +44,8 @@ namespace Kie {
 
         Object Rotate(Object object);
 
+        Object Clipping(Object object);
+
         Object Translate(Object object);
 
         Object Illuminate(Object object);

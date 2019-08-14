@@ -15,6 +15,7 @@ namespace Kie::Math {
         Vec3D():Impl::Vec<3>(0.0f){}
     public:
         using Impl::Vec<3>::Vec;
+
         Vec3D crossProduct(const Vec3D& vec){
             Vec3D res;
             res.arr[0] = arr[1]*vec.arr[2]-arr[2]*vec.arr[1];

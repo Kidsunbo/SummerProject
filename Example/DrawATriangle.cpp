@@ -16,7 +16,8 @@ int main(){
 
         glfwPollEvents();
         window.clear(Kie::Color(0,0,0));
-        window.draw(Kie::Triangle(p1,p2,p3,true));
+        //window.draw(Kie::Triangle(p1,p2,p3,true));
+        window.draw(Kie::Triangle(Kie::Point(0,0.249981284f,0),Kie::Point(0.187485978,0.249981284,0.0f),Kie::Point(0.0f,0.0f,0),true));
         window.display();
     }
 

@@ -8,13 +8,15 @@
 void Kie::Object::draw(Kie::Window &window) {
     auto& pipLine = PipLine::getInstance(window);
     auto obj = *this;
+    obj = pipLine.Rotate(obj);
     obj = pipLine.MapToWorld(obj);
     obj = pipLine.Projection(obj);
-    obj = pipLine.Rotate(obj);
-    //obj = pipLine.Translate(obj);
+    obj = pipLine.Translate(obj);
     //obj = pipLine.Illuminate(obj);
+    obj = pipLine.Clipping(obj);
     for(auto& tri:obj.mesh){
         window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2]));
+        window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2], true,Color(255,0,0)));
     }
 }
 
@@ -102,5 +104,13 @@ void Kie::Object::rotateY(float degree){
 }
 void Kie::Object::rotateZ(float degree){
     this->setRotateZ(this->getRotateZ()+degree);
+}
+
+void Kie::Object::setOrigin(float x, float y, float z) {
+    for(auto& tri:mesh){
+        for(auto& ver:tri.vertex){
+            ver.setPosition(ver.getPosition()-Kie::Math::Vec3D{x,y,z});
+        }
+    }
 }
 
