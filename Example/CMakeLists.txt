@@ -24,3 +24,7 @@ target_link_libraries(DrawATriangle PRIVATE raster)
 add_executable(DrawACube DrawACube.cpp)
 target_include_directories(DrawACube PRIVATE ../Rasterization)
 target_link_libraries(DrawACube PRIVATE raster)
+
+add_executable(DrawCubeWithLight DrawCubeWithLight.cpp)
+target_include_directories(DrawCubeWithLight PRIVATE ../Rasterization)
+target_link_libraries(DrawCubeWithLight PRIVATE raster)

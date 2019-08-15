@@ -73,3 +73,17 @@ Kie::Color Kie::InterpColor::operator++() {
     c.b += step_b;
     return c;
 }
+
+Kie::Color Kie::Color::operator*(float num) const {
+    return Color(std::min(r*num,1.0f), std::min(g*num,1.0f), std::min(b*num,1.0f));
+}
+
+Kie::Math::Vec3D Kie::Color::toVec3D() const {
+    return {r,g,b};
+}
+
+Kie::Color::Color(const Math::Vec3D &vec) {
+    r= vec[0];
+    g= vec[1];
+    b= vec[2];
+}

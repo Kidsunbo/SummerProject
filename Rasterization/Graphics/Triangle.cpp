@@ -40,7 +40,7 @@ void Kie::Triangle::_drawWithFill(Kie::Window &window) {
     auto& pos3 = vertex[2].getPosition();
 
     if(Math::floatEqual(pos2.getY(),pos3.getY())) _fillTopTriangle(window,vertex[0],vertex[1],vertex[2]);
-    else if(Math::floatEqual(pos1.getY(),pos2.getY())) _fillBottomTriangle(window,vertex[0],vertex[1],vertex[2]);
+    else if(Math::floatEqual(pos1.getY(),pos2.getY())) _fillBottomTriangle(window,vertex[2],vertex[0],vertex[1]);
     else {
         float r = (pos2.getY() - pos1.getY()) / (pos3.getY() - pos1.getY());
         float newX = pos1.getX() + r * (pos3.getX() - pos1.getX());

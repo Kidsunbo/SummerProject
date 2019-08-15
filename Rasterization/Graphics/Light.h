@@ -12,7 +12,12 @@ namespace Kie {
     private:
         Color lightColor;
         Math::Vec3D lightPos;
+        float ambientStrength = 0.1f;
     public:
+        float getAmbientStrength() const;
+
+        void setAmbientStrength(float ambientStrength);
+
         const Color &getLightColor() const;
 
         void setLightColor(const Color &lightColor);

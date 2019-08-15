@@ -42,6 +42,14 @@ void Kie::Light::setLightPos(const Kie::Math::Vec3D &lp) {
     Light::lightPos = lp;
 }
 
+float Kie::Light::getAmbientStrength() const {
+    return ambientStrength;
+}
+
+void Kie::Light::setAmbientStrength(float ambientStrength) {
+    Light::ambientStrength = ambientStrength;
+}
+
 
 
 

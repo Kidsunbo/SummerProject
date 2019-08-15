@@ -5,6 +5,7 @@
 #ifndef SUMMERPROJECT_COLOR_H
 #define SUMMERPROJECT_COLOR_H
 
+#include "Math/Math.h"
 
 
 namespace Kie {
@@ -25,11 +26,17 @@ namespace Kie {
     public:
         Color(int r, int g, int b);
 
+        explicit Color(const Math::Vec3D& vec);
+
         Color(float r, float g, float b, bool normalized = true);
 
         Color operator +(Color& color);
 
         Color operator -(Color& color);
+
+        Color operator* (float num) const;
+
+        Math::Vec3D toVec3D() const;
     };
 
     class InterpColor{
@@ -47,6 +54,7 @@ namespace Kie {
         Color operator*();
         Color operator++();
     };
+
 }
 
 

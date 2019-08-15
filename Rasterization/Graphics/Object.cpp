@@ -10,10 +10,10 @@ void Kie::Object::draw(Kie::Window &window) {
     auto obj = *this;
     obj = pipLine.Rotate(obj);
     obj = pipLine.MapToWorld(obj);
+    obj = pipLine.Illuminate(obj);
     obj = pipLine.Projection(obj);
     obj = pipLine.Clipping(obj);
     obj = pipLine.Translate(obj);
-    //obj = pipLine.Illuminate(obj);
     for(auto& tri:obj.mesh){
         if(drawSketch)
             window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2]));

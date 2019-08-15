@@ -77,6 +77,22 @@ Kie::Object Kie::PipLine::Translate(Kie::Object object) {
 }
 
 Kie::Object Kie::PipLine::Illuminate(Kie::Object object) {
+    //Ambient
+    Math::Vec3D ambient = (light.getLightColor()*light.getAmbientStrength()).toVec3D();
+    for(auto& tri:object.mesh){
+        for(auto& ver:tri.vertex){
+            //Diffuse
+            Math::Vec3D lightDir = (light.getLightPos()-ver.getPosition()).normalize(); // duplicate calculation
+            Math::Vec3D line1(tri.vertex[1].getPosition()-tri.vertex[0].getPosition());
+            Math::Vec3D line2(tri.vertex[2].getPosition()-tri.vertex[0].getPosition());
+            auto normal = line1.crossProduct(line2).normalize();
+            float diff = std::max(normal.dotProduct(lightDir),0.0f);
+            Math::Vec3D diffuse = (light.getLightColor()*diff).toVec3D();
+
+            ver.setColor(Color(static_cast<Math::Vec3D>((ambient+diffuse)*ver.getColor().toVec3D())));
+        }
+    }
+
     return object;
 }
 
