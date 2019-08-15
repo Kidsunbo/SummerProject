@@ -71,10 +71,6 @@ namespace Kie {
 
         void setProMatrix(const Math::Mat4D &proMatrix);
 
-        const Math::Mat4D &getRotMatrix() const;
-
-        void setRotMatrix(const Math::Mat4D &rotMatrix);
-
         const Math::Mat4D &getTraMatrix() const;
 
         void setTraMatrix(const Math::Mat4D &traMatrix);

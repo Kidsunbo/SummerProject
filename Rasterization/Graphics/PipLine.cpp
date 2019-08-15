@@ -35,19 +35,16 @@ Kie::Object Kie::PipLine::Projection(Kie::Object object) {
 
 Kie::Object Kie::PipLine::Rotate(Kie::Object object) {
     Kie::Math::Mat4D xMat = {{1.0f,0.0f,0.0f,0.0f},{0.0f,1.0f,0.0f,0.0f},{0.0f,0.0f,1.0f,0.0f},{0.0f,0.0f,0.0f,1.0f}};
-//    Kie::Math::Mat3D xMat = {{1.0f,0.0f,0.0f},{0.0f,1.0f,0.0f},{0.0f,0.0f,1.0f}};
     xMat[1][1] = std::cos(object.rotateXDegree/180.0f*3.1415926f);
     xMat[1][2] = -std::sin(object.rotateXDegree/180.0f*3.1415926f);
     xMat[2][1] = std::sin(object.rotateXDegree/180.0f*3.1415926f);
     xMat[2][2] = std::cos(object.rotateXDegree/180.0f*3.1415926f);
     Kie::Math::Mat4D yMat = {{1.0f,0.0f,0.0f,0.0f},{0.0f,1.0f,0.0f,0.0f},{0.0f,0.0f,1.0f,0.0f},{0.0f,0.0f,0.0f,1.0f}};
-//    Kie::Math::Mat3D yMat = {{1.0f,0.0f,0.0f},{0.0f,1.0f,0.0f},{0.0f,0.0f,1.0f}};
     yMat[0][0] = std::cos(object.rotateYDegree/180.0f*3.1415926f);
     yMat[0][2] = -std::sin(object.rotateYDegree/180.0f*3.1415926f);
     yMat[2][0] = std::sin(object.rotateYDegree/180.0f*3.1415926f);
     yMat[2][2] = std::cos(object.rotateYDegree/180.0f*3.1415926f);
     Kie::Math::Mat4D zMat = {{1.0f,0.0f,0.0f,0.0f},{0.0f,1.0f,0.0f,0.0f},{0.0f,0.0f,1.0f,0.0f},{0.0f,0.0f,0.0f,1.0f}};
-//    Kie::Math::Mat3D zMat = {{1.0f,0.0f,0.0f},{0.0f,1.0f,0.0f},{0.0f,0.0f,1.0f}};
    zMat[0][0] = std::cos(object.rotateZDegree/180.0f*3.1415926f);
    zMat[0][1] = -std::sin(object.rotateZDegree/180.0f*3.1415926f);
    zMat[1][0] = std::sin(object.rotateZDegree/180.0f*3.1415926f);
@@ -97,14 +94,6 @@ const Kie::Math::Mat4D &Kie::PipLine::getProMatrix() const {
 
 void Kie::PipLine::setProMatrix(const Kie::Math::Mat4D &proMatrix) {
     PipLine::proMatrix = proMatrix;
-}
-
-const Kie::Math::Mat4D &Kie::PipLine::getRotMatrix() const {
-    return rotMatrix;
-}
-
-void Kie::PipLine::setRotMatrix(const Kie::Math::Mat4D &rotMatrix) {
-    PipLine::rotMatrix = rotMatrix;
 }
 
 const Kie::Math::Mat4D &Kie::PipLine::getTraMatrix() const {

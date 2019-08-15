@@ -25,6 +25,9 @@ namespace Kie {
 
         std::vector<Triangle> mesh;
 
+        bool drawSketch = true;
+        bool drawFill = false;
+
     public:
         Object();
 
@@ -57,6 +60,12 @@ namespace Kie {
         float getRotateX();
         float getRotateY();
         float getRotateZ();
+
+        bool isDrawSketch() const;
+        void setDrawSketch(bool drawSketch);
+
+        bool isDrawFill() const;
+        void setDrawFill(bool drawFill);
 
         void setOrigin(float x, float y, float z) override;
 

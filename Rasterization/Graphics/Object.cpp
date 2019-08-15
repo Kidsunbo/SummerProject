@@ -11,12 +11,14 @@ void Kie::Object::draw(Kie::Window &window) {
     obj = pipLine.Rotate(obj);
     obj = pipLine.MapToWorld(obj);
     obj = pipLine.Projection(obj);
+    obj = pipLine.Clipping(obj);
     obj = pipLine.Translate(obj);
     //obj = pipLine.Illuminate(obj);
-    obj = pipLine.Clipping(obj);
     for(auto& tri:obj.mesh){
-        window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2]));
-        window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2], true,Color(255,0,0)));
+        if(drawSketch)
+            window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2]));
+        if(drawFill)
+            window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2], true));
     }
 }
 
@@ -26,14 +28,16 @@ void Kie::Object::setDistance(float z) {
 
 Kie::Object::Object(std::initializer_list<std::array<float, 9>> li) {
     for(auto& tri : li){
-        mesh.emplace_back(Point(tri[0],tri[1],tri[2]),Point(tri[3],tri[4],tri[5]),Point(tri[6],tri[7],tri[8]));
+        mesh.emplace_back(Point(tri[0],tri[1],tri[2],Color(255,0,0)),Point(tri[3],tri[4],tri[5],Color(0,255,0)),Point(tri[6],tri[7],tri[8],Color(0,0,255)));
+//        mesh.emplace_back(Point(tri[0],tri[1],tri[2]),Point(tri[3],tri[4],tri[5]),Point(tri[6],tri[7],tri[8]));
+
     }
 }
 
 Kie::Object::Object()= default;
 
 Kie::Object::Object(const std::string& filePath) {
-
+    load(filePath);
 }
 
 void Kie::Object::load(std::string filePath){}
@@ -113,4 +117,21 @@ void Kie::Object::setOrigin(float x, float y, float z) {
         }
     }
 }
+
+bool Kie::Object::isDrawSketch() const {
+    return drawSketch;
+}
+
+void Kie::Object::setDrawSketch(bool drawSketch) {
+    Object::drawSketch = drawSketch;
+}
+
+bool Kie::Object::isDrawFill() const {
+    return drawFill;
+}
+
+void Kie::Object::setDrawFill(bool drawFill) {
+    Object::drawFill = drawFill;
+}
+
 
