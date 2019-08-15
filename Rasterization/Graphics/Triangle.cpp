@@ -48,18 +48,19 @@ void Kie::Triangle::_drawWithFill(Kie::Window &window) {
         float newG = vertex[0].getColor().getG() + (vertex[2].getColor().getG() - vertex[0].getColor().getG()) * r;
         float newB = vertex[0].getColor().getB() + (vertex[2].getColor().getB() - vertex[0].getColor().getB()) * r;
         Point p(newX, pos2.getY(), Color(newR, newG, newB));
-        if (p.getPosition().getX() < vertex[1].getPosition().getX()) { // new Point is on the left
-            _fillTopTriangle(window, vertex[0], p,vertex[1]);
-            _fillBottomTriangle(window, vertex[2], p, vertex[1]);
-        }
-        else{  // new Point is on the right
-            _fillTopTriangle(window, vertex[0], vertex[1],p);
-            _fillBottomTriangle(window, vertex[2],vertex[1], p);
-        }
-
-//         Actually it can work as well, there is no need to check which point is on the left
+//        if (p.getPosition().getX() < vertex[1].getPosition().getX()) { // new Point is on the left
 //            _fillTopTriangle(window, vertex[0], p,vertex[1]);
 //            _fillBottomTriangle(window, vertex[2], p, vertex[1]);
+//        }
+//        else{  // new Point is on the right
+//            _fillTopTriangle(window, vertex[0], vertex[1],p);
+//            _fillBottomTriangle(window, vertex[2],vertex[1], p);
+//        }
+
+//         Actually it can work as well, there is no need to check which point is on the left
+        _fillTopTriangle(window, vertex[0], p,vertex[1]);
+        _fillBottomTriangle(window, vertex[2], p, vertex[1]);
+        window.draw(Line(vertex[1],p));
     }
 }
 
@@ -151,6 +152,7 @@ void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1/*bot
             start-=step1;
             end-=step2;
             y-=y_step;
+
         }
     }
 }

@@ -4,6 +4,10 @@
 
 #include "Object.h"
 #include "Window/Window.h"
+#include <fstream>
+#include <sstream>
+#include <iterator>
+
 
 void Kie::Object::draw(Kie::Window &window) {
     auto& pipLine = PipLine::getInstance(window);
@@ -28,7 +32,7 @@ void Kie::Object::setDistance(float z) {
 
 Kie::Object::Object(std::initializer_list<std::array<float, 9>> li) {
     for(auto& tri : li){
-        mesh.emplace_back(Point(tri[0],tri[1],tri[2],Color(255,0,0)),Point(tri[3],tri[4],tri[5],Color(0,255,0)),Point(tri[6],tri[7],tri[8],Color(0,0,255)));
+        mesh.emplace_back(Point(tri[0],tri[1],tri[2],Color(255,0,0)),Point(tri[3],tri[4],tri[5],Color(255,0,0)),Point(tri[6],tri[7],tri[8],Color(255,0,0)));
 //        mesh.emplace_back(Point(tri[0],tri[1],tri[2]),Point(tri[3],tri[4],tri[5]),Point(tri[6],tri[7],tri[8]));
 
     }
@@ -40,7 +44,54 @@ Kie::Object::Object(const std::string& filePath) {
     load(filePath);
 }
 
-void Kie::Object::load(std::string filePath){}
+
+template<typename Out>
+void split(const std::string &s, char delim, Out result) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        *(result++) = item;
+    }
+}
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+
+void Kie::Object::load(std::string filePath){
+
+    auto file = std::fstream(filePath,std::ios::in);
+    std::string buf;
+    std::vector<Point> points;
+    while(std::getline(file,buf)){
+        if(buf.size()==0) continue;
+        auto content = split(buf,' ');
+        if(content[0]=="v" && content.size()==4){
+            points.emplace_back(std::stof(content[1]),std::stof(content[2]),std::stof(content[3]));
+        }
+        else if(content[0]=="f") {
+            if (content.size() == 4) {
+                auto x = split(content[1],'/')[0];
+                auto y = split(content[2],'/')[0];
+                auto z = split(content[3],'/')[0];
+                mesh.emplace_back(points.at(std::stoi(x)), points.at(std::stoi(y)), points.at(std::stoi(z)));
+            }
+            else if(content.size()==5){
+                auto x = split(content[1],'/')[0];
+                auto y = split(content[2],'/')[0];
+                auto z = split(content[3],'/')[0];
+                auto w = split(content[4],'/')[0];
+                mesh.emplace_back(points.at(std::stoi(x)), points.at(std::stoi(y)), points.at(std::stoi(z)));
+                mesh.emplace_back(points.at(std::stoi(x)),points.at(std::stoi(z)),points.at(std::stoi(w)));
+            }
+
+        }
+    }
+}
+
+
 
 Kie::Object::Object(const Kie::Object &object) {
     mesh = object.mesh;
