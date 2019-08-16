@@ -8,6 +8,7 @@
 
 // STL
 #include <thread>
+#include <iostream>
 
 
 void Kie::Window::clear(Kie::Color c) {
@@ -63,8 +64,12 @@ void Kie::Window::_display(std::vector<std::vector<Color>> &_buf) {
             glVertex2f((float) (j - width / 2.0) / width * 2.0, -(float) (i - height / 2.0) / height * 2.0);
         }
     }
-
     glEnd();
+    if(printfps){
+        auto now = std::chrono::system_clock::now();
+        std::cout<<"fps: "<<1000.0f/std::chrono::duration_cast<std::chrono::milliseconds>(now-time).count()<<std::endl;
+        time = now;
+    }
 }
 
 Kie::Window::Window(int width, int height, const char *title) {
@@ -117,6 +122,10 @@ Kie::Window::~Window() {
 
 GLFWwindow *Kie::Window::getWindow() {
     return window;
+}
+
+void Kie::Window::printFPS(bool value){
+    this->printfps = value;
 }
 
 

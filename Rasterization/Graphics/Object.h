@@ -28,6 +28,8 @@ namespace Kie {
         bool drawSketch = true;
         bool drawFill = false;
 
+        bool renderForEachTriangle = true;
+
     public:
         Object();
 
@@ -61,6 +63,7 @@ namespace Kie {
         float getRotateY();
         float getRotateZ();
 
+
         bool isDrawSketch() const;
         void setDrawSketch(bool drawSketch);
 
@@ -68,6 +71,7 @@ namespace Kie {
         void setDrawFill(bool drawFill);
 
         void setOrigin(float x, float y, float z) override;
+        void setRenderForEachTriangle(bool value);
 
     };
 

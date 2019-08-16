@@ -12,6 +12,7 @@
 // STL
 #include <vector>
 #include <atomic>
+#include <chrono>
 
 // Custom
 #include "Graphics/Color.h"
@@ -26,6 +27,10 @@ namespace Kie {
         std::vector<std::vector<Color>> _buf1; // This is the most important thing in this class, which stores all the
         std::vector<std::vector<Color>> _buf2;// This is the other buffer which is used to solve the slash.
         std::atomic_bool buf1InBack = true; // Draw and clear will only effect the back buffer
+
+        bool printfps = false;
+        std::chrono::time_point<std::chrono::system_clock> time;
+
 
     private:
         void _display(std::vector<std::vector<Color>>& _buf);
@@ -45,6 +50,8 @@ namespace Kie {
         int getHeight();
 
         void setFrameRate(int rate);
+
+        void printFPS(bool value);
 
         bool shouldClose();
 

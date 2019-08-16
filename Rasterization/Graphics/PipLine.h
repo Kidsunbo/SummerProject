@@ -25,7 +25,10 @@ namespace Kie {
 
         Math::Mat4D proMatrix;
 
-        Math::Mat4D rotMatrix;
+        Math::Mat4D rotXMatrix;
+        Math::Mat4D rotYMatrix;
+        Math::Mat4D rotZMatrix;
+
 
         Math::Mat4D traMatrix;
 
@@ -52,16 +55,21 @@ namespace Kie {
 
         void updatePromatrix(Window& window,float near=0.1f,float far=1000.0f,float fov=90.0f);
 
-//
-//        void Projection(Triangle& triangle);
-//
-//        void Rotate(Triangle& triangle);
-//
-//        void Translate(Triangle& triangle);
-//
-//        void Illuminate(Triangle& triangle);
-//
-//        void Process(Object& object);
+
+        void Projection(Triangle& triangle);
+
+        void Rotate(Triangle& triangle);
+
+        void Translate(Triangle& triangle,Object& object);
+
+        void Illuminate(Triangle& triangle);
+
+        bool Clipping(Triangle& triangle);
+
+        void SetupRotateMatrix(Object& object);
+
+        void MapToWorld(Triangle& triangle,Object& object);
+
 
         const Light &getLight() const;
 

@@ -7,10 +7,15 @@
 #include <fstream>
 #include <sstream>
 #include <iterator>
+#include <iostream>
+#include <algorithm>
 
 
 void Kie::Object::draw(Kie::Window &window) {
-    auto& pipLine = PipLine::getInstance(window);
+    auto &pipLine = PipLine::getInstance(window);
+
+//// Old API
+if(!renderForEachTriangle) {
     auto obj = *this;
     obj = pipLine.Rotate(obj);
     obj = pipLine.MapToWorld(obj);
@@ -18,12 +23,29 @@ void Kie::Object::draw(Kie::Window &window) {
     obj = pipLine.Projection(obj);
     obj = pipLine.Clipping(obj);
     obj = pipLine.Translate(obj);
-    for(auto& tri:obj.mesh){
-        if(drawSketch)
-            window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2]));
-        if(drawFill)
-            window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2], true));
+    for (auto &tri:obj.mesh) {
+        if (drawSketch)
+            window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
+        if (drawFill)
+            window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
     }
+}else {
+//// New API
+    pipLine.SetupRotateMatrix(*this);
+    for (auto tri:mesh) {
+        pipLine.Rotate(tri);
+        pipLine.MapToWorld(tri, *this);
+        pipLine.Illuminate(tri);
+        pipLine.Projection(tri);
+        if (pipLine.Clipping(tri)) continue;
+        pipLine.Translate(tri, *this);
+        if (drawSketch)
+            window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
+        if (drawFill)
+            window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
+    }
+}
+
 }
 
 void Kie::Object::setDistance(float z) {
@@ -45,19 +67,16 @@ Kie::Object::Object(const std::string& filePath) {
 }
 
 
-template<typename Out>
-void split(const std::string &s, char delim, Out result) {
-    std::stringstream ss(s);
-    std::string item;
-    while (std::getline(ss, item, delim)) {
-        *(result++) = item;
+std::vector<std::string> split(const std::string& s, char delimiter)
+{
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delimiter))
+    {
+        tokens.push_back(token);
     }
-}
-
-std::vector<std::string> split(const std::string &s, char delim) {
-    std::vector<std::string> elems;
-    split(s, delim, std::back_inserter(elems));
-    return elems;
+    return tokens;
 }
 
 void Kie::Object::load(std::string filePath){
@@ -68,6 +87,7 @@ void Kie::Object::load(std::string filePath){
     while(std::getline(file,buf)){
         if(buf.size()==0) continue;
         auto content = split(buf,' ');
+        content.erase(std::remove_if(content.begin(),content.end(),[](std::string& x){return x.empty();}),content.end());
         if(content[0]=="v" && content.size()==4){
             points.emplace_back(std::stof(content[1]),std::stof(content[2]),std::stof(content[3]));
         }
@@ -184,5 +204,11 @@ bool Kie::Object::isDrawFill() const {
 void Kie::Object::setDrawFill(bool drawFill) {
     Object::drawFill = drawFill;
 }
+
+void Kie::Object::setRenderForEachTriangle(bool value) {
+    this->renderForEachTriangle=value;
+}
+
+
 
 
