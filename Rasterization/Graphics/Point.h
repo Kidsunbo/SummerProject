@@ -13,6 +13,12 @@
 namespace Kie {
     class Point : public IDrawable, public ITransformable{
         Color color;
+        Math::Vec2D texture;
+    public:
+        const Math::Vec2D &getTexture() const;
+
+        void setTexture(const Math::Vec2D &texture);
+
     public:
         Point(float x, float y, Color c = Color(255,255,255));
 

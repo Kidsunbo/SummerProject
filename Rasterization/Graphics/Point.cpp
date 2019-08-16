@@ -25,7 +25,7 @@ void Kie::Point::draw(Kie::Window &window) {
     window.getBuffer().at(y).at(x) = color;
 }
 
-Kie::Point::Point(float x, float y, Kie::Color c):color(c) {
+Kie::Point::Point(float x, float y, Kie::Color c):color(c),texture(0.0f) {
     this->setPosition(x,y,0);
 }
 
@@ -38,7 +38,15 @@ void Kie::Point::setColor(Kie::Color c) {
     color = c;
 }
 
-Kie::Point::Point(float x, float y, float z, Kie::Color c):color(c) {
+Kie::Point::Point(float x, float y, float z, Kie::Color c):color(c),texture(0.0f) {
     this->setPosition(x,y,z);
+}
+
+const Kie::Math::Vec2D &Kie::Point::getTexture() const {
+    return texture;
+}
+
+void Kie::Point::setTexture(const Kie::Math::Vec2D &texture) {
+    Point::texture = texture;
 }
 

@@ -12,6 +12,7 @@
 
 
 void Kie::Object::draw(Kie::Window &window) {
+
     auto &pipLine = PipLine::getInstance(window);
 
 //// Old API
@@ -23,6 +24,7 @@ if(!renderForEachTriangle) {
     obj = pipLine.Projection(obj);
     obj = pipLine.Clipping(obj);
     obj = pipLine.Translate(obj);
+
     for (auto &tri:obj.mesh) {
         if (drawSketch)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
@@ -44,6 +46,7 @@ if(!renderForEachTriangle) {
         if (drawFill)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
     }
+
 }
 
 }
@@ -83,7 +86,7 @@ void Kie::Object::load(std::string filePath){
 
     auto file = std::fstream(filePath,std::ios::in);
     std::string buf;
-    std::vector<Point> points;
+    std::vector<Point> points{Point(0,0,0)};
     while(std::getline(file,buf)){
         if(buf.size()==0) continue;
         auto content = split(buf,' ');
