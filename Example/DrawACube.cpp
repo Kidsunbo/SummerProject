@@ -46,7 +46,7 @@ int main(){
     bool directionZ = false;
     bool directionX = false;
     bool directionY = false;
-    window.setFrameRate(100);
+    window.setFrameRate(20);
     while(!window.shouldClose()){
         glfwPollEvents();
         window.clear(Kie::Color(0,0,0));

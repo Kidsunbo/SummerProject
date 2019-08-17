@@ -50,3 +50,4 @@ void Kie::Point::setTexture(const Kie::Math::Vec2D &texture) {
     Point::texture = texture;
 }
 
+

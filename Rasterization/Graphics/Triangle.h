@@ -9,6 +9,7 @@
 #include "IDrawable.h"
 #include "ITransformable.h"
 #include "Line.h"
+#include "Texture.h"
 
 namespace Kie {
     class Triangle: public IDrawable, public ITransformable {
@@ -17,6 +18,9 @@ namespace Kie {
 
     public:
         Triangle(Point p1,Point p2,Point p3, bool fill=false, Color filledColor=Color(-1,-1,-1,true));
+
+        Triangle(Point p1,Point p2,Point p3, bool useTexure, Texture& texture);
+
 
         void draw(Window &window) override;
 
@@ -35,6 +39,8 @@ namespace Kie {
         std::array<Point,3> vertex;
         Color fillColor;
         bool fill=false;
+        bool useTexture = false;
+        Texture texture;
     };
 }
 

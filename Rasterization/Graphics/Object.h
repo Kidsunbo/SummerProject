@@ -10,6 +10,7 @@
 #include "IDrawable.h"
 #include "ITransformable.h"
 #include "PipLine.h"
+#include "Texture.h"
 
 #include <vector>
 #include <string>
@@ -27,8 +28,11 @@ namespace Kie {
 
         bool drawSketch = true;
         bool drawFill = false;
+        bool drawTexture = false;
 
         bool renderForEachTriangle = true;
+
+        Texture texture;
 
     public:
         Object();
@@ -41,11 +45,11 @@ namespace Kie {
 
         Object& operator=(const Object& other);
 
-        Object& operator=(Object&& other);
+        Object& operator=(Object&& other) noexcept ;
 
-        explicit Object(const std::string& filePath);
+        explicit Object(const std::string& filePath,std::string textureFilePath = "");
 
-        void load(std::string filePath);
+        void load(std::string filePath,std::string textureFilePath = "");
 
         void draw(Window &window) override;
 
@@ -69,6 +73,9 @@ namespace Kie {
 
         bool isDrawFill() const;
         void setDrawFill(bool drawFill);
+
+        bool isDrawTexture() const;
+        void setDrawTexture(bool drawTexure);
 
         void setOrigin(float x, float y, float z) override;
         void setRenderForEachTriangle(bool value);

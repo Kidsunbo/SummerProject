@@ -4,9 +4,10 @@
 
 #include "Line.h"
 #include "Window/Window.h"
+#include "Texture.h"
 
-Kie::Line::Line(Kie::Point p1, Kie::Point p2):
-lineColor(-1,-1,-1,true),vertex({std::move(p1),std::move(p2)}) {}
+Kie::Line::Line(Kie::Point p1, Kie::Point p2, Texture& texture):
+lineColor(-1,-1,-1,true),vertex({std::move(p1),std::move(p2)}),useTexture(true),texture(texture) {}
 
 Kie::Line::Line(float x1, float y1, float x2, float y2, Kie::Color c):Line(Point(x1,y1,c),Point(x2,y2,c)) {}
 
@@ -37,7 +38,15 @@ void Kie::Line::draw(Kie::Window &window) {
     float y2 = vertex[1].getPosition().getY();
     float delta_x = (x2-x1)/(float)step;
     float delta_y = (y2-y1)/(float)step;
-    if (lineColor.getR() == -1.0) {
+    if(useTexture){
+        InterpTexture ic(vertex[0].getTexture(),vertex[1].getTexture(),texture,step);
+        for(int i=0;i<step;i++){
+            float x_Pos = x1 + static_cast<float>(i) * delta_x;
+            float y_Pos = y1 + static_cast<float>(i) * delta_y;
+            window.draw(Point(x_Pos,y_Pos,++ic));
+        }
+    }
+    else if (Math::floatEqual(lineColor.getR(),-1.0)) {
         InterpColor ic(vertex[0].getColor(),vertex[1].getColor(),step);
         for(int i=0;i<step;i++){
             float x_Pos = x1 + static_cast<float>(i) * delta_x;
@@ -53,3 +62,8 @@ void Kie::Line::draw(Kie::Window &window) {
     }
 
 }
+
+Kie::Line::Line(Kie::Point p1, Kie::Point p2, Kie::Color c):lineColor(c),vertex({std::move(p1),std::move(p2)}),texture() {
+}
+
+

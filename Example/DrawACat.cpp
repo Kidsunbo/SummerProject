@@ -11,8 +11,8 @@ int main() {
     Kie::Window window(640, 480, "Hello Cat");
 
     Kie::Object object;
-    object.load("/Resource/cat.obj");
-    object.setDistance(2000);
+    object.load("./Resource/cat.obj");
+    object.setDistance(100);
     object.setOrigin(0.5f, 0.5f, 0.0f);
     object.setDrawSketch(true);
     object.setDrawFill(false);
@@ -29,8 +29,8 @@ int main() {
         window.draw(object);
 
         object.rotateY(1);
-        object.rotateX(0.5);
-        object.rotateZ(1);
+//        object.rotateX(0.5);
+//        object.rotateZ(1);
 
         window.display();
 

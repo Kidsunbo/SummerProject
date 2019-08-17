@@ -71,6 +71,7 @@ Kie::Color Kie::InterpColor::operator++() {
     c.r += step_r;
     c.g += step_g;
     c.b += step_b;
+    count--;
     return c;
 }
 
@@ -87,3 +88,4 @@ Kie::Color::Color(const Math::Vec3D &vec) {
     g= vec[1];
     b= vec[2];
 }
+

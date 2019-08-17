@@ -7,7 +7,6 @@
 #include <fstream>
 #include <sstream>
 #include <iterator>
-#include <iostream>
 #include <algorithm>
 
 
@@ -45,6 +44,8 @@ if(!renderForEachTriangle) {
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
         if (drawFill)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
+        if(drawTexture)
+            window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2],true,texture));
     }
 
 }
@@ -65,8 +66,8 @@ Kie::Object::Object(std::initializer_list<std::array<float, 9>> li) {
 
 Kie::Object::Object()= default;
 
-Kie::Object::Object(const std::string& filePath) {
-    load(filePath);
+Kie::Object::Object(const std::string& filePath,std::string textureFilePath) {
+    load(filePath,textureFilePath);
 }
 
 
@@ -82,32 +83,55 @@ std::vector<std::string> split(const std::string& s, char delimiter)
     return tokens;
 }
 
-void Kie::Object::load(std::string filePath){
+void Kie::Object::load(std::string filePath,std::string textureFilePath){
 
     auto file = std::fstream(filePath,std::ios::in);
     std::string buf;
     std::vector<Point> points{Point(0,0,0)};
+    std::vector<Math::Vec2D> textureData{{0,0}};
+
+    if(!textureFilePath.empty()) texture.load(textureFilePath);
+
     while(std::getline(file,buf)){
-        if(buf.size()==0) continue;
+        if(buf.empty()) continue;
         auto content = split(buf,' ');
         content.erase(std::remove_if(content.begin(),content.end(),[](std::string& x){return x.empty();}),content.end());
         if(content[0]=="v" && content.size()==4){
             points.emplace_back(std::stof(content[1]),std::stof(content[2]),std::stof(content[3]));
         }
+        if(content[0]=="vt" && content.size()==3){
+            textureData.emplace_back(std::stof(content[1]),std::stof(content[2]));
+        }
         else if(content[0]=="f") {
             if (content.size() == 4) {
-                auto x = split(content[1],'/')[0];
-                auto y = split(content[2],'/')[0];
-                auto z = split(content[3],'/')[0];
-                mesh.emplace_back(points.at(std::stoi(x)), points.at(std::stoi(y)), points.at(std::stoi(z)));
+                auto x = split(content[1],'/');
+                auto y = split(content[2],'/');
+                auto z = split(content[3],'/');
+                auto p1 = points.at(std::stoi(x[0]));
+                auto p2 = points.at(std::stoi(y[0]));
+                auto p3 = points.at(std::stoi(z[0]));
+                if(x.size()==3&&!x[1].empty())p1.setTexture(textureData.at(std::stoi(x[1])));
+                if(y.size()==3&&!y[1].empty())p2.setTexture(textureData.at(std::stoi(y[1])));
+                if(z.size()==3&&!z[1].empty())p3.setTexture(textureData.at(std::stoi(z[1])));
+                mesh.emplace_back(p1,p2,p3);
             }
             else if(content.size()==5){
-                auto x = split(content[1],'/')[0];
-                auto y = split(content[2],'/')[0];
-                auto z = split(content[3],'/')[0];
-                auto w = split(content[4],'/')[0];
-                mesh.emplace_back(points.at(std::stoi(x)), points.at(std::stoi(y)), points.at(std::stoi(z)));
-                mesh.emplace_back(points.at(std::stoi(x)),points.at(std::stoi(z)),points.at(std::stoi(w)));
+                auto x = split(content[1],'/');
+                auto y = split(content[2],'/');
+                auto z = split(content[3],'/');
+                auto w = split(content[4],'/');
+                auto p1 = points.at(std::stoi(x[0]));
+                auto p2 = points.at(std::stoi(y[0]));
+                auto p3 = points.at(std::stoi(z[0]));
+                auto p4 = points.at(std::stoi(w[0]));
+                if(x.size()==3&&!x[1].empty())p1.setTexture(textureData.at(std::stoi(x[1])));
+                if(y.size()==3&&!y[1].empty())p2.setTexture(textureData.at(std::stoi(y[1])));
+                if(z.size()==3&&!z[1].empty())p3.setTexture(textureData.at(std::stoi(z[1])));
+                if(w.size()==3&&!w[1].empty())p4.setTexture(textureData.at(std::stoi(w[1])));
+
+
+                mesh.emplace_back(p1, p2, p3);
+                mesh.emplace_back(p1,p3,p4);
             }
 
         }
@@ -141,7 +165,7 @@ Kie::Object& Kie::Object::operator=(const Kie::Object& other){
     return *this;
 }
 
-Kie::Object& Kie::Object::operator=(Kie::Object&& other){
+Kie::Object& Kie::Object::operator=(Kie::Object&& other) noexcept {
     this->mesh = other.mesh;
     this->rotateZDegree = other.rotateZDegree;
     this->rotateXDegree = other.rotateXDegree;
@@ -205,13 +229,21 @@ bool Kie::Object::isDrawFill() const {
 }
 
 void Kie::Object::setDrawFill(bool drawFill) {
-    Object::drawFill = drawFill;
+    this->drawTexture=false;
+    this->drawFill = drawFill;
 }
 
 void Kie::Object::setRenderForEachTriangle(bool value) {
     this->renderForEachTriangle=value;
 }
 
+bool Kie::Object::isDrawTexture() const {
+    return drawTexture;
+}
 
+void Kie::Object::setDrawTexture(bool drawTexure) {
+    this->drawFill=false;
+    this->drawTexture=drawTexure;
+}
 
 

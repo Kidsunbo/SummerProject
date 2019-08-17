@@ -7,6 +7,7 @@
 #include "PipLine.h"
 
 #include <algorithm>
+#include <utility>
 
 void Kie::Triangle::draw(Kie::Window &window) {
     if(fill){
@@ -90,7 +91,17 @@ void Kie::Triangle::_fillTopTriangle(Kie::Window &window, Kie::Point &p1/*top*/,
     float end_y = p2.getPosition().getY();
     step1*=y_step;
     step2*=y_step;
-    if(Math::floatEqual(fillColor.getR(),-1.0f)) {
+    if(useTexture){
+        InterpTexture left(p1.getColor(),p2.getColor(),(y2_temp - y1_temp)*2);
+        InterpTexture right(p1.getColor(),p3.getColor(),(y2_temp - y1_temp)*2);
+        for (float y = p1.getPosition().getY(); y >= end_y;) {
+            window.draw(Line(Point(start,y,++left),Point(end,y,++right)));
+            start+=step1;
+            end+=step2;
+            y+=y_step;
+        }
+    }
+    else if(Math::floatEqual(fillColor.getR(),-1.0f)) {
         InterpColor left(p1.getColor(),p2.getColor(),(y2_temp - y1_temp)*2);
         InterpColor right(p1.getColor(),p3.getColor(),(y2_temp - y1_temp)*2);
         for (float y = p1.getPosition().getY(); y >= end_y;) {
@@ -155,5 +166,14 @@ void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1/*bot
 
         }
     }
+}
+
+Kie::Triangle::Triangle(Kie::Point p1, Kie::Point p2, Kie::Point p3, bool useTexure, Kie::Texture &texture):
+fillColor(1,1,1,true),
+vertex({std::move(p1),std::move(p2),std::move(p3)}),
+texture(texture),
+useTexture(useTexure)
+{
+
 }
 
