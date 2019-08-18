@@ -27,6 +27,7 @@ namespace Kie {
 
         std::vector<Triangle> mesh;
 
+
         bool drawSketch = true;
         bool drawFill = false;
         bool drawTexture = false;
@@ -80,6 +81,8 @@ namespace Kie {
 
         void setOrigin(float x, float y, float z) override;
         void setRenderForEachTriangle(bool value);
+
+
 
     };
 

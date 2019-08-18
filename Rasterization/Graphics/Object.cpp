@@ -6,10 +6,8 @@
 #include "Window/Window.h"
 #include <fstream>
 #include <sstream>
-#include <iterator>
 #include <algorithm>
 #include <utility>
-#include <iostream>
 
 
 void Kie::Object::draw(Kie::Window &window) {
@@ -22,8 +20,10 @@ if(!renderForEachTriangle) {
     obj = pipLine.Rotate(obj);
     obj = pipLine.MapToWorld(obj);
     obj = pipLine.Illuminate(obj);
+    obj = pipLine.MapToView(obj);
+
     obj = pipLine.Projection(obj);
-    obj = pipLine.Clipping(obj);
+    obj = pipLine.Culling(obj);
     obj = pipLine.Translate(obj);
 
     for (auto &tri:obj.mesh) {
@@ -42,8 +42,11 @@ if(!renderForEachTriangle) {
         pipLine.Rotate(tri);
         pipLine.MapToWorld(tri, *this);
         pipLine.Illuminate(tri);
+        pipLine.MapToView(tri);
+
         pipLine.Projection(tri);
-        if (pipLine.Clipping(tri)) continue;
+        if (!pipLine.Culling(tri)) continue;
+
         pipLine.Translate(tri, *this);
         if (drawSketch)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));

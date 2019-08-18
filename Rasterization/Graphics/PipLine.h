@@ -9,6 +9,8 @@
 #include "Triangle.h"
 #include "Object.h"
 #include "Light.h"
+#include "Camera.h"
+
 #include <memory>
 
 namespace Kie {
@@ -29,32 +31,33 @@ namespace Kie {
         Math::Mat4D rotYMatrix;
         Math::Mat4D rotZMatrix;
 
-
         Math::Mat4D traMatrix;
 
+        Camera camera;
 
     public:
         static PipLine& getInstance(Window& window);
 
-        explicit PipLine(Window& window,float near=0.1f,float far=1000.0f,float fov=90.0f,Color lightColor=Color(255,255,255),const Math::Vec3D& pos=Math::Vec3D(0.0f));
+        explicit PipLine(Window& window,float near=0.1f,float far=100.0f,float fov=90.0f,Color lightColor=Color(255,255,255),const Math::Vec3D& pos=Math::Vec3D(0.0f));
 
         PipLine(const PipLine& pipLine) = delete;
         PipLine(PipLine&& pipLine) = delete;
 
         Object MapToWorld(Object object);
 
+        Object MapToView(Object object);
+
         Object Projection(Object object);
 
         Object Rotate(Object object);
 
-        Object Clipping(Object object);
+        Object Culling(Object object);
 
         Object Translate(Object object);
 
         Object Illuminate(Object object);
 
-        void updatePromatrix(Window& window,float near=0.1f,float far=1000.0f,float fov=90.0f);
-
+        void updatePromatrix(Window& window,float near=0.1f,float far=100.0f,float fov=90.0f);
 
         void Projection(Triangle& triangle);
 
@@ -64,11 +67,13 @@ namespace Kie {
 
         void Illuminate(Triangle& triangle);
 
-        bool Clipping(Triangle& triangle);
+        bool Culling(Triangle& triangle);
 
         void SetupRotateMatrix(Object& object);
 
         void MapToWorld(Triangle& triangle,Object& object);
+
+        void MapToView(Triangle& triangle);
 
 
         const Light &getLight() const;
@@ -82,6 +87,11 @@ namespace Kie {
         const Math::Mat4D &getTraMatrix() const;
 
         void setTraMatrix(const Math::Mat4D &traMatrix);
+
+        Camera& getCamera();
+
+        void setCamera(const Camera& camera);
+
 
     };
 

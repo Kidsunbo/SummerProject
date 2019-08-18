@@ -134,6 +134,7 @@ namespace Kie::Math::Impl {
                 l += arr[i] * arr[i];
             }
             l = std::sqrt(l);
+            if(l==0) return *this;
             Vec res;
             for (int i = 0; i < N; i++) {
                 res.arr[i] = arr[i] / l;

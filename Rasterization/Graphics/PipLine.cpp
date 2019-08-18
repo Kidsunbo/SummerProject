@@ -5,6 +5,7 @@
 #include "PipLine.h"
 #include "Window/Window.h"
 #include <cmath>
+#include <iostream>
 
 
 Kie::PipLine::PipLine(Window& window,float near, float far, float fov, Kie::Color lightColor, const Kie::Math::Vec3D& pos):
@@ -147,7 +148,7 @@ Kie::Object Kie::PipLine::MapToWorld(Kie::Object object) {
     return object;
 }
 
-Kie::Object Kie::PipLine::Clipping(Kie::Object object) {
+Kie::Object Kie::PipLine::Culling(Kie::Object object) {
     std::vector<Triangle> vec;
     for(auto& tri:object.mesh) {
         Math::Vec3D line1(tri.vertex[1].getPosition()-tri.vertex[0].getPosition());
@@ -227,11 +228,34 @@ void Kie::PipLine::MapToWorld(Kie::Triangle &triangle,Object& object) {
     }
 }
 
-bool Kie::PipLine::Clipping(Kie::Triangle &triangle) {
+bool Kie::PipLine::Culling(Kie::Triangle &triangle) {
     Math::Vec3D line1(triangle.vertex[1].getPosition()-triangle.vertex[0].getPosition());
     Math::Vec3D line2(triangle.vertex[2].getPosition()-triangle.vertex[0].getPosition());
     auto result = line1.crossProduct(line2).normalize();
     return result[2]>=0;
 }
+
+Kie::Camera &Kie::PipLine::getCamera() {
+    return camera;
+}
+
+void Kie::PipLine::setCamera(const Kie::Camera &camera) {
+    this->camera = camera;
+}
+
+void Kie::PipLine::MapToView(Kie::Triangle &triangle) {
+    for(auto& ver:triangle.vertex){
+        auto oldPos = ver.getPosition();
+        ver.setPosition(Math::Vec4D(camera.getView()*Math::Vec4D(oldPos,1.0f)).toVec3D());
+    }
+}
+
+Kie::Object Kie::PipLine::MapToView(Kie::Object object) {
+    for(auto& tri:object.mesh){
+        MapToView(tri);
+    }
+    return object;
+}
+
 
 

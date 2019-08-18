@@ -14,6 +14,8 @@ int main() {
     object.load("../../Resource/deer/deer.obj");
     object.setDistance(1000);
     object.setOrigin(0, 0, 0);
+    object.setRotateZ(180);
+    object.move(0,-0.5,0);
     object.setDrawSketch(true);
     object.setDrawFill(false);
     object.setDrawTexture(false);
@@ -21,26 +23,46 @@ int main() {
     Kie::Light light(Kie::Color(255, 255, 255));
     light.setLightPos(Kie::Math::Vec3D({10, 0, -1}));
     Kie::PipLine::getInstance(window).setLight(light);
+    Kie::PipLine::getInstance(window).getCamera().setTarget({0,0,1000});
     window.printFPS(true);
     while (!window.shouldClose()) {
 
-        if(glfwGetKey(window.getWindow(),GLFW_KEY_W)==GLFW_PRESS){
-            object.move(0,0.01,0);
-        }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_S)==GLFW_PRESS){
-            object.move(0,-0.01f,0);
-        }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
-            object.rotateX(0.5);
-        }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
-            object.rotateX(-0.5);
+//        if(glfwGetKey(window.getWindow(),GLFW_KEY_W)==GLFW_PRESS){
+//            object.move(0,0.01,0);
+//        }
+//        else if(glfwGetKey(window.getWindow(),GLFW_KEY_S)==GLFW_PRESS){
+//            object.move(0,-0.01f,0);
+//        }
+//        else if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
+//            object.rotateX(0.5);
+//        }
+//        else if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
+//            object.rotateX(-0.5);
+//        }
+//        else if(glfwGetKey(window.getWindow(),GLFW_KEY_LEFT)==GLFW_PRESS){
+//            object.rotateY(-1);
+//        }
+//        else if(glfwGetKey(window.getWindow(),GLFW_KEY_RIGHT)==GLFW_PRESS){
+//            object.rotateY(1);
+//        }
+
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_RIGHT)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(100,0,0);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_LEFT)==GLFW_PRESS){
-            object.rotateY(-1);
+            Kie::PipLine::getInstance(window).getCamera().move(-100,0,0);
         }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_RIGHT)==GLFW_PRESS){
-            object.rotateY(1);
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,100,0);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,-100,0);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_UP)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,0,100);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_DOWN)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,0,-100);
         }
 
         glfwPollEvents();
@@ -48,7 +70,7 @@ int main() {
 
         window.draw(object);
 
-//        object.rotateY(1);
+        object.rotateY(1);
 //        object.rotateX(0.5);
 //        object.rotateZ(1);
 

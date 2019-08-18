@@ -5,12 +5,13 @@
 #include "Window/Window.h"
 #include "Graphics/Object.h"
 
-#include <iostream>
+#include <random>
 
 
 int main(){
 
     Kie::Window window(640,480,"Hello Cube with light");
+
     Kie::Object object = {
 
             // SOUTH
@@ -39,17 +40,51 @@ int main(){
 
     };
 
-    object.setDistance(3);
+    Kie::Camera camera;
+    camera.setPosition({0,0,-10});
+    Kie::PipLine::getInstance(window).setCamera(camera);
+    object.setPosition({0,0,0});
     object.setOrigin(0.5f,0.5f,0.5f);
     object.setDrawSketch(true);
     object.setDrawFill(true);
     object.setRotateZ(45);
+    object.setRenderForEachTriangle(true);
     Kie::Light light(Kie::Color(255,100,255));
-    light.setLightPos(Kie::Math::Vec3D({0,0,-1}));
+    light.setLightPos(Kie::Math::Vec3D({0,0,10}));
     Kie::PipLine::getInstance(window).setLight(light);
-//    object.setRotateZ(45);
-//    object.setRotateX(60);
+    object.setRotateZ(45);
+    object.setRotateX(60);
+    //window.printFPS(true);
     while(!window.shouldClose()){
+
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_RIGHT)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0.1,0,0);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_LEFT)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(-0.1,0,0);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,0.1,0);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,-0.1,0);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_UP)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,0,0.1);
+        }
+        else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_DOWN)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,0,-0.1);
+        }
+
+
+        float radius = 5.0f;
+        float camX = sin(glfwGetTime()) * radius;
+        float camZ = cos(glfwGetTime()) * radius;
+        Kie::PipLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
+
+//        Kie::Math::Vec3D front = {0.0f, 0.0f, -1.0f};
+//        Kie::PipLine::getInstance(window).getCamera().setTarget(Kie::PipLine::getInstance(window).getCamera().getPosition()+front);
+
         glfwPollEvents();
         window.clear(Kie::Color(0,0,0));
         window.draw(object);
