@@ -33,8 +33,8 @@ int Kie::Texture::getChannel() const {
 Kie::InterpTexture::InterpTexture(const Kie::Math::Vec2D &start, const Kie::Math::Vec2D &end, Texture& texture,
                                   int count):current(start),texture(texture) {
     this->count=count;
-    step_x=(end[0]-start[0])* static_cast<float>(texture.getWidth())/ static_cast<float>(count);
-    step_y=(end[1]-start[1])* static_cast<float>(texture.getHeight())/ static_cast<float>(count);
+    step_x=(end[0]-start[0])/ static_cast<float>(count);
+    step_y=(end[1]-start[1])/ static_cast<float>(count);
 }
 
 Kie::InterpTexture &Kie::InterpTexture::begin() {
@@ -58,9 +58,9 @@ Kie::Color Kie::InterpTexture::operator++() {
     current[0]+= step_x;
     current[1]+= step_y;
     count--;
-    auto r = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1])*texture.getWidth()+ static_cast<int>(current[0])*3+0));
-    auto g = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1])*texture.getWidth()+ static_cast<int>(current[0])*3+1));
-    auto b = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1])*texture.getWidth()+ static_cast<int>(current[0])*3+2));
+    auto r = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1]* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0])*3+0));
+    auto g = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1]* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0])*3+1));
+    auto b = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1]* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0])*3+2));
 
     return Color(r,g,b);
 }
