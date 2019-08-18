@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 namespace Kie {
     class Object : public IDrawable,public ITransformable{
@@ -32,7 +33,7 @@ namespace Kie {
 
         bool renderForEachTriangle = true;
 
-        Texture texture;
+        std::shared_ptr<Texture> texture=std::make_shared<Texture>();
 
     public:
         Object();

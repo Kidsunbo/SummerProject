@@ -45,8 +45,8 @@ namespace Kie {
         InterpTexture& begin();
         InterpTexture& end();
         bool operator !=(InterpTexture& other);
-        InterpTexture operator*();
-        InterpTexture operator++();
+        Math::Vec2D operator*();
+        Color operator++();
     };
 }
 

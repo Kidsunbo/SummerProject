@@ -49,18 +49,18 @@ bool Kie::InterpTexture::operator!=(Kie::InterpTexture &other) {
     return count!=0;
 }
 
-Kie::InterpTexture Kie::InterpTexture::operator*() {
+Kie::Math::Vec2D Kie::InterpTexture::operator*() {
+
+    return current;
+}
+
+Kie::Color Kie::InterpTexture::operator++() {
+    current[0]+= step_x;
+    current[1]+= step_y;
+    count--;
     auto r = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1])*texture.getWidth()+ static_cast<int>(current[0])*3+0));
     auto g = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1])*texture.getWidth()+ static_cast<int>(current[0])*3+1));
     auto b = static_cast<int>(*(texture.getImg()+ static_cast<int>(current[1])*texture.getWidth()+ static_cast<int>(current[0])*3+2));
 
-    return Kie::Color(r, g, b);
-}
-
-Kie::InterpTexture Kie::InterpTexture::operator++() {
-    current[0]+= step_x;
-    current[1]+=step_y;
-    count--;
-
-    return *(*this);
+    return Color(r,g,b);
 }

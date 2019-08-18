@@ -11,6 +11,8 @@
 #include "Line.h"
 #include "Texture.h"
 
+#include <memory>
+
 namespace Kie {
     class Triangle: public IDrawable, public ITransformable {
         friend class Object;
@@ -19,7 +21,7 @@ namespace Kie {
     public:
         Triangle(Point p1,Point p2,Point p3, bool fill=false, Color filledColor=Color(-1,-1,-1,true));
 
-        Triangle(Point p1,Point p2,Point p3, bool useTexure, Texture& texture);
+        Triangle(Point p1,Point p2,Point p3, bool useTexure, std::shared_ptr<Texture> texture);
 
 
         void draw(Window &window) override;
@@ -40,7 +42,7 @@ namespace Kie {
         Color fillColor;
         bool fill=false;
         bool useTexture = false;
-        Texture texture;
+        std::shared_ptr<Texture> texture= nullptr;
     };
 }
 

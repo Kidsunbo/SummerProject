@@ -8,6 +8,7 @@
 #include <sstream>
 #include <iterator>
 #include <algorithm>
+#include <utility>
 
 
 void Kie::Object::draw(Kie::Window &window) {
@@ -27,8 +28,11 @@ if(!renderForEachTriangle) {
     for (auto &tri:obj.mesh) {
         if (drawSketch)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
-        if (drawFill)
+        if(drawTexture)
+            window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2],true,texture));
+        else if (drawFill)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
+
     }
 }else {
 //// New API
@@ -42,10 +46,11 @@ if(!renderForEachTriangle) {
         pipLine.Translate(tri, *this);
         if (drawSketch)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
-        if (drawFill)
-            window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
         if(drawTexture)
             window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2],true,texture));
+        else if (drawFill)
+            window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
+
     }
 
 }
@@ -67,7 +72,7 @@ Kie::Object::Object(std::initializer_list<std::array<float, 9>> li) {
 Kie::Object::Object()= default;
 
 Kie::Object::Object(const std::string& filePath,std::string textureFilePath) {
-    load(filePath,textureFilePath);
+    load(filePath,std::move(textureFilePath));
 }
 
 
@@ -90,7 +95,7 @@ void Kie::Object::load(std::string filePath,std::string textureFilePath){
     std::vector<Point> points{Point(0,0,0)};
     std::vector<Math::Vec2D> textureData{{0,0}};
 
-    if(!textureFilePath.empty()) texture.load(textureFilePath);
+    if(!textureFilePath.empty()) texture->load(textureFilePath);
 
     while(std::getline(file,buf)){
         if(buf.empty()) continue;
@@ -100,7 +105,7 @@ void Kie::Object::load(std::string filePath,std::string textureFilePath){
             points.emplace_back(std::stof(content[1]),std::stof(content[2]),std::stof(content[3]));
         }
         if(content[0]=="vt" && content.size()==3){
-            textureData.emplace_back(std::stof(content[1]),std::stof(content[2]));
+            textureData.emplace_back(Math::Vec2D{std::stof(content[1]),std::stof(content[2])});
         }
         else if(content[0]=="f") {
             if (content.size() == 4) {
@@ -229,7 +234,6 @@ bool Kie::Object::isDrawFill() const {
 }
 
 void Kie::Object::setDrawFill(bool drawFill) {
-    this->drawTexture=false;
     this->drawFill = drawFill;
 }
 
@@ -242,7 +246,6 @@ bool Kie::Object::isDrawTexture() const {
 }
 
 void Kie::Object::setDrawTexture(bool drawTexure) {
-    this->drawFill=false;
     this->drawTexture=drawTexure;
 }
 

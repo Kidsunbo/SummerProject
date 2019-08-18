@@ -11,11 +11,12 @@ int main() {
     Kie::Window window(640, 480, "Hello Cat");
 
     Kie::Object object;
-    object.load("./Resource/cat.obj");
+    object.load("./Resource/cat.obj","./Resource/cat.png");
     object.setDistance(100);
     object.setOrigin(0.5f, 0.5f, 0.0f);
     object.setDrawSketch(true);
-    object.setDrawFill(false);
+    object.setDrawFill(true);
+    object.setDrawTexture(true);
     object.move(0, -0.3, 0);
     object.setRenderForEachTriangle(true);
     Kie::Light light(Kie::Color(255, 255, 255));

@@ -48,7 +48,10 @@ void Kie::Triangle::_drawWithFill(Kie::Window &window) {
         float newR = vertex[0].getColor().getR() + (vertex[2].getColor().getR() - vertex[0].getColor().getR()) * r;
         float newG = vertex[0].getColor().getG() + (vertex[2].getColor().getG() - vertex[0].getColor().getG()) * r;
         float newB = vertex[0].getColor().getB() + (vertex[2].getColor().getB() - vertex[0].getColor().getB()) * r;
+        float newTx = vertex[0].getTexture()[0]+(vertex[2].getTexture()[0]-vertex[0].getTexture()[0])*r;
+        float newTy = vertex[0].getTexture()[1]+(vertex[2].getTexture()[1]-vertex[0].getTexture()[1])*r;
         Point p(newX, pos2.getY(), Color(newR, newG, newB));
+        p.setTexture({newTx,newTy});
 //        if (p.getPosition().getX() < vertex[1].getPosition().getX()) { // new Point is on the left
 //            _fillTopTriangle(window, vertex[0], p,vertex[1]);
 //            _fillBottomTriangle(window, vertex[2], p, vertex[1]);
@@ -92,10 +95,14 @@ void Kie::Triangle::_fillTopTriangle(Kie::Window &window, Kie::Point &p1/*top*/,
     step1*=y_step;
     step2*=y_step;
     if(useTexture){
-        InterpTexture left(p1.getColor(),p2.getColor(),(y2_temp - y1_temp)*2);
-        InterpTexture right(p1.getColor(),p3.getColor(),(y2_temp - y1_temp)*2);
+        InterpTexture left(p1.getTexture(),p2.getTexture(),*texture,(y2_temp - y1_temp)*2);
+        InterpTexture right(p1.getTexture(),p3.getTexture(),*texture,(y2_temp - y1_temp)*2);
         for (float y = p1.getPosition().getY(); y >= end_y;) {
-            window.draw(Line(Point(start,y,++left),Point(end,y,++right)));
+            auto pp1 = Point(start,y,++left);
+            auto pp2 = Point(end,y,++right);
+            pp1.setTexture(*left);
+            pp2.setTexture(*right);
+            window.draw(Line(pp1,pp2));
             start+=step1;
             end+=step2;
             y+=y_step;
@@ -168,11 +175,12 @@ void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1/*bot
     }
 }
 
-Kie::Triangle::Triangle(Kie::Point p1, Kie::Point p2, Kie::Point p3, bool useTexure, Kie::Texture &texture):
+Kie::Triangle::Triangle(Kie::Point p1, Kie::Point p2, Kie::Point p3, bool useTexure, std::shared_ptr<Kie::Texture> texture):
 fillColor(1,1,1,true),
 vertex({std::move(p1),std::move(p2),std::move(p3)}),
-texture(texture),
-useTexture(useTexure)
+texture(std::move(texture)),
+useTexture(useTexure),
+fill(useTexure)
 {
 
 }

@@ -12,6 +12,8 @@
 #include "Texture.h"
 #include "Math/Math.h"
 
+#include <memory>
+
 namespace Kie {
     class Line: public IDrawable, public ITransformable {
     public:
@@ -19,7 +21,7 @@ namespace Kie {
 
         Line(Point p1,Point p2, Color c=Color(-1,-1,-1,true));
 
-        Line(Point p1,Point p2,Texture& texture);
+        Line(Point p1,Point p2,std::shared_ptr<Texture> texture);
 
         void draw(Window &window) override;
 
@@ -29,7 +31,7 @@ namespace Kie {
         std::array<Point,2> vertex;
         Color lineColor;
         bool useTexture = false;
-        Texture texture;
+        std::shared_ptr<Texture> texture;
     };
 }
 
