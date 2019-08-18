@@ -45,7 +45,9 @@ void Kie::Line::draw(Kie::Window &window) {
         for(int i=0;i<step;i++){
             float x_Pos = x1 + static_cast<float>(i) * delta_x;
             float y_Pos = y1 + static_cast<float>(i) * delta_y;
-            window.draw(Point(x_Pos,y_Pos,++ic));
+            auto p = Point(x_Pos,y_Pos,++ic);
+            p.setTexture(*ic);
+            window.draw(p);
         }
     }
     else if (Math::floatEqual(lineColor.getR(),-1.0)) {

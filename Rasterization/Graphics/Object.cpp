@@ -9,6 +9,7 @@
 #include <iterator>
 #include <algorithm>
 #include <utility>
+#include <iostream>
 
 
 void Kie::Object::draw(Kie::Window &window) {
@@ -104,7 +105,7 @@ void Kie::Object::load(std::string filePath,std::string textureFilePath){
         if(content[0]=="v" && content.size()==4){
             points.emplace_back(std::stof(content[1]),std::stof(content[2]),std::stof(content[3]));
         }
-        if(content[0]=="vt" && content.size()==3){
+        if(content[0]=="vt" && (content.size()==3||content.size()==4)){
             textureData.emplace_back(Math::Vec2D{std::stof(content[1]),std::stof(content[2])});
         }
         else if(content[0]=="f") {

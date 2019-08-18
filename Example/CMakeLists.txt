@@ -32,3 +32,11 @@ target_link_libraries(DrawCubeWithLight PRIVATE raster)
 add_executable(DrawACat DrawACat.cpp)
 target_include_directories(DrawACat PRIVATE ../Rasterization)
 target_link_libraries(DrawACat PRIVATE raster)
+
+add_executable(DrawADeer DrawADeer.cpp)
+target_include_directories(DrawADeer PRIVATE ../Rasterization)
+target_link_libraries(DrawADeer PRIVATE raster)
+
+add_executable(DrawATriangleWithTexture DrawATriangleWithTexture.cpp)
+target_include_directories(DrawATriangleWithTexture PRIVATE ../Rasterization)
+target_link_libraries(DrawATriangleWithTexture PRIVATE raster)

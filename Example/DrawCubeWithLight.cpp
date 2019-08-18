@@ -10,7 +10,7 @@
 
 int main(){
 
-    Kie::Window window(640,480,"Hello Triangle");
+    Kie::Window window(640,480,"Hello Cube with light");
     Kie::Object object = {
 
             // SOUTH
