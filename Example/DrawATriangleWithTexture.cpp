@@ -10,12 +10,12 @@ int main(){
 
     Kie::Window window(640,480,"Hello Triangle");
     std::shared_ptr<Kie::Texture> texture = std::make_shared<Kie::Texture>();
-    texture->load(R"(C:\Users\bxs863\Desktop\brick.png)");
-    Kie::Point p1(0.0f,1.0f,Kie::Color(1.0f,0.0f,0.0f));
+    texture->load(R"(../../Resource/img/brick.png)");
+    Kie::Point p1(0.0f,1.0f,0,Kie::Color(1.0f,0.0f,0.0f));
     p1.setTexture({0.0f,1.0f});
-    Kie::Point p2(0.0f,0.0f,Kie::Color(0.0f,1.0f,0.0f));
+    Kie::Point p2(0.0f,0.0f,0,Kie::Color(0.0f,1.0f,0.0f));
     p2.setTexture({0,0});
-    Kie::Point p3(1.0f,0.5f,Kie::Color(0.0f,0.0f,1.0f));
+    Kie::Point p3(1.0f,0.5f,0,Kie::Color(0.0f,0.0f,1.0f));
     p3.setTexture({1.0f,0.5f});
     Kie::Triangle tri(p1,p2,p3,true,texture);
     window.setFrameRate(100);
