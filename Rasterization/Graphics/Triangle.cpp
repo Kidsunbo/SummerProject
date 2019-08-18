@@ -52,12 +52,13 @@ void Kie::Triangle::_drawWithFill(Kie::Window &window) {
     else {
         float r = (pos2.getY() - pos1.getY()) / (pos3.getY() - pos1.getY());
         float newX = pos1.getX() + r * (pos3.getX() - pos1.getX());
+        float newZ = pos1.getZ()+r*(pos3.getZ()-pos1.getZ());
         float newR = vertex[0].getColor().getR() + (vertex[2].getColor().getR() - vertex[0].getColor().getR()) * r;
         float newG = vertex[0].getColor().getG() + (vertex[2].getColor().getG() - vertex[0].getColor().getG()) * r;
         float newB = vertex[0].getColor().getB() + (vertex[2].getColor().getB() - vertex[0].getColor().getB()) * r;
         float newTx = vertex[0].getTexture()[0]+(vertex[2].getTexture()[0]-vertex[0].getTexture()[0])*r;
         float newTy = vertex[0].getTexture()[1]+(vertex[2].getTexture()[1]-vertex[0].getTexture()[1])*r;
-        Point p(newX, pos2.getY(), Color(newR, newG, newB));
+        Point p(newX, pos2.getY(),newZ, Color(newR, newG, newB));
         p.setTexture({newTx,newTy});
 //        if (p.getPosition().getX() < vertex[1].getPosition().getX()) { // new Point is on the left
 //            _fillTopTriangle(window, vertex[0], p,vertex[1]);
@@ -77,12 +78,18 @@ void Kie::Triangle::_drawWithFill(Kie::Window &window) {
 }
 
 void Kie::Triangle::_fillTopTriangle(Kie::Window &window, Kie::Point &p1/*top*/, Kie::Point &p2/*left*/, Kie::Point &p3/*right*/) {
-    float step1 =
+    float step1_x =
             (p2.getPosition().getX() - p1.getPosition().getX()) / (p2.getPosition().getY() - p1.getPosition().getY());
-    float step2 =
+    float step2_x =
             (p3.getPosition().getX() - p1.getPosition().getX()) / (p3.getPosition().getY() - p1.getPosition().getY());
-    float start = p1.getPosition().getX();
-    float end = p1.getPosition().getX();
+    float step1_z =
+            (p2.getPosition().getZ() - p1.getPosition().getZ()) / (p2.getPosition().getY() - p1.getPosition().getY());
+    float step2_z =
+            (p3.getPosition().getZ() - p1.getPosition().getZ()) / (p3.getPosition().getY() - p1.getPosition().getY());
+    float start_x = p1.getPosition().getX();
+    float end_x = p1.getPosition().getX();
+    float start_z = p1.getPosition().getZ();
+    float end_z = p1.getPosition().getZ();
     auto width = window.getWidth();
     auto height = window.getHeight();
 #if __cplusplus >= 201703L
@@ -100,19 +107,21 @@ void Kie::Triangle::_fillTopTriangle(Kie::Window &window, Kie::Point &p1/*top*/,
         return;
     float y_step = (p1.getPosition().getY() - p2.getPosition().getY()) / static_cast<float>(y1_temp - y2_temp)/2;
     float end_y = p2.getPosition().getY();
-    step1*=y_step;
-    step2*=y_step;
+    step1_x*=y_step;
+    step2_x*=y_step;
     if(useTexture){
         InterpTexture left(p1.getTexture(),p2.getTexture(),*texture,(y2_temp - y1_temp)*2);
         InterpTexture right(p1.getTexture(),p3.getTexture(),*texture,(y2_temp - y1_temp)*2);
         for (float y = p1.getPosition().getY(); y >= end_y;) {
-            auto pp1 = Point(start,y,++left);
-            auto pp2 = Point(end,y,++right);
+            auto pp1 = Point(start_x, y,start_z, ++left);
+            auto pp2 = Point(end_x, y, end_z,++right);
             pp1.setTexture(*left);
             pp2.setTexture(*right);
             window.draw(Line(pp1,pp2,texture));
-            start+=step1;
-            end+=step2;
+            start_x+=step1_x;
+            end_x+=step2_x;
+            start_z+=step1_z;
+            end_z+=step2_z;
             y+=y_step;
         }
     }
@@ -120,29 +129,39 @@ void Kie::Triangle::_fillTopTriangle(Kie::Window &window, Kie::Point &p1/*top*/,
         InterpColor left(p1.getColor(),p2.getColor(),(y2_temp - y1_temp)*2);
         InterpColor right(p1.getColor(),p3.getColor(),(y2_temp - y1_temp)*2);
         for (float y = p1.getPosition().getY(); y >= end_y;) {
-            window.draw(Line(Point(start,y,++left),Point(end,y,++right)));
-            start+=step1;
-            end+=step2;
+            window.draw(Line(Point(start_x, y,start_z, ++left), Point(end_x, y, end_z,++right)));
+            start_x+=step1_x;
+            end_x+=step2_x;
+            start_z+=step1_z;
+            end_z+=step2_z;
             y+=y_step;
         }
     }
     else{
         for (float y = p1.getPosition().getY(); y >= end_y;) {
-            window.draw(Line(start,y,end,y,fillColor));
-            start+=step1;
-            end+=step2;
+            window.draw(Line(Point(start_x, y,start_z,fillColor),Point(end_x, y,end_z,fillColor)));
+            start_x+=step1_x;
+            end_x+=step2_x;
+            start_z+=step1_z;
+            end_z+=step2_z;
             y+=y_step;
         }
     }
 }
 
 void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1/*bottom*/, Kie::Point &p2/*left*/, Kie::Point &p3/*right*/) {
-    float step1 =
+    float step1_x =
             (p1.getPosition().getX() - p2.getPosition().getX()) / (p1.getPosition().getY() - p2.getPosition().getY());
-    float step2 =
+    float step2_x =
             (p1.getPosition().getX() - p3.getPosition().getX()) / (p1.getPosition().getY() - p3.getPosition().getY());
-    float start = p1.getPosition().getX();
-    float end = p1.getPosition().getX();
+    float step1_z =
+            (p1.getPosition().getX() - p2.getPosition().getX()) / (p1.getPosition().getY() - p2.getPosition().getY());
+    float step2_z =
+            (p1.getPosition().getZ() - p3.getPosition().getZ()) / (p1.getPosition().getY() - p3.getPosition().getY());
+    float start_x = p1.getPosition().getX();
+    float end_x = p1.getPosition().getX();
+    float start_z = p1.getPosition().getZ();
+    float end_z = p1.getPosition().getZ();
     auto width = window.getWidth();
     auto height = window.getHeight();
 #if __cplusplus >= 201703L
@@ -160,19 +179,21 @@ void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1/*bot
         return;
     float y_step = (p2.getPosition().getY() - p1.getPosition().getY()) / static_cast<float>(y2_temp - y1_temp)/2;
     float end_y = p2.getPosition().getY();
-    step1*=y_step;
-    step2*=y_step;
+    step1_x*=y_step;
+    step2_x*=y_step;
     if(useTexture){
         InterpTexture left(p1.getTexture(),p2.getTexture(),*texture,(y1_temp - y2_temp)*2);
         InterpTexture right(p1.getTexture(),p3.getTexture(),*texture,(y1_temp - y2_temp)*2);
         for (float y = p1.getPosition().getY(); y <= end_y;) {
-            auto pp1 = Point(start,y,++left);
-            auto pp2 = Point(end,y,++right);
+            auto pp1 = Point(start_x, y,start_z, ++left);
+            auto pp2 = Point(end_x, y,end_z, ++right);
             pp1.setTexture(*left);
             pp2.setTexture(*right);
             window.draw(Line(pp1,pp2,texture));
-            start-=step1;
-            end-=step2;
+            start_x-=step1_x;
+            end_x-=step2_x;
+            start_z-=step1_z;
+            end_z-=step2_z;
             y-=y_step;
         }
     }
@@ -180,17 +201,21 @@ void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1/*bot
         InterpColor left(p1.getColor(),p2.getColor(),(y1_temp - y2_temp)*2);
         InterpColor right(p1.getColor(),p3.getColor(),(y1_temp - y2_temp)*2);
         for (float y = p1.getPosition().getY(); y <= end_y;) {
-            window.draw(Line(Point(start,y,++left),Point(end,y,++right)));
-            start-=step1;
-            end-=step2;
+            window.draw(Line(Point(start_x, y,start_z, ++left), Point(end_x, y,end_z, ++right)));
+            start_x-=step1_x;
+            end_x-=step2_x;
+            start_z-=step1_z;
+            end_z-=step2_z;
             y-=y_step;
         }
     }
     else{
         for (float y = p1.getPosition().getY(); y <= end_y;) {
-            window.draw(Line(start,y,end,y,fillColor));
-            start-=step1;
-            end-=step2;
+            window.draw(Line(Point(start_x, y,start_z,fillColor), Point(end_x, y,end_z, fillColor)));
+            start_x-=step1_x;
+            end_x-=step2_x;
+            start_z-=step1_z;
+            end_z-=step2_z;
             y-=y_step;
 
         }

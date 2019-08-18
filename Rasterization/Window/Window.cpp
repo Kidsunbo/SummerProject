@@ -9,6 +9,7 @@
 // STL
 #include <thread>
 #include <iostream>
+#include <limits>
 
 
 void Kie::Window::clear(Kie::Color c) {
@@ -24,6 +25,11 @@ void Kie::Window::clear(Kie::Color c) {
             for (auto &p : row) {
                 p = c;
             }
+        }
+    }
+    for(auto& row:zbuffer){
+        for(auto& p:row){
+            p=std::numeric_limits<float>::max();
         }
     }
 }
@@ -84,6 +90,7 @@ Kie::Window::Window(int width, int height, const char *title) {
     for(auto i = 0;i<=mode->height;i++){
         _buf1.emplace_back(std::vector<Color>(mode->width+1,Color(0,0,0)));
         _buf2.emplace_back(std::vector<Color>(mode->width+1,Color(0,0,0)));
+        zbuffer.emplace_back(std::vector<float>(mode->width+1,std::numeric_limits<float>::max()));
     }
 
     glfwMakeContextCurrent(window);
@@ -126,6 +133,10 @@ GLFWwindow *Kie::Window::getWindow() {
 
 void Kie::Window::printFPS(bool value){
     this->printfps = value;
+}
+
+std::vector<std::vector<float>>& Kie::Window::getZbuffer() {
+    return zbuffer;
 }
 
 

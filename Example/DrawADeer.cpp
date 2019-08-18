@@ -17,8 +17,7 @@ int main() {
     object.setRotateZ(180);
     object.move(0,-0.5,0);
     object.setDrawSketch(true);
-    object.setDrawFill(false);
-    object.setDrawTexture(false);
+    object.setDrawFill(true);
     object.setRenderForEachTriangle(true);
     Kie::Light light(Kie::Color(255, 255, 255));
     light.setLightPos(Kie::Math::Vec3D({10, 0, -1}));

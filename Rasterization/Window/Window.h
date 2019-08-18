@@ -31,6 +31,8 @@ namespace Kie {
         bool printfps = false;
         std::chrono::time_point<std::chrono::system_clock> time;
 
+        std::vector<std::vector<float>> zbuffer;
+
 
     private:
         void _display(std::vector<std::vector<Color>>& _buf);
@@ -54,6 +56,8 @@ namespace Kie {
         void printFPS(bool value);
 
         bool shouldClose();
+
+        std::vector<std::vector<float>>& getZbuffer();
 
         std::vector<std::vector<Color>>& getBuffer();
 

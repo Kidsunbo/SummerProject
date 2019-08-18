@@ -22,13 +22,13 @@ void Kie::Point::draw(Kie::Window &window) {
     auto y = std::get<1>(res);
 #endif
     if(x<0 || x>width ||y<0 || y>height) return;
-    window.getBuffer().at(y).at(x) = color;
-}
+    if(window.getZbuffer().at(y).at(x)>this->getPosition().getZ()) {
+        window.getBuffer().at(y).at(x) = color;
+        window.getZbuffer().at(y).at(x) = this->getPosition().getZ();
+    }
+//    window.getBuffer().at(y).at(x) = color;
 
-Kie::Point::Point(float x, float y, Kie::Color c):color(c),texture(0.0f) {
-    this->setPosition(x,y,0);
 }
-
 
 const Kie::Color &Kie::Point::getColor() {
     return color;

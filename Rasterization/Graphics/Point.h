@@ -19,8 +19,6 @@ namespace Kie {
 
         void setTexture(const Math::Vec2D &texture);
 
-        Point(float x, float y, Color c = Color(255,255,255));
-
         Point(float x, float y, float z, Color c = Color(255,255,255));
 
         void draw(Window &window) override;
