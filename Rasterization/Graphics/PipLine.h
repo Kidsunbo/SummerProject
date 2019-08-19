@@ -57,6 +57,8 @@ namespace Kie {
 
         Object Illuminate(Object object);
 
+        Object Clip(Object object);
+
         void updatePromatrix(Window& window,float near=0.1f,float far=100.0f,float fov=90.0f);
 
         void Projection(Triangle& triangle);
@@ -75,8 +77,10 @@ namespace Kie {
 
         void MapToView(Triangle& triangle);
 
+        void Clip(Triangle& triangle);
 
-        const Light &getLight() const;
+
+        Light &getLight();
 
         void setLight(const Light &light);
 
@@ -91,7 +95,6 @@ namespace Kie {
         Camera& getCamera();
 
         void setCamera(const Camera& camera);
-
 
     };
 

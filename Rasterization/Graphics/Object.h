@@ -34,6 +34,8 @@ namespace Kie {
 
         bool renderForEachTriangle = true;
 
+        bool applyLight = true;
+
         std::shared_ptr<Texture> texture=std::make_shared<Texture>();
 
     public:
@@ -82,7 +84,9 @@ namespace Kie {
         void setOrigin(float x, float y, float z) override;
         void setRenderForEachTriangle(bool value);
 
+        void turnTheLight();
 
+        std::vector<Triangle>& getMesh();
 
     };
 

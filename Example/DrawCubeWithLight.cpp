@@ -47,13 +47,14 @@ int main(){
     object.setOrigin(0.5f,0.5f,0.5f);
     object.setDrawSketch(true);
     object.setDrawFill(true);
-    object.setRotateZ(45);
+//    object.setRotateZ(45);
     object.setRenderForEachTriangle(true);
     Kie::Light light(Kie::Color(255,100,255));
     light.setLightPos(Kie::Math::Vec3D({0,0,10}));
     Kie::PipLine::getInstance(window).setLight(light);
-    object.setRotateZ(45);
-    object.setRotateX(60);
+//    object.setRotateZ(45);
+//    object.setRotateX(60);
+    object.turnTheLight();
     //window.printFPS(true);
     while(!window.shouldClose()){
 
@@ -90,8 +91,8 @@ int main(){
         window.draw(object);
 
         object.rotateY(1);
-        object.rotateX(0.5);
-        object.rotateZ(1);
+//        object.rotateX(0.5);
+//        object.rotateZ(1);
         window.display();
     }
 

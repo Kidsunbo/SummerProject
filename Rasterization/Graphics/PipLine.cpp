@@ -83,6 +83,13 @@ Kie::Object Kie::PipLine::Translate(Kie::Object object) {
     return object;
 }
 
+Kie::Object Kie::PipLine::Clip(Object object){
+    for(auto& tri:object.mesh){
+        Clip(tri);
+    }
+    return object;
+}
+
 Kie::Object Kie::PipLine::Illuminate(Kie::Object object) {
     //Ambient
     Math::Vec3D ambient = (light.getLightColor()*light.getAmbientStrength()).toVec3D();
@@ -103,7 +110,7 @@ Kie::Object Kie::PipLine::Illuminate(Kie::Object object) {
     return object;
 }
 
-const Kie::Light &Kie::PipLine::getLight() const {
+ Kie::Light &Kie::PipLine::getLight() {
     return light;
 }
 
@@ -258,4 +265,6 @@ Kie::Object Kie::PipLine::MapToView(Kie::Object object) {
 }
 
 
+void Kie::PipLine::Clip(Triangle& triangle){
 
+}

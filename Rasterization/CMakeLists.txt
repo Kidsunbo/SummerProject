@@ -13,8 +13,9 @@ if(NOT TARGET glfw)
     add_subdirectory(../glfw-3.3 ../glfw-3.3)
 endif()
 
+if(NOT TARGET raster)
 add_library(raster ${SOURCE} ${GLAD})
-
+endif()
 target_include_directories(raster PUBLIC ../Rasterization)
 target_include_directories(raster PUBLIC ../glfw-3.3/include)
 target_include_directories(raster PUBLIC ../glfw-3.3/deps)

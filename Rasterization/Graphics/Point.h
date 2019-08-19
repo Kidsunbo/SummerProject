@@ -9,6 +9,7 @@
 #include "Color.h"
 #include "ITransformable.h"
 #include "Math/Math.h"
+#include <limits>
 
 namespace Kie {
     class Point : public IDrawable, public ITransformable{
@@ -26,6 +27,7 @@ namespace Kie {
         const Color &getColor();
 
         void setColor(Color c);
+
     };
 }
 

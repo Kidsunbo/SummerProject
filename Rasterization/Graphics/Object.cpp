@@ -8,6 +8,7 @@
 #include <sstream>
 #include <algorithm>
 #include <utility>
+#include <iostream>
 
 
 void Kie::Object::draw(Kie::Window &window) {
@@ -19,12 +20,13 @@ if(!renderForEachTriangle) {
     auto obj = *this;
     obj = pipLine.Rotate(obj);
     obj = pipLine.MapToWorld(obj);
-    obj = pipLine.Illuminate(obj);
-    obj = pipLine.MapToView(obj);
+    if(applyLight) obj = pipLine.Illuminate(obj);
+    obj = pipLine.Translate(obj);
 
+    obj = pipLine.MapToView(obj);
+    obj = pipLine.Clip(obj);
     obj = pipLine.Projection(obj);
     obj = pipLine.Culling(obj);
-    obj = pipLine.Translate(obj);
 
     for (auto &tri:obj.mesh) {
         if (drawSketch)
@@ -41,13 +43,13 @@ if(!renderForEachTriangle) {
     for (auto tri:mesh) {
         pipLine.Rotate(tri);
         pipLine.MapToWorld(tri, *this);
-        pipLine.Illuminate(tri);
-        pipLine.MapToView(tri);
+        pipLine.Translate(tri, *this);
 
+        if(applyLight) pipLine.Illuminate(tri);
+        pipLine.MapToView(tri);
+        pipLine.Clip(tri);
         pipLine.Projection(tri);
         if (!pipLine.Culling(tri)) continue;
-
-        pipLine.Translate(tri, *this);
         if (drawSketch)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
         if(drawTexture)
@@ -67,9 +69,7 @@ void Kie::Object::setDistance(float z) {
 
 Kie::Object::Object(std::initializer_list<std::array<float, 9>> li) {
     for(auto& tri : li){
-        mesh.emplace_back(Point(tri[0],tri[1],tri[2],Color(255,0,0)),Point(tri[3],tri[4],tri[5],Color(255,0,0)),Point(tri[6],tri[7],tri[8],Color(255,0,0)));
-//        mesh.emplace_back(Point(tri[0],tri[1],tri[2]),Point(tri[3],tri[4],tri[5]),Point(tri[6],tri[7],tri[8]));
-
+        mesh.emplace_back(Point(tri[0],tri[1],tri[2]),Point(tri[3],tri[4],tri[5]),Point(tri[6],tri[7],tri[8]));
     }
 }
 
@@ -137,7 +137,6 @@ void Kie::Object::load(std::string filePath,std::string textureFilePath){
                 if(y.size()==3&&!y[1].empty())p2.setTexture(textureData.at(std::stoi(y[1])));
                 if(z.size()==3&&!z[1].empty())p3.setTexture(textureData.at(std::stoi(z[1])));
                 if(w.size()==3&&!w[1].empty())p4.setTexture(textureData.at(std::stoi(w[1])));
-
 
                 mesh.emplace_back(p1, p2, p3);
                 mesh.emplace_back(p1,p3,p4);
@@ -252,5 +251,15 @@ bool Kie::Object::isDrawTexture() const {
 void Kie::Object::setDrawTexture(bool drawTexure) {
     this->drawTexture=drawTexure;
 }
+
+void Kie::Object::turnTheLight() {
+    applyLight = !applyLight;
+}
+
+std::vector<Kie::Triangle> &Kie::Object::getMesh() {
+    return mesh;
+}
+
+
 
 

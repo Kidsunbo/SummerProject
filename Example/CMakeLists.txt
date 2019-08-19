@@ -40,3 +40,11 @@ target_link_libraries(DrawADeer PRIVATE raster)
 add_executable(DrawATriangleWithTexture DrawATriangleWithTexture.cpp)
 target_include_directories(DrawATriangleWithTexture PRIVATE ../Rasterization)
 target_link_libraries(DrawATriangleWithTexture PRIVATE raster)
+
+add_executable(DrawADog DrawADog.cpp)
+target_include_directories(DrawADog PRIVATE ../Rasterization)
+target_link_libraries(DrawADog PRIVATE raster)
+
+add_executable(TestZBuffer TestZBuffer.cpp)
+target_include_directories(TestZBuffer PRIVATE ../Rasterization)
+target_link_libraries(TestZBuffer PRIVATE raster)
