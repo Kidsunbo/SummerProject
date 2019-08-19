@@ -22,7 +22,13 @@ if(!renderForEachTriangle) {
     obj = pipLine.MapToWorld(obj);
     if(applyLight) obj = pipLine.Illuminate(obj);
     obj = pipLine.Translate(obj);
-
+    for(auto& tri:obj.mesh){
+        for(auto& ver:tri.vertex){
+            auto cameraDir = Kie::PipLine::getInstance(window).getCamera().getDirection();
+            float dis = cameraDir.dotProduct(ver.getPosition()-Kie::PipLine::getInstance(window).getCamera().getPosition());
+            ver.setZ(dis);
+        }
+    }
     obj = pipLine.MapToView(obj);
     obj = pipLine.Clip(obj);
     obj = pipLine.Projection(obj);
@@ -46,6 +52,8 @@ if(!renderForEachTriangle) {
         pipLine.Translate(tri, *this);
         for(auto& ver:tri.vertex){
             auto cameraDir = Kie::PipLine::getInstance(window).getCamera().getDirection();
+            float dis = cameraDir.dotProduct(ver.getPosition()-Kie::PipLine::getInstance(window).getCamera().getPosition());
+            ver.setZ(dis);
         }
         if(applyLight) pipLine.Illuminate(tri);
         pipLine.MapToView(tri);

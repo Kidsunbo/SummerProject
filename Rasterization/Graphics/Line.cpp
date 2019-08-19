@@ -5,6 +5,7 @@
 #include "Line.h"
 
 #include <utility>
+#include <iostream>
 #include "Window/Window.h"
 #include "Texture.h"
 
@@ -38,8 +39,8 @@ void Kie::Line::draw(Kie::Window &window) {
     float x2 = vertex[1].getPosition().getX();
     float y1 = vertex[0].getPosition().getY();
     float y2 = vertex[1].getPosition().getY();
-    float z1 = vertex[0].getPosition().getZ();
-    float z2 = vertex[1].getPosition().getZ();
+    float z1 = vertex[0].getZ();
+    float z2 = vertex[1].getZ();
     float delta_x = (x2-x1)/(float)step;
     float delta_y = (y2-y1)/(float)step;
     float delta_z = (z2-z1)/(float)step;

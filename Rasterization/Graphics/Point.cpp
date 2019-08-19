@@ -50,13 +50,39 @@ void Kie::Point::setTexture(const Kie::Math::Vec2D &texture) {
     Point::texture = texture;
 }
 
-float Kie::Point::getZ() {
+float Kie::Point::getZ() const {
     if(z== nullptr) return getPosition().getZ();
     return *z;
 }
 
 void Kie::Point::setZ(float value) {
-    z = std::make_shared<float>(value);
+    if(z== nullptr)
+        z = std::make_shared<float>(value);
+    else *z=value;
+}
+
+Kie::Point::Point(const Kie::Point &point):z(point.z),color(point.color),texture(point.texture),ITransformable(point) {
+
+}
+
+Kie::Point::Point(Kie::Point &&point):z(point.z),color(point.color),texture(point.texture),ITransformable(point) {
+
+}
+
+Kie::Point &Kie::Point::operator=(const Kie::Point &point) {
+    color=point.color;
+    texture=point.texture;
+    setPosition(point.getPosition());
+    setZ(point.getZ());
+    return *this;
+}
+
+Kie::Point &Kie::Point::operator=(Kie::Point &&point) noexcept {
+    color=point.color;
+    texture=point.texture;
+    setPosition(point.getPosition());
+    setZ(point.getZ());
+    return *this;
 }
 
 

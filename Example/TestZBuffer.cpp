@@ -46,12 +46,12 @@ int main() {
     vec[1].setPosition(0,0,6);
 
     vec[0].setDrawFill(true);
-    vec[1].setDrawFill(false);
+    vec[1].setDrawFill(true);
     vec[0].setRotateX(0);
     vec[1].setRotateX(0);
 
-    Kie::PipLine::getInstance(window).getCamera().setPosition(0.0f,0.0f,12.0);
-    Kie::PipLine::getInstance(window).setLight(Kie::Light(Kie::Color(255,255,255),Kie::Math::Vec3D({0.0f,0.0f,13.0f})));
+    Kie::PipLine::getInstance(window).getCamera().setPosition(0.0f,0.0f,16.0);
+    Kie::PipLine::getInstance(window).setLight(Kie::Light(Kie::Color(255,255,255),Kie::Math::Vec3D({0.0f,0.0f,130.0f})));
 
     while (!window.shouldClose()) {
 
@@ -73,12 +73,11 @@ int main() {
 
         glfwPollEvents();
         window.clear(Kie::Color(0, 0, 0));
-
-        float radius = 10.0f;
-        float camX = sin(angle) * radius;
-        float camZ = cos(angle) * radius;
-        Kie::PipLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
-        std::sort(vec.begin(),vec.end(),[](Kie::Object& object1,Kie::Object& object2){return object1.getPosition().getZ()<object2.getPosition().getZ();});
+//
+//        float radius = 10.0f;
+//        float camX = sin(angle) * radius;
+//        float camZ = cos(angle) * radius;
+//        Kie::PipLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
 
         for(auto& i:vec){
             window.draw(i);

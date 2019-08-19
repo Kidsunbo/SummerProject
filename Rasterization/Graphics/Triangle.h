@@ -23,6 +23,13 @@ namespace Kie {
 
         Triangle(Point p1,Point p2,Point p3, bool useTexure, std::shared_ptr<Texture> texture);
 
+        Triangle(const Triangle& triangle);
+
+        Triangle(Triangle& triangle);
+
+        Triangle&operator=(const Triangle& triangle);
+
+        Triangle&operator=(Triangle&& triangle);
 
         void draw(Window &window) override;
 

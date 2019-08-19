@@ -85,6 +85,7 @@ Kie::Window::Window(int width, int height, const char *title) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,1);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,1);
     window = glfwCreateWindow(width,height,title,nullptr,nullptr);
+
     if(window==nullptr) throw GLFWLoginException("GLFW window create failed");
 
     for(auto i = 0;i<=mode->height;i++){
@@ -92,7 +93,6 @@ Kie::Window::Window(int width, int height, const char *title) {
         _buf2.emplace_back(std::vector<Color>(mode->width+1,Color(0,0,0)));
         zbuffer.emplace_back(std::vector<float>(mode->width+1,std::numeric_limits<float>::max()));
     }
-
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow* window, int width, int height){

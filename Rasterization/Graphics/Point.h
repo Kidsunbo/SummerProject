@@ -23,13 +23,21 @@ namespace Kie {
 
         Point(float x, float y, float z, Color c = Color(255,255,255));
 
+        Point(const Point& point);
+
+        explicit Point(Point&& point);
+
+        Point&operator=(const Point& point);
+
+        Point&operator=(Point&& point)noexcept;
+
         void draw(Window &window) override;
 
         const Color &getColor();
 
         void setColor(Color c);
         
-        float getZ();
+        float getZ() const;
         
         void setZ(float value);
     };
