@@ -44,7 +44,9 @@ if(!renderForEachTriangle) {
         pipLine.Rotate(tri);
         pipLine.MapToWorld(tri, *this);
         pipLine.Translate(tri, *this);
-
+        for(auto& ver:tri.vertex){
+            auto cameraDir = Kie::PipLine::getInstance(window).getCamera().getDirection();
+        }
         if(applyLight) pipLine.Illuminate(tri);
         pipLine.MapToView(tri);
         pipLine.Clip(tri);

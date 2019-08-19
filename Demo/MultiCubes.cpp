@@ -61,19 +61,26 @@ int main() {
     }
     for(auto& i:vec){
         i.setDrawFill(true);
+        i.setOrigin(0.5f,0.5f,0.5f);
     }
     vec[0].move(-2,0.5,0);
-    vec[1].move(-0.7,-0.4,0);
-    vec[2].move(-0.3,1.2,0);
-    vec[3].move(0,0,0);
-    vec[4].move(0.6,0.7,0);
-    vec[5].move(1.7,-0.5,0);
+    //vec[1].move(-1.7,2,0);
+    //vec[2].move(-3,1.2,0);
+    //vec[3].move(0,0,0);
+    //vec[4].move(0.6,0.7,0);
+    //vec[5].move(1.7,-0.5,0);
+//    vec[0].move(-20,5,0);
+//    vec[1].move(-7,-4,0);
+//    vec[2].move(-3,12,0);
+//    vec[3].move(0,0,0);
+//    vec[4].move(0.6,7,0);
+//    vec[5].move(17,-5,0);
 
 
 
     Kie::Camera& camera = Kie::PipLine::getInstance(window).getCamera();
     Kie::Light& light = Kie::PipLine::getInstance(window).getLight();
-    camera.setPosition(0,0,-10);
+    camera.setPosition(0,0,-100);
     light.setLightPos(Kie::Math::Vec3D{0,0,-100});
 
     Kie::Math::Vec3D cameraFront = {0,0,1};
@@ -82,44 +89,33 @@ int main() {
 
         if(!autoRotate) {
             if (glfwGetKey(window.getWindow(), GLFW_KEY_UP) == GLFW_PRESS) {
-                camera.setTarget(camera.getPosition() + cameraFront);
                 camera.setPosition(camera.getPosition() - Kie::Math::Vec3D{0, 1, 0});
-                camera.setTarget(camera.getPosition() + cameraFront);
+                camera.setTarget(camera.getPosition()+cameraFront);
+
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS) {
-                camera.setTarget(camera.getPosition() + cameraFront);
                 camera.setPosition(camera.getPosition() + Kie::Math::Vec3D{0, 1, 0});
-                camera.setTarget(camera.getPosition() + cameraFront);
+                camera.setTarget(camera.getPosition()+cameraFront);
 
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS) {
-
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS) {
-
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-                camera.setTarget(camera.getPosition() + cameraFront);
                 camera.setPosition(camera.getPosition() + cameraFront * speed);
-                camera.setTarget(camera.getPosition() + cameraFront);
-
+                camera.setTarget(camera.getPosition()+cameraFront);
 
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-                camera.setTarget(camera.getPosition() + cameraFront);
                 camera.setPosition(camera.getPosition() - cameraFront * speed);
-                camera.setTarget(camera.getPosition() + cameraFront);
-
+                camera.setTarget(camera.getPosition()+cameraFront);
 
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-                camera.setTarget(camera.getPosition() + cameraFront);
                 camera.setPosition(camera.getPosition() + cameraFront.crossProduct(cameraUp).normalize() * speed);
-                camera.setTarget(camera.getPosition() + cameraFront);
-
+                camera.setTarget(camera.getPosition()+cameraFront);
 
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-                camera.setTarget(camera.getPosition() + cameraFront);
                 camera.setPosition(camera.getPosition() - cameraFront.crossProduct(cameraUp).normalize() * speed);
-                camera.setTarget(camera.getPosition() + cameraFront);
+                camera.setTarget(camera.getPosition()+cameraFront);
 
             }
         }
-
 
 
         glfwPollEvents();

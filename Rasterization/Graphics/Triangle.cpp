@@ -155,7 +155,7 @@ void Kie::Triangle::_fillBottomTriangle(Kie::Window &window, Kie::Point &p1/*bot
     float step2_x =
             (p1.getPosition().getX() - p3.getPosition().getX()) / (p1.getPosition().getY() - p3.getPosition().getY());
     float step1_z =
-            (p1.getPosition().getX() - p2.getPosition().getX()) / (p1.getPosition().getY() - p2.getPosition().getY());
+            (p1.getPosition().getZ() - p2.getPosition().getZ()) / (p1.getPosition().getY() - p2.getPosition().getY());
     float step2_z =
             (p1.getPosition().getZ() - p3.getPosition().getZ()) / (p1.getPosition().getY() - p3.getPosition().getY());
     float start_x = p1.getPosition().getX();

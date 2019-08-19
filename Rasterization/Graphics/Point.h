@@ -9,12 +9,13 @@
 #include "Color.h"
 #include "ITransformable.h"
 #include "Math/Math.h"
-#include <limits>
+#include <memory>
 
 namespace Kie {
     class Point : public IDrawable, public ITransformable{
         Color color;
         Math::Vec2D texture;
+        std::shared_ptr<float> z = nullptr;
     public:
         const Math::Vec2D &getTexture() const;
 
@@ -27,7 +28,10 @@ namespace Kie {
         const Color &getColor();
 
         void setColor(Color c);
-
+        
+        float getZ();
+        
+        void setZ(float value);
     };
 }
 

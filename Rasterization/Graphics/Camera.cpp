@@ -66,3 +66,11 @@ void Kie::Camera::move(float x, float y, float z) {
     updateView();
 }
 
+Kie::Math::Vec3D& Kie::Camera::getTarget() {
+    return target;
+}
+
+Kie::Math::Vec3D Kie::Camera::getDirection() {
+    return (target-getPosition()).normalize();
+}
+

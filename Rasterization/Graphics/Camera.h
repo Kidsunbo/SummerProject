@@ -35,6 +35,10 @@ namespace Kie {
 
         void move(float x, float y, float z) override;
 
+        Math::Vec3D& getTarget();
+
+        Math::Vec3D getDirection();
+
 
     public:
 

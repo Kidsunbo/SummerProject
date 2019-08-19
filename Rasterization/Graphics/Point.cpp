@@ -22,9 +22,9 @@ void Kie::Point::draw(Kie::Window &window) {
     auto y = std::get<1>(res);
 #endif
     if(x<0 || x>width ||y<0 || y>height) return;
-    if(window.getZbuffer().at(y).at(x)>this->getPosition().getZ()) {
+    if(window.getZbuffer().at(y).at(x)>this->getZ()) {
         window.getBuffer().at(y).at(x) = color;
-        window.getZbuffer().at(y).at(x) = this->getPosition().getZ();
+        window.getZbuffer().at(y).at(x) = this->getZ();
     }
 //    window.getBuffer().at(y).at(x) = color;
 
@@ -48,6 +48,15 @@ const Kie::Math::Vec2D &Kie::Point::getTexture() const {
 
 void Kie::Point::setTexture(const Kie::Math::Vec2D &texture) {
     Point::texture = texture;
+}
+
+float Kie::Point::getZ() {
+    if(z== nullptr) return getPosition().getZ();
+    return *z;
+}
+
+void Kie::Point::setZ(float value) {
+    z = std::make_shared<float>(value);
 }
 
 

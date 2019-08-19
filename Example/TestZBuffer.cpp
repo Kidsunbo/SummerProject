@@ -46,12 +46,12 @@ int main() {
     vec[1].setPosition(0,0,6);
 
     vec[0].setDrawFill(true);
-    vec[1].setDrawFill(true);
-    vec[0].setRotateX(60);
-    vec[1].setRotateX(30);
+    vec[1].setDrawFill(false);
+    vec[0].setRotateX(0);
+    vec[1].setRotateX(0);
 
-    Kie::PipLine::getInstance(window).getCamera().setPosition(0.0f,0.0f,-3.0);
-    Kie::PipLine::getInstance(window).setLight(Kie::Light(Kie::Color(255,255,255),Kie::Math::Vec3D({0.0f,0.0f,10.0f})));
+    Kie::PipLine::getInstance(window).getCamera().setPosition(0.0f,0.0f,12.0);
+    Kie::PipLine::getInstance(window).setLight(Kie::Light(Kie::Color(255,255,255),Kie::Math::Vec3D({0.0f,0.0f,13.0f})));
 
     while (!window.shouldClose()) {
 
@@ -83,7 +83,8 @@ int main() {
         for(auto& i:vec){
             window.draw(i);
         }
-
+        vec[1].rotateY(1);
+        vec[1].rotateZ(1);
 
         window.display();
     }
