@@ -35,7 +35,7 @@ int main() {
     Kie::Window window(640, 480, "Hello Deer");
     glfwSetKeyCallback(window.getWindow(),key_callback);
     Kie::Object object;
-    object.load("Resource/deer/deer.obj");
+    object.load("../../Resource/deer/deer.obj");
     object.setDistance(1000);
     object.setOrigin(0, 0, 0);
     object.setRotateZ(180);

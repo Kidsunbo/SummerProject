@@ -95,6 +95,9 @@ Kie::Window::Window(int width, int height, const char *title) {
     }
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
+#ifdef __APPLE__
+    glPointSize(2);
+#endif
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow* window, int width, int height){
         glViewport(0, 0, width, height);
     });
