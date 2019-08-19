@@ -56,10 +56,10 @@ Kie::Math::Vec2D Kie::InterpTexture::operator*() {
 
 Kie::Color Kie::InterpTexture::operator++() {
 
-    int index_r =  static_cast<int>(current[1]* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0]*
-                                                                                                                                static_cast<float>(texture.getWidth()))*3+0;
-    int index_g = static_cast<int>(current[1]* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0]*static_cast<float>(texture.getWidth()))*3+1;
-    int index_b =  static_cast<int>(current[1]* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0]*static_cast<float>(texture.getWidth()))*3+2;
+    int index_r =  static_cast<int>((1-current[1])* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0]*
+            static_cast<float>(texture.getWidth()))*3+0;
+    int index_g = static_cast<int>((1-current[1])* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0]*static_cast<float>(texture.getWidth()))*3+1;
+    int index_b =  static_cast<int>((1-current[1])* static_cast<float>(texture.getHeight()))*texture.getWidth()*3+ static_cast<int>(current[0]*static_cast<float>(texture.getWidth()))*3+2;
     auto r = static_cast<int>(*(texture.getImg()+index_r));
     auto g = static_cast<int>(*(texture.getImg()+index_g));
     auto b = static_cast<int>(*(texture.getImg()+index_b));

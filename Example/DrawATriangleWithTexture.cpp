@@ -10,7 +10,7 @@ int main(){
 
     Kie::Window window(640,480,"Hello Triangle");
     std::shared_ptr<Kie::Texture> texture = std::make_shared<Kie::Texture>();
-    texture->load(R"(../../Resource/img/brick.png)");
+    texture->load(R"(C:\Users\bxs863\Desktop/test.jpg)");
     Kie::Point p1(0.0f,1.0f,0,Kie::Color(1.0f,0.0f,0.0f));
     p1.setTexture({0.0f,1.0f});
     Kie::Point p2(0.0f,0.0f,0,Kie::Color(0.0f,1.0f,0.0f));

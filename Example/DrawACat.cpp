@@ -15,10 +15,10 @@ int main() {
         object.load("../../Resource/cat/cat.obj", "../../Resource/cat/cat.png");
         object.setDistance(100);
         object.setOrigin(0.5f, 0.5f, 0.0f);
-        object.setDrawSketch(true);
+        object.setDrawSketch(false);
         object.setDrawFill(true);
-        object.setDrawTexture(false);
-        object.setRotateY(180);
+        object.setDrawTexture(true);
+        object.setRotateZ(180);
         object.move(0, -0.3, 0);
         object.setRenderForEachTriangle(true);
         Kie::Light light(Kie::Color(255, 255, 255));
@@ -31,7 +31,7 @@ int main() {
 
             window.draw(object);
 
-//            object.rotateY(1);
+            object.rotateY(1);
 //        object.rotateX(0.5);
 //        object.rotateZ(1);
 
