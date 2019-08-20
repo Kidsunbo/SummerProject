@@ -34,6 +34,8 @@ namespace Kie {
         void draw(Window &window) override;
 
         void resetFilledColor(bool fill,Color c=Color(-1,-1,-1,true));
+        
+        void setVertex(const std::array<Point,3>& vertex);
 
     private:
         void _drawWithoutFill(Window& window);

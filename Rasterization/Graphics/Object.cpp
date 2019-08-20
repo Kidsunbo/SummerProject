@@ -50,22 +50,23 @@ if(!renderForEachTriangle) {
         pipLine.Rotate(tri);
         pipLine.MapToWorld(tri, *this);
         pipLine.Translate(tri, *this);
+        if(applyLight) pipLine.Illuminate(tri);
         for(auto& ver:tri.vertex){
             auto cameraDir = Kie::PipLine::getInstance(window).getCamera().getDirection();
             float dis = cameraDir.dotProduct(ver.getPosition()-Kie::PipLine::getInstance(window).getCamera().getPosition());
             ver.setZ(dis);
         }
-        if(applyLight) pipLine.Illuminate(tri);
+       if(pipLine.Clip(tri)) {continue;}
         pipLine.MapToView(tri);
-        pipLine.Clip(tri);
         pipLine.Projection(tri);
         if (!pipLine.Culling(tri)) continue;
         if (drawSketch)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2]));
-        if(drawTexture)
-            window.draw(Triangle(tri.vertex[0],tri.vertex[1],tri.vertex[2],true,texture));
+        if (drawTexture)
+            window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true, texture));
         else if (drawFill)
             window.draw(Triangle(tri.vertex[0], tri.vertex[1], tri.vertex[2], true));
+
 
     }
 
@@ -268,6 +269,14 @@ void Kie::Object::turnTheLight() {
 
 std::vector<Kie::Triangle> &Kie::Object::getMesh() {
     return mesh;
+}
+
+void Kie::Object::setScale(float ratio) {
+    for(auto& tri:mesh){
+        for(auto& ver:tri.vertex){
+            ver.setPosition(ver.getPosition()*ratio);
+        }
+    }
 }
 
 

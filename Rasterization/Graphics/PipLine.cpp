@@ -264,7 +264,82 @@ Kie::Object Kie::PipLine::MapToView(Kie::Object object) {
     return object;
 }
 
-
-void Kie::PipLine::Clip(Triangle& triangle){
-
+bool Kie::PipLine::Clip(Triangle& triangle){
+    for(auto& ver:triangle.vertex){
+        if(ver.getZ()<=0.5f) return true;
+    }
+    return false;
 }
+
+//std::vector<Kie::Triangle> Kie::PipLine::Clip(Triangle& triangle){
+//    std::vector<Point> inner;
+//    std::vector<Point> outer;
+//    planeN = planeN.normalize();
+//
+//    float d1 = dist(triangle.vertex[0]);
+//    float d2 = dist(triangle.vertex[1]);
+//    float d3 = dist(triangle.vertex[2]);
+//
+//    if(d1>=0) inner.push_back(triangle.vertex[0]);
+//    else outer.push_back(triangle.vertex[0]);
+//    if(d2>=0) inner.push_back(triangle.vertex[1]);
+//    else outer.push_back(triangle.vertex[1]);
+//    if(d3>=0) inner.push_back(triangle.vertex[2]);
+//    else outer.push_back(triangle.vertex[2]);
+//    std::cout<<outer.size()<<std::endl;
+//    if(inner.size()==0) return{};
+//    if(inner.size()==3) return{triangle};
+//    if(inner.size()==1 && outer.size()==2){
+//        Triangle result = triangle;
+//        Point p1 = inner.at(0);
+//        Point p2 = intersetctPlane(planeP,planeN,inner.at(0),outer.at(0));
+//        Point p3 = intersetctPlane(planeP,planeN,inner.at(0),outer.at(1));
+//        result.setVertex({p1,p2,p3});
+//        return {result};
+//    }
+//    if(inner.size()==2 && outer.size()==1){
+//        Triangle result1 = triangle;
+//        Triangle result2 = triangle;
+//        Point pp1 = intersetctPlane(planeP,planeN,inner.at(0),outer.at(0));
+//        result1.setVertex({inner.at(0),inner.at(1),pp1});
+//        result2.setVertex({inner.at(1),pp1,intersetctPlane(planeP,planeN,inner.at(1),outer.at(0))});
+//        return {result1,result2};
+//    }
+//    return {};
+//}
+
+//float Kie::PipLine::dist(Kie::Point &p) {
+//    auto p1 = p.getPosition();
+//    p1[2]=p.getZ();
+//    auto n = p1.normalize();
+//    return (planeN.getX()*p1.getX()+planeN.getY()*p1.getY()+planeN.getZ()*p1.getZ()-planeN.dotProduct(planeP));
+//}
+
+
+//Kie::Point
+//Kie::PipLine::intersetctPlane(Math::Vec3D &plane, Kie::Math::Vec3D &planeN, Kie::Point &start, Kie::Point &end) {
+//    planeN = planeN.normalize();
+//    float dis = -planeN.dotProduct(plane);
+//    auto startPos = start.getPosition();
+//    startPos[2] = start.getZ();
+//    float aDis = startPos.dotProduct(planeN);
+//    auto endPos = end.getPosition();
+//    endPos[2] = end.getZ();
+//    float bDis = endPos.dotProduct(planeN);
+//    float t = (-dis-aDis)/(bDis-aDis);
+//    Math::Vec3D totalLength = endPos-startPos;
+//    Math::Vec3D clipped = totalLength*t;
+//    Math::Vec3D pointPos = startPos+clipped;
+//    float newR = start.getColor().getR() + (end.getColor().getR() - start.getColor().getR()) * t;
+//    float newG = start.getColor().getG() + (end.getColor().getG() - start.getColor().getG()) * t;
+//    float newB = start.getColor().getB() + (end.getColor().getB() - start.getColor().getB()) * t;
+//    float newTx = start.getTexture()[0]+(end.getTexture()[0]-start.getTexture()[0])*t;
+//    float newTy = start.getTexture()[1]+(end.getTexture()[1]-start.getTexture()[1])*t;
+//    auto result = Point(pointPos.getX(),pointPos.getY(),pointPos.getZ(),Color(newR,newG,newB));
+//    result .setTexture({newTx,newTy});
+//    return result;
+//}
+
+
+
+

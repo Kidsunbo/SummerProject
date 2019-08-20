@@ -12,6 +12,7 @@
 #include "Camera.h"
 
 #include <memory>
+#include <vector>
 
 namespace Kie {
 
@@ -34,6 +35,14 @@ namespace Kie {
         Math::Mat4D traMatrix;
 
         Camera camera;
+
+        Math::Vec3D planeP = {0.0,0.0,1.1f};
+        Math::Vec3D planeN = {0,0,1};
+
+
+    private:
+//        Point intersetctPlane(Math::Vec3D& plane,Math::Vec3D& planeN,Point& start,Point& end);
+//        float dist(Point& p);
 
     public:
         static PipLine& getInstance(Window& window);
@@ -77,8 +86,8 @@ namespace Kie {
 
         void MapToView(Triangle& triangle);
 
-        void Clip(Triangle& triangle);
-
+//        std::vector<Triangle> Clip(Triangle& triangle);
+        bool Clip(Triangle& triangle);
 
         Light &getLight();
 

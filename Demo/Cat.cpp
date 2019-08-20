@@ -12,6 +12,7 @@ bool drawTexture = false;
 bool drawSketch = true;
 bool addDog = false;
 
+
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_F && action == GLFW_PRESS)
@@ -32,6 +33,7 @@ void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
     if(key==GLFW_KEY_D && action == GLFW_PRESS){
         addDog=!addDog;
     }
+
 }
 
 int main() {
@@ -39,7 +41,7 @@ int main() {
         Kie::Window window(640, 480, "Hello Cat");
         glfwSetKeyCallback(window.getWindow(),key_callback);
         Kie::Object object;
-        object.load("../../Resource/cat/cat.obj", "../../Resource/cat/cat.png");
+        object.load("./Resource/cat/cat.obj", "./Resource/cat/cat.png");
         object.setDistance(50);
         object.setOrigin(0.5f, 0.5f, 0.0f);
         object.setRotateZ(180);
@@ -51,7 +53,7 @@ int main() {
         Kie::PipLine::getInstance(window).setLight(light);
 
         Kie::Object dog;
-        dog.load("../../Resource/dog/dog.obj", "../../Resource/dog/dog.jpg");
+        dog.load("./Resource/dog/dog.obj", "./Resource/dog/dog.jpg");
         dog.setDistance(50);
         dog.setOrigin(0.5f, 0.5f, 0.0f);
         dog.setDrawSketch(false);
@@ -75,12 +77,12 @@ int main() {
             window.clear(Kie::Color(0, 0, 0));
             object.rotateY(1);
 
-
             window.draw(object);
-            if(addDog) {
+            if (addDog) {
                 dog.rotateY(1);
                 window.draw(dog);
             }
+
             window.display();
 
         }

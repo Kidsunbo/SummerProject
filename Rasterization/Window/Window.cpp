@@ -73,12 +73,13 @@ void Kie::Window::_display(std::vector<std::vector<Color>> &_buf) {
     glEnd();
     if(printfps){
         auto now = std::chrono::system_clock::now();
-        std::cout<<"fps: "<<1000.0f/std::chrono::duration_cast<std::chrono::milliseconds>(now-time).count()<<std::endl;
+        std::string s ="  fps: "+std::to_string(1000.0f/std::chrono::duration_cast<std::chrono::milliseconds>(now-time).count());
+        glfwSetWindowTitle(window,(title+s).c_str());
         time = now;
     }
 }
 
-Kie::Window::Window(int width, int height, const char *title) {
+Kie::Window::Window(int width, int height, const char *title):title(title) {
     if(!glfwInit()) throw GLFWLoginException("GLFW init failed");
     // Set window hint
     const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());

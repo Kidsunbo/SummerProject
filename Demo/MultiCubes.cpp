@@ -9,6 +9,8 @@
 
 
 bool autoRotate = true;
+bool changeColor = false;
+float radius = 10.0f;
 
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
 {
@@ -16,10 +18,17 @@ void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
     {
         autoRotate=!autoRotate;
     }
+    if(key == GLFW_KEY_C && action==GLFW_PRESS){
+        changeColor = true;
+    }
 }
 
 
 int main() {
+
+    std::random_device e;
+    std::uniform_int_distribution<int> d(0,255);
+
 
     Kie::Window window(640, 480, "Hello Many Cubes");
     glfwSetKeyCallback(window.getWindow(),key_callback);
@@ -64,23 +73,18 @@ int main() {
         i.setOrigin(0.5f,0.5f,0.5f);
     }
     vec[0].move(-2,0.5,0);
-    //vec[1].move(-1.7,2,0);
-    //vec[2].move(-3,1.2,0);
-    //vec[3].move(0,0,0);
-    //vec[4].move(0.6,0.7,0);
-    //vec[5].move(1.7,-0.5,0);
-//    vec[0].move(-20,5,0);
-//    vec[1].move(-7,-4,0);
-//    vec[2].move(-3,12,0);
-//    vec[3].move(0,0,0);
-//    vec[4].move(0.6,7,0);
-//    vec[5].move(17,-5,0);
+    vec[1].move(-1.7,2,0);
+    vec[2].move(-3,1.2,0);
+    vec[3].move(0,0,0);
+    vec[4].move(0.6,0.7,0);
+    vec[5].move(1.7,-0.5,0);
+
 
 
 
     Kie::Camera& camera = Kie::PipLine::getInstance(window).getCamera();
     Kie::Light& light = Kie::PipLine::getInstance(window).getLight();
-    camera.setPosition(0,0,-100);
+    camera.setPosition(0,0,-10);
     light.setLightPos(Kie::Math::Vec3D{0,0,-100});
 
     Kie::Math::Vec3D cameraFront = {0,0,1};
@@ -113,9 +117,13 @@ int main() {
             } else if (glfwGetKey(window.getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
                 camera.setPosition(camera.getPosition() - cameraFront.crossProduct(cameraUp).normalize() * speed);
                 camera.setTarget(camera.getPosition()+cameraFront);
-
             }
         }
+        if(changeColor){
+            Kie::PipLine::getInstance(window).getLight().setLightColor(Kie::Color(d(e),d(e),d(e)));
+            changeColor = false;
+        }
+
 
 
         glfwPollEvents();
@@ -123,10 +131,10 @@ int main() {
 
         if(autoRotate) {
             camera.setTarget(Kie::Math::Vec3D{0,0,0});
-            float radius = 10.0f;
             float camX = sin(angle) * radius;
             float camZ = cos(angle) * radius;
             Kie::PipLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
+            cameraFront = (camera.getTarget()-camera.getPosition()).normalize();
             angle+=rotateSpeed;
         }
 

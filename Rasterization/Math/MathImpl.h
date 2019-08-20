@@ -340,7 +340,7 @@ namespace Kie::Math::Impl {
          * @param vec
          * @return
          */
-        float dotProduct(const Vec &vec) {
+        float dotProduct(const Vec &vec) const  {
             float res = 0.0f;
             for (int i = 0; i < N; i++) {
                 res += arr[i] * vec.arr[i];

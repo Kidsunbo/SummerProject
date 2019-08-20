@@ -40,12 +40,13 @@ Kie::Object object = {
 bool drawFill = false;
 std::random_device e;
 std::uniform_real_distribution<float> d(0.2f,1.0f);
+bool autoRotate = false;
 
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
     {
-
+        autoRotate = !autoRotate;
     }
     else if(key==GLFW_KEY_C && action==GLFW_PRESS){
         auto temp = Kie::Color(d(e),d(e),d(e));
@@ -69,30 +70,43 @@ int main() {
     object.setDrawSketch(true);
     object.setDrawFill(drawFill);
     glfwSetKeyCallback(window.getWindow(),key_callback);
+    window.printFPS(true);
     while (!window.shouldClose()) {
 
         if(glfwGetKey(window.getWindow(),GLFW_KEY_RIGHT)==GLFW_PRESS){
             object.rotateZ(1);
         }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_LEFT)==GLFW_PRESS){
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_LEFT)==GLFW_PRESS){
             object.rotateZ(-1);
         }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
             object.rotateX(1);
         }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
             object.rotateX(-1);
         }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_UP)==GLFW_PRESS){
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_COMMA)==GLFW_PRESS){
             object.rotateY(1);
         }
-        else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_DOWN)==GLFW_PRESS){
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_PERIOD)==GLFW_PRESS){
             object.rotateY(-1);
+        }
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_W)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,0,0.01);
+        }
+        if(glfwGetKey(window.getWindow(),GLFW_KEY_S)==GLFW_PRESS){
+            Kie::PipLine::getInstance(window).getCamera().move(0,0,-0.01);
         }
 
 
         glfwPollEvents();
         window.clear(Kie::Color(0, 0, 0));
+
+        if(autoRotate){
+            object.rotateX(0.5);
+            object.rotateY(1);
+            object.rotateZ(1);
+        }
 
         window.draw(object);
 

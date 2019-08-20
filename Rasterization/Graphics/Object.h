@@ -58,6 +58,7 @@ namespace Kie {
         void draw(Window &window) override;
 
         void setDistance(float z);
+        void setScale(float ratio); 
 
         void setRotateX(float degree);
         void setRotateY(float degree);

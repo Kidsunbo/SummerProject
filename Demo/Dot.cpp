@@ -26,6 +26,7 @@ int main(){
     std::vector<Kie::Point> ps;
     ps.emplace_back(0,0,0);
     glfwSetKeyCallback(window.getWindow(),key_callback);
+    window.printFPS(true);
     while(!window.shouldClose()){
         if(glfwGetMouseButton(window.getWindow(),GLFW_MOUSE_BUTTON_LEFT)==GLFW_PRESS){
             double x,y;

@@ -33,6 +33,8 @@ namespace Kie {
 
         std::vector<std::vector<float>> zbuffer;
 
+        std::string title = "";
+
 
     private:
         void _display(std::vector<std::vector<Color>>& _buf);

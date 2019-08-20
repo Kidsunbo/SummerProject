@@ -10,7 +10,7 @@
 bool drawFill = false;
 bool changeLightColor = false;
 bool resetColor = false;
-
+bool useLight = false;
 
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
 {
@@ -24,6 +24,9 @@ void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
     if(key==GLFW_KEY_R && action==GLFW_PRESS){
         resetColor = true;
     }
+    if(key==GLFW_KEY_L && action ==GLFW_PRESS){
+        useLight=true;
+    }
 }
 
 int main() {
@@ -31,12 +34,13 @@ int main() {
     std::random_device e;
     std::uniform_real_distribution<float> d(0.0f,1.0f);
 
-    float speed = 100.0f;
+    float speed = 0.5f;
     Kie::Window window(640, 480, "Hello Deer");
     glfwSetKeyCallback(window.getWindow(),key_callback);
     Kie::Object object;
-    object.load("../../Resource/deer/deer.obj");
-    object.setDistance(1000);
+    object.load("./Resource/deer/deer.obj");
+    object.setScale(0.01);
+    object.setDistance(10);
     object.setOrigin(0, 0, 0);
     object.setRotateZ(180);
     object.move(0,-0.5,0);
@@ -49,19 +53,22 @@ int main() {
     window.printFPS(true);
     Kie::Camera& camera = Kie::PipLine::getInstance(window).getCamera();
     camera.setPosition(0,0,-10);
-
+    object.turnTheLight();
     Kie::Math::Vec3D cameraFront = {0,0,1};
     Kie::Math::Vec3D cameraUp = {0,1,0};
     while (!window.shouldClose()) {
         object.setDrawFill(drawFill);
-
+        if(useLight){
+            object.turnTheLight();
+            useLight = false;
+        }
         if (glfwGetKey(window.getWindow(), GLFW_KEY_UP) == GLFW_PRESS) {
             camera.setTarget(camera.getPosition() + cameraFront);
-            camera.setPosition(camera.getPosition() - Kie::Math::Vec3D{0, 100, 0});
+            camera.setPosition(camera.getPosition() - Kie::Math::Vec3D{0, 0.5f, 0});
             camera.setTarget(camera.getPosition() + cameraFront);
         } else if (glfwGetKey(window.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS) {
             camera.setTarget(camera.getPosition() + cameraFront);
-            camera.setPosition(camera.getPosition() + Kie::Math::Vec3D{0, 100, 0});
+            camera.setPosition(camera.getPosition() + Kie::Math::Vec3D{0, 0.5f, 0});
             camera.setTarget(camera.getPosition() + cameraFront);
 
         } else if (glfwGetKey(window.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS) {

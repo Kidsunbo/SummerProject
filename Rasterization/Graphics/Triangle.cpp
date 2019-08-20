@@ -281,3 +281,7 @@ Kie::Triangle &Kie::Triangle::operator=(Kie::Triangle &&triangle) {
     return *this;
 }
 
+void Kie::Triangle::setVertex(const std::array<Point, 3> &vertex) {
+    this->vertex = vertex;
+}
+
