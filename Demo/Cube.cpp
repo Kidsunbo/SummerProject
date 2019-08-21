@@ -50,8 +50,8 @@ void key_callback(GLFWwindow* w, int key, int scancode, int action, int mods)
     }
     else if(key==GLFW_KEY_C && action==GLFW_PRESS){
         auto temp = Kie::Color(d(e),d(e),d(e));
-        Kie::Light light(Kie::PipLine::getInstance(window).getLight().getLightPos(),temp);
-        Kie::PipLine::getInstance(window).setLight(light);
+        Kie::Light light(Kie::PipeLine::getInstance(window).getLight().getLightPos(), temp);
+        Kie::PipeLine::getInstance(window).setLight(light);
     }
     else if(key==GLFW_KEY_L && action==GLFW_PRESS){
         object.turnTheLight();
@@ -92,15 +92,16 @@ int main() {
             object.rotateY(-1);
         }
         if(glfwGetKey(window.getWindow(),GLFW_KEY_W)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(0,0,0.01);
+            Kie::PipeLine::getInstance(window).getCamera().move(0, 0, 0.01);
         }
         if(glfwGetKey(window.getWindow(),GLFW_KEY_S)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(0,0,-0.01);
+            Kie::PipeLine::getInstance(window).getCamera().move(0, 0, -0.01);
         }
 
 
         glfwPollEvents();
         window.clear(Kie::Color(0, 0, 0));
+
 
         if(autoRotate){
             object.rotateX(0.5);

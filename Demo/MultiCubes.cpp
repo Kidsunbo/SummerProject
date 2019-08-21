@@ -82,8 +82,8 @@ int main() {
 
 
 
-    Kie::Camera& camera = Kie::PipLine::getInstance(window).getCamera();
-    Kie::Light& light = Kie::PipLine::getInstance(window).getLight();
+    Kie::Camera& camera = Kie::PipeLine::getInstance(window).getCamera();
+    Kie::Light& light = Kie::PipeLine::getInstance(window).getLight();
     camera.setPosition(0,0,-10);
     light.setLightPos(Kie::Math::Vec3D{0,0,-100});
 
@@ -120,7 +120,7 @@ int main() {
             }
         }
         if(changeColor){
-            Kie::PipLine::getInstance(window).getLight().setLightColor(Kie::Color(d(e),d(e),d(e)));
+            Kie::PipeLine::getInstance(window).getLight().setLightColor(Kie::Color(d(e), d(e), d(e)));
             changeColor = false;
         }
 
@@ -133,7 +133,7 @@ int main() {
             camera.setTarget(Kie::Math::Vec3D{0,0,0});
             float camX = sin(angle) * radius;
             float camZ = cos(angle) * radius;
-            Kie::PipLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
+            Kie::PipeLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
             cameraFront = (camera.getTarget()-camera.getPosition()).normalize();
             angle+=rotateSpeed;
         }

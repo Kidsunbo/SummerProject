@@ -9,6 +9,9 @@
 #include <string>
 
 namespace Kie {
+    /**
+     * The basic exception of this library
+     */
     class BaseException : public std::exception {
         const char* msg;
     public:

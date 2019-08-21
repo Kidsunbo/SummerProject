@@ -2,13 +2,13 @@
 // Created by bxs863 on 14/08/2019.
 //
 
-#include "PipLine.h"
+#include "PipeLine.h"
 #include "Window/Window.h"
 #include <cmath>
 #include <iostream>
 
 
-Kie::PipLine::PipLine(Window& window,float near, float far, float fov, Kie::Color lightColor, const Kie::Math::Vec3D& pos):
+Kie::PipeLine::PipeLine(Window& window, float near, float far, float fov, Kie::Color lightColor, const Kie::Math::Vec3D& pos):
 light(lightColor,pos),
 proMatrix(0.0f),
 rotXMatrix({{1.0f,0.0f,0.0f,0.0f},{0.0f,1.0f,0.0f,0.0f},{0.0f,0.0f,1.0f,0.0f},{0.0f,0.0f,0.0f,1.0f}}),
@@ -19,14 +19,14 @@ traMatrix(0.0f)
     updatePromatrix(window, near, far, fov);
 }
 
-std::shared_ptr<Kie::PipLine> Kie::PipLine::pp = nullptr;
+std::shared_ptr<Kie::PipeLine> Kie::PipeLine::pp = nullptr;
 
-Kie::PipLine& Kie::PipLine::getInstance(Kie::Window &window) {
-    if(pp== nullptr) pp = std::make_shared<PipLine>(window);
+Kie::PipeLine& Kie::PipeLine::getInstance(Kie::Window &window) {
+    if(pp== nullptr) pp = std::make_shared<PipeLine>(window);
     return *pp;
 }
 
-Kie::Object Kie::PipLine::Projection(Kie::Object object) {
+Kie::Object Kie::PipeLine::Projection(Kie::Object object) {
     for(auto& tri:object.mesh){
         for(auto& ver:tri.vertex){
             auto pos = proMatrix*Math::Vec4D(ver.getPosition(),1.0f);
@@ -40,7 +40,7 @@ Kie::Object Kie::PipLine::Projection(Kie::Object object) {
     return object;
 }
 
-Kie::Object Kie::PipLine::Rotate(Kie::Object object) {
+Kie::Object Kie::PipeLine::Rotate(Kie::Object object) {
     Kie::Math::Mat4D xMat = {{1.0f,0.0f,0.0f,0.0f},{0.0f,1.0f,0.0f,0.0f},{0.0f,0.0f,1.0f,0.0f},{0.0f,0.0f,0.0f,1.0f}};
     xMat[1][1] = std::cos(object.rotateXDegree/180.0f*3.1415926f);
     xMat[1][2] = -std::sin(object.rotateXDegree/180.0f*3.1415926f);
@@ -73,7 +73,7 @@ Kie::Object Kie::PipLine::Rotate(Kie::Object object) {
     return object;
 }
 
-Kie::Object Kie::PipLine::Translate(Kie::Object object) {
+Kie::Object Kie::PipeLine::Transform(Kie::Object object) {
     for(auto& tri:object.mesh){
         for(auto& ver:tri.vertex){
             Math::Vec3D newPos = ver.getPosition()+object.getPosition();
@@ -83,14 +83,14 @@ Kie::Object Kie::PipLine::Translate(Kie::Object object) {
     return object;
 }
 
-Kie::Object Kie::PipLine::Clip(Object object){
+Kie::Object Kie::PipeLine::Clip(Object object){
     for(auto& tri:object.mesh){
         Clip(tri);
     }
     return object;
 }
 
-Kie::Object Kie::PipLine::Illuminate(Kie::Object object) {
+Kie::Object Kie::PipeLine::Illuminate(Kie::Object object) {
     //Ambient
     Math::Vec3D ambient = (light.getLightColor()*light.getAmbientStrength()).toVec3D();
     for(auto& tri:object.mesh){
@@ -110,31 +110,31 @@ Kie::Object Kie::PipLine::Illuminate(Kie::Object object) {
     return object;
 }
 
- Kie::Light &Kie::PipLine::getLight() {
+ Kie::Light &Kie::PipeLine::getLight() {
     return light;
 }
 
-void Kie::PipLine::setLight(const Kie::Light &light) {
-    PipLine::light = light;
+void Kie::PipeLine::setLight(const Kie::Light &light) {
+    PipeLine::light = light;
 }
 
-const Kie::Math::Mat4D &Kie::PipLine::getProMatrix() const {
+const Kie::Math::Mat4D &Kie::PipeLine::getProMatrix() const {
     return proMatrix;
 }
 
-void Kie::PipLine::setProMatrix(const Kie::Math::Mat4D &proMatrix) {
-    PipLine::proMatrix = proMatrix;
+void Kie::PipeLine::setProMatrix(const Kie::Math::Mat4D &proMatrix) {
+    PipeLine::proMatrix = proMatrix;
 }
 
-const Kie::Math::Mat4D &Kie::PipLine::getTraMatrix() const {
+const Kie::Math::Mat4D &Kie::PipeLine::getTraMatrix() const {
     return traMatrix;
 }
 
-void Kie::PipLine::setTraMatrix(const Kie::Math::Mat4D &traMatrix) {
-    PipLine::traMatrix = traMatrix;
+void Kie::PipeLine::setTraMatrix(const Kie::Math::Mat4D &traMatrix) {
+    PipeLine::traMatrix = traMatrix;
 }
 
-void Kie::PipLine::updatePromatrix(Kie::Window &window, float near, float far, float fov) {
+void Kie::PipeLine::updatePromatrix(Kie::Window &window, float near, float far, float fov) {
     float AR = static_cast<float>(window.getHeight()) / static_cast<float>(window.getWidth());
     float FR = 1.0f/std::tan(fov * 0.5f / 180.0f * 3.1415926f);
     proMatrix[0][0] = AR*FR;
@@ -144,7 +144,7 @@ void Kie::PipLine::updatePromatrix(Kie::Window &window, float near, float far, f
     proMatrix[2][3] = 1.0f;
 }
 
-Kie::Object Kie::PipLine::MapToWorld(Kie::Object object) {
+Kie::Object Kie::PipeLine::MapToWorld(Kie::Object object) {
 
     for(auto& tri : object.mesh){
         for(auto& ver:tri.vertex){
@@ -155,7 +155,7 @@ Kie::Object Kie::PipLine::MapToWorld(Kie::Object object) {
     return object;
 }
 
-Kie::Object Kie::PipLine::Culling(Kie::Object object) {
+Kie::Object Kie::PipeLine::Culling(Kie::Object object) {
     std::vector<Triangle> vec;
     for(auto& tri:object.mesh) {
         Math::Vec3D line1(tri.vertex[1].getPosition()-tri.vertex[0].getPosition());
@@ -167,7 +167,7 @@ Kie::Object Kie::PipLine::Culling(Kie::Object object) {
     return object;
 }
 
-void Kie::PipLine::Projection(Kie::Triangle &triangle) {
+void Kie::PipeLine::Projection(Kie::Triangle &triangle) {
     for(auto& ver:triangle.vertex){
         auto pos = proMatrix*Math::Vec4D(ver.getPosition(),1.0f);
         float w = pos[0]*proMatrix[0][3]+pos[1]*proMatrix[1][3]+pos[2]*proMatrix[2][3]+proMatrix[3][3];
@@ -178,7 +178,7 @@ void Kie::PipLine::Projection(Kie::Triangle &triangle) {
     }
 }
 
-void Kie::PipLine::Rotate(Kie::Triangle &triangle) {
+void Kie::PipeLine::Rotate(Kie::Triangle &triangle) {
     for(auto& ver:triangle.vertex){
         auto pos = rotXMatrix*Math::Vec4D(ver.getPosition(),1.0f);
         Math::Vec3D after(0);
@@ -191,14 +191,14 @@ void Kie::PipLine::Rotate(Kie::Triangle &triangle) {
     }
 }
 
-void Kie::PipLine::Translate(Kie::Triangle &triangle,Object& object) {
+void Kie::PipeLine::Transform(Kie::Triangle &triangle, Object& object) {
     for(auto& ver:triangle.vertex){
         Math::Vec3D newPos = ver.getPosition()+object.getPosition();
         ver.setPosition(newPos);
     }
 }
 
-void Kie::PipLine::SetupRotateMatrix(Object& object) {
+void Kie::PipeLine::SetupRotateMatrix(Object& object) {
     rotXMatrix[1][1] = std::cos(object.rotateXDegree/180.0f*3.1415926f);
     rotXMatrix[1][2] = -std::sin(object.rotateXDegree/180.0f*3.1415926f);
     rotXMatrix[2][1] = std::sin(object.rotateXDegree/180.0f*3.1415926f);
@@ -213,7 +213,7 @@ void Kie::PipLine::SetupRotateMatrix(Object& object) {
     rotZMatrix[1][1] = std::cos(object.rotateZDegree/180.0f*3.1415926f);
 }
 
-void Kie::PipLine::Illuminate(Kie::Triangle &triangle) {
+void Kie::PipeLine::Illuminate(Kie::Triangle &triangle) {
     Math::Vec3D ambient = (light.getLightColor()*light.getAmbientStrength()).toVec3D();
     Math::Vec3D line1(triangle.vertex[1].getPosition()-triangle.vertex[0].getPosition());
     Math::Vec3D line2(triangle.vertex[2].getPosition()-triangle.vertex[0].getPosition());
@@ -228,50 +228,50 @@ void Kie::PipLine::Illuminate(Kie::Triangle &triangle) {
     }
 }
 
-void Kie::PipLine::MapToWorld(Kie::Triangle &triangle,Object& object) {
+void Kie::PipeLine::MapToWorld(Kie::Triangle &triangle, Object& object) {
     for(auto& ver:triangle.vertex){
         auto oldPos = ver.getPosition();
         ver.setPosition(oldPos+object.getPosition());
     }
 }
 
-bool Kie::PipLine::Culling(Kie::Triangle &triangle) {
+bool Kie::PipeLine::Culling(Kie::Triangle &triangle) {
     Math::Vec3D line1(triangle.vertex[1].getPosition()-triangle.vertex[0].getPosition());
     Math::Vec3D line2(triangle.vertex[2].getPosition()-triangle.vertex[0].getPosition());
     auto result = line1.crossProduct(line2).normalize();
     return result[2]>=0;
 }
 
-Kie::Camera &Kie::PipLine::getCamera() {
+Kie::Camera &Kie::PipeLine::getCamera() {
     return camera;
 }
 
-void Kie::PipLine::setCamera(const Kie::Camera &camera) {
+void Kie::PipeLine::setCamera(const Kie::Camera &camera) {
     this->camera = camera;
 }
 
-void Kie::PipLine::MapToView(Kie::Triangle &triangle) {
+void Kie::PipeLine::MapToView(Kie::Triangle &triangle) {
     for(auto& ver:triangle.vertex){
         auto oldPos = ver.getPosition();
         ver.setPosition(Math::Vec4D(camera.getView()*Math::Vec4D(oldPos,1.0f)).toVec3D());
     }
 }
 
-Kie::Object Kie::PipLine::MapToView(Kie::Object object) {
+Kie::Object Kie::PipeLine::MapToView(Kie::Object object) {
     for(auto& tri:object.mesh){
         MapToView(tri);
     }
     return object;
 }
 
-bool Kie::PipLine::Clip(Triangle& triangle){
+bool Kie::PipeLine::Clip(Triangle& triangle){
     for(auto& ver:triangle.vertex){
         if(ver.getZ()<=0.5f) return true;
     }
     return false;
 }
 
-//std::vector<Kie::Triangle> Kie::PipLine::Clip(Triangle& triangle){
+//std::vector<Kie::Triangle> Kie::PipeLine::Clip(Triangle& triangle){
 //    std::vector<Point> inner;
 //    std::vector<Point> outer;
 //    planeN = planeN.normalize();
@@ -308,7 +308,7 @@ bool Kie::PipLine::Clip(Triangle& triangle){
 //    return {};
 //}
 
-//float Kie::PipLine::dist(Kie::Point &p) {
+//float Kie::PipeLine::dist(Kie::Point &p) {
 //    auto p1 = p.getPosition();
 //    p1[2]=p.getZ();
 //    auto n = p1.normalize();
@@ -317,7 +317,7 @@ bool Kie::PipLine::Clip(Triangle& triangle){
 
 
 //Kie::Point
-//Kie::PipLine::intersetctPlane(Math::Vec3D &plane, Kie::Math::Vec3D &planeN, Kie::Point &start, Kie::Point &end) {
+//Kie::PipeLine::intersetctPlane(Math::Vec3D &plane, Kie::Math::Vec3D &planeN, Kie::Point &start, Kie::Point &end) {
 //    planeN = planeN.normalize();
 //    float dis = -planeN.dotProduct(plane);
 //    auto startPos = start.getPosition();

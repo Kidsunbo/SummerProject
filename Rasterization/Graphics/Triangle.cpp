@@ -4,7 +4,7 @@
 
 #include "Triangle.h"
 #include "Window/Window.h"
-#include "PipLine.h"
+#include "PipeLine.h"
 
 #include <algorithm>
 #include <utility>

@@ -10,8 +10,15 @@ namespace Kie {
 
     class Window;
 
+    /**
+     * This is the interface for drawable object
+     */
     class IDrawable {
     public:
+        /**
+         * This is a pure abstract function, which need to be implemented by the sub classes
+         * @param window The window
+         */
         virtual void draw(Window& window) = 0;
 
     };

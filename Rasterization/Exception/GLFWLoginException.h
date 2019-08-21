@@ -9,6 +9,9 @@
 #include "BaseException.h"
 
 namespace Kie {
+    /**
+     * Mainly used when the creation of the window fails
+     */
     class GLFWLoginException:public BaseException{
     public:
         using BaseException::BaseException;

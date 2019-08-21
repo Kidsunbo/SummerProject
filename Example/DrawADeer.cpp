@@ -21,8 +21,8 @@ int main() {
     object.setRenderForEachTriangle(true);
     Kie::Light light(Kie::Color(255, 255, 255));
     light.setLightPos(Kie::Math::Vec3D({10, 0, -1}));
-    Kie::PipLine::getInstance(window).setLight(light);
-    Kie::PipLine::getInstance(window).getCamera().setTarget({0,0,1000});
+    Kie::PipeLine::getInstance(window).setLight(light);
+    Kie::PipeLine::getInstance(window).getCamera().setTarget({0, 0, 1000});
     window.printFPS(true);
     while (!window.shouldClose()) {
 
@@ -46,22 +46,22 @@ int main() {
 //        }
 
         if(glfwGetKey(window.getWindow(),GLFW_KEY_RIGHT)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(100,0,0);
+            Kie::PipeLine::getInstance(window).getCamera().move(100, 0, 0);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_LEFT)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(-100,0,0);
+            Kie::PipeLine::getInstance(window).getCamera().move(-100, 0, 0);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(0,100,0);
+            Kie::PipeLine::getInstance(window).getCamera().move(0, 100, 0);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(0,-100,0);
+            Kie::PipeLine::getInstance(window).getCamera().move(0, -100, 0);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_UP)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(0,0,100);
+            Kie::PipeLine::getInstance(window).getCamera().move(0, 0, 100);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_PAGE_DOWN)==GLFW_PRESS){
-            Kie::PipLine::getInstance(window).getCamera().move(0,0,-100);
+            Kie::PipeLine::getInstance(window).getCamera().move(0, 0, -100);
         }
 
         glfwPollEvents();

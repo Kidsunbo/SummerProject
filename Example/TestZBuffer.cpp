@@ -50,18 +50,18 @@ int main() {
     vec[0].setRotateX(0);
     vec[1].setRotateX(0);
 
-    Kie::PipLine::getInstance(window).getCamera().setPosition(0.0f,0.0f,16.0);
-    Kie::PipLine::getInstance(window).setLight(Kie::Light(Kie::Color(255,255,255),Kie::Math::Vec3D({0.0f,0.0f,130.0f})));
+    Kie::PipeLine::getInstance(window).getCamera().setPosition(0.0f, 0.0f, 16.0);
+    Kie::PipeLine::getInstance(window).setLight(Kie::Light(Kie::Color(255, 255, 255), Kie::Math::Vec3D({0.0f, 0.0f, 130.0f})));
 
     while (!window.shouldClose()) {
 
         if(glfwGetKey(window.getWindow(),GLFW_KEY_UP)==GLFW_PRESS){
-            auto temp = std::min(Kie::PipLine::getInstance(window).getLight().getAmbientStrength()+0.01,1.0);
-            Kie::PipLine::getInstance(window).getLight().setAmbientStrength(temp);
+            auto temp = std::min(Kie::PipeLine::getInstance(window).getLight().getAmbientStrength() + 0.01, 1.0);
+            Kie::PipeLine::getInstance(window).getLight().setAmbientStrength(temp);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_DOWN)==GLFW_PRESS){
-            auto temp = std::max(Kie::PipLine::getInstance(window).getLight().getAmbientStrength()-0.01,0.0);
-            Kie::PipLine::getInstance(window).getLight().setAmbientStrength(temp);
+            auto temp = std::max(Kie::PipeLine::getInstance(window).getLight().getAmbientStrength() - 0.01, 0.0);
+            Kie::PipeLine::getInstance(window).getLight().setAmbientStrength(temp);
         }
         else if(glfwGetKey(window.getWindow(),GLFW_KEY_LEFT)==GLFW_PRESS){
             angle+=speed;
@@ -77,7 +77,7 @@ int main() {
 //        float radius = 10.0f;
 //        float camX = sin(angle) * radius;
 //        float camZ = cos(angle) * radius;
-//        Kie::PipLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
+//        Kie::PipeLine::getInstance(window).getCamera().setPosition(camX, 0.0, camZ);
 
         for(auto& i:vec){
             window.draw(i);

@@ -12,6 +12,10 @@
 #include <memory>
 
 namespace Kie {
+
+    /**
+     * This is the point class which is the base of this library
+     */
     class Point : public IDrawable, public ITransformable{
         Color color;
         Math::Vec2D texture;

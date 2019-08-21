@@ -24,7 +24,7 @@ int main() {
         object.setRenderForEachTriangle(true);
         Kie::Light light(Kie::Color(255, 255, 255));
         light.setLightPos(Kie::Math::Vec3D({10, 0, -1}));
-        Kie::PipLine::getInstance(window).setLight(light);
+        Kie::PipeLine::getInstance(window).setLight(light);
         window.printFPS(true);
         while (!window.shouldClose()) {
             glfwPollEvents();

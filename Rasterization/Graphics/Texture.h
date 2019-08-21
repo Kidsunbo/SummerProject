@@ -10,6 +10,10 @@
 #include "Color.h"
 
 namespace Kie {
+
+    /**
+     * This is used to represent the texture
+     */
     class Texture {
         unsigned char* img;
         int width;
@@ -33,6 +37,9 @@ namespace Kie {
 
     };
 
+    /**
+     * This is used to generate the texture of each pixel.
+     */
     class InterpTexture{
         Math::Vec2D current;
         float step_x;

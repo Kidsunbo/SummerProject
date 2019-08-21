@@ -48,10 +48,10 @@ int main() {
     object.setRenderForEachTriangle(true);
     Kie::Light light(Kie::Color(255, 255, 255));
     light.setLightPos(Kie::Math::Vec3D({10, 0, -1}));
-    Kie::PipLine::getInstance(window).setLight(light);
-    Kie::PipLine::getInstance(window).getCamera().setTarget({0,0,1000});
+    Kie::PipeLine::getInstance(window).setLight(light);
+    Kie::PipeLine::getInstance(window).getCamera().setTarget({0, 0, 1000});
     window.printFPS(true);
-    Kie::Camera& camera = Kie::PipLine::getInstance(window).getCamera();
+    Kie::Camera& camera = Kie::PipeLine::getInstance(window).getCamera();
     camera.setPosition(0,0,-10);
     object.turnTheLight();
     Kie::Math::Vec3D cameraFront = {0,0,1};
@@ -101,11 +101,11 @@ int main() {
         }
 
         if(changeLightColor){
-            Kie::PipLine::getInstance(window).getLight().setLightColor(Kie::Color(d(e),d(e),d(e)));
+            Kie::PipeLine::getInstance(window).getLight().setLightColor(Kie::Color(d(e), d(e), d(e)));
             changeLightColor = false;
         }
         if(resetColor){
-            Kie::PipLine::getInstance(window).getLight().setLightColor(Kie::Color(255,255,255));
+            Kie::PipeLine::getInstance(window).getLight().setLightColor(Kie::Color(255, 255, 255));
             resetColor = false;
         }
 

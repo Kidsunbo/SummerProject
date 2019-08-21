@@ -50,7 +50,7 @@ int main() {
         object.setRenderForEachTriangle(true);
         Kie::Light light(Kie::Color(255, 255, 255));
         light.setLightPos(Kie::Math::Vec3D({10, 0, -1}));
-        Kie::PipLine::getInstance(window).setLight(light);
+        Kie::PipeLine::getInstance(window).setLight(light);
 
         Kie::Object dog;
         dog.load("./Resource/dog/dog.obj", "./Resource/dog/dog.jpg");
@@ -64,7 +64,7 @@ int main() {
         dog.setRenderForEachTriangle(true);
 
 
-        Kie::Camera camera = Kie::PipLine::getInstance(window).getCamera();
+        Kie::Camera camera = Kie::PipeLine::getInstance(window).getCamera();
         window.printFPS(true);
         while (!window.shouldClose()) {
             object.setDrawSketch(drawSketch);

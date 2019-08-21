@@ -13,7 +13,7 @@
 
 void Kie::Object::draw(Kie::Window &window) {
 
-    auto &pipLine = PipLine::getInstance(window);
+    auto &pipLine = PipeLine::getInstance(window);
 
 //// Old API
 if(!renderForEachTriangle) {
@@ -21,11 +21,11 @@ if(!renderForEachTriangle) {
     obj = pipLine.Rotate(obj);
     obj = pipLine.MapToWorld(obj);
     if(applyLight) obj = pipLine.Illuminate(obj);
-    obj = pipLine.Translate(obj);
+    obj = pipLine.Transform(obj);
     for(auto& tri:obj.mesh){
         for(auto& ver:tri.vertex){
-            auto cameraDir = Kie::PipLine::getInstance(window).getCamera().getDirection();
-            float dis = cameraDir.dotProduct(ver.getPosition()-Kie::PipLine::getInstance(window).getCamera().getPosition());
+            auto cameraDir = Kie::PipeLine::getInstance(window).getCamera().getDirection();
+            float dis = cameraDir.dotProduct(ver.getPosition()-Kie::PipeLine::getInstance(window).getCamera().getPosition());
             ver.setZ(dis);
         }
     }
@@ -49,11 +49,11 @@ if(!renderForEachTriangle) {
     for (auto tri:mesh) {
         pipLine.Rotate(tri);
         pipLine.MapToWorld(tri, *this);
-        pipLine.Translate(tri, *this);
+        pipLine.Transform(tri, *this);
         if(applyLight) pipLine.Illuminate(tri);
         for(auto& ver:tri.vertex){
-            auto cameraDir = Kie::PipLine::getInstance(window).getCamera().getDirection();
-            float dis = cameraDir.dotProduct(ver.getPosition()-Kie::PipLine::getInstance(window).getCamera().getPosition());
+            auto cameraDir = Kie::PipeLine::getInstance(window).getCamera().getDirection();
+            float dis = cameraDir.dotProduct(ver.getPosition()-Kie::PipeLine::getInstance(window).getCamera().getPosition());
             ver.setZ(dis);
         }
        if(pipLine.Clip(tri)) {continue;}
