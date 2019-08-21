@@ -18,7 +18,7 @@ int main(){
 
         glfwPollEvents();
         window.clear(Kie::Color(0,0,0));
-        window.draw(line);
+       // window.draw(line);
         window.draw(line1);
         window.display();
     }
