@@ -68,7 +68,7 @@ And it will display a point at the center of the window.
 #include "Window/Window.h"
 #include "Graphics/Point.h"
 int main(){
-    Kie::Window window(640,480,"Hello Dot");
+    Kie::Window window(640,480,"Hello Line");
     Kie::Point p1(0.0f,0.0f,0.0f,Kie::Color(0.0f,0.0f,0.0f));
     Kie::Point p2(0.5f,0.5f,0.0f);
     Kie::Line line(p1,p2);
@@ -80,9 +80,61 @@ int main(){
     return 0;
 }
 ```
-And it will display a point at the center of the window.
+And it will display a line in the window.
 ![drawLine](./Resource/img/drawLine.PNG)
 
+##### Draw a Triangle
+```C++
+#include "Window/Window.h"
+#include "Graphics/Triangle.h"
+int main(){
+
+    Kie::Window window(640,480,"Hello Triangle");
+    Kie::Point p1(0.0f,-0.5f,0,Kie::Color(1.0f,0.0f,0.0f));
+    Kie::Point p2(0.5f,0.5f,0,Kie::Color(0.0f,1.0f,0.0f));
+    Kie::Point p3(-0.5f,0.0f,0,Kie::Color(0.0f,0.0f,1.0f));
+    Kie::Triangle tri(p1,p2,p3,true);
+    window.printFPS(true);
+    while(!window.shouldClose()){
+        glfwPollEvents();
+        window.clear(Kie::Color(0,0,0));
+        window.draw(tri);
+        window.display();
+    }
+    return 0;
+}
+
+```
+A triangle will be drawn with color interpolation.
+![drawTriangle](./Resource/img/drawTriangle.PNG)
+
+##### Draw 3D object
+```C++
+#include "Window/Window.h"
+#include "Graphics/Object.h"
+int main() {
+     Kie::Window window(640, 480, "Hello Deer");
+     Kie::Object deer;
+     deer.load("Resource/Path/Of/Deer.ojb");
+     deer.setScale(0.01);
+     deer.setDistance(100);
+     while (!window.shouldClose()) {
+        glfwPollEvents();
+        window.clear(Kie::Color(0,0,0));
+        deer.rotateY(1);
+        window.draw(deer);
+        window.display();
+     }
+
+    return 0;
+}
+
+```
+A deer will be drawn and rotate 1 degree per frame.
+![drawDeer](./Resource/img/drawDeer.PNG)
+
+## Future
+This library will be continued in the future, which multi-threading and more configurable APIs will be added as expected.
 
 
 
