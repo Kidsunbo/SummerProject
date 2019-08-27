@@ -155,7 +155,7 @@ int main() {
 }
 
 ```
-A deer will be drawn and rotate 1 degree per frame.
+A cat will be drawn and rotate 1 degree per frame.
 ![drawCat](./Resource/img/drawCat.PNG)
 
 ## Future
