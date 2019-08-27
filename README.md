@@ -133,8 +133,31 @@ int main() {
 A deer will be drawn and rotate 1 degree per frame.
 ![drawDeer](./Resource/img/drawDeer.PNG)
 
+##### Draw 3D object with texture
+```C++
+#include "Window/Window.h"
+#include "Graphics/Object.h"
+int main() {
+     Kie::Window window(640, 480, "Hello cat");
+     Kie::cat cat;
+     cat.load("Resource/Path/Of/cat.ojb","./Resource/cat/cat.png");
+     cat.setScale(0.01);
+     cat.setDistance(100);
+     while (!window.shouldClose()) {
+        glfwPollEvents();
+        window.clear(Kie::Color(0,0,0));
+        cat.rotateY(1);
+        window.draw(deer);
+        window.display();
+     }
+
+    return 0;
+}
+
+```
+A deer will be drawn and rotate 1 degree per frame.
+![drawCat](./Resource/img/drawCat.PNG)
+
 ## Future
 This library will be continued in the future, which multi-threading and more configurable APIs will be added as expected.
-
-
 
