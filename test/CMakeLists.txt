@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.14)
+
+kie_add_executable(draw_a_cat)
+kie_add_executable(draw_a_cube)
+kie_add_executable(draw_a_deer)
+kie_add_executable(draw_a_dog)
+kie_add_executable(draw_a_line)
+kie_add_executable(draw_a_point)
+kie_add_executable(draw_a_triangle_with_texture)
+kie_add_executable(draw_a_triangle)
+kie_add_executable(draw_cube_with_light)
+kie_add_executable(test_function)
+kie_add_executable(test_z_buffer)

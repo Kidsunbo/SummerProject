@@ -1,0 +1,1 @@
+target_sources(raster PUBLIC window.cpp)

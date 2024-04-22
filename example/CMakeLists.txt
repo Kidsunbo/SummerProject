@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.14)
+
+kie_add_executable(dot)
+kie_add_executable(line)
+kie_add_executable(triangle)
+kie_add_executable(two_triangle)
+kie_add_executable(cube)
+kie_add_executable(multi_cubes)
+kie_add_executable(deer)
+kie_add_executable(cat)
