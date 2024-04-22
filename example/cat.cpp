@@ -57,7 +57,7 @@ int main() {
         Kie::PipeLine::getInstance(window).setLight(light);
 
         Kie::Object dog;
-        dog.load("./Resource/dog/dog.obj", "./Resource/dog/dog.jpg");
+        dog.load(std::string{RESOURCE_PATH}+"/dog/dog.obj", std::string{RESOURCE_PATH}+"/dog/dog.png");
         dog.setDistance(50);
         dog.setOrigin(0.5f, 0.5f, 0.0f);
         dog.setDrawSketch(false);
